@@ -126,7 +126,7 @@ export default defineConfig({
 });
 ```
 
-:bulb: Important Notes
+:exclamation: Important Notes
 
 Only official "@astrojs/\*" integrations are currently supported.  
 To enable 3rd-party integrations, use the "--experimental-integrations" flag.  
