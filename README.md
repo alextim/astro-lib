@@ -84,8 +84,8 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 |     Name     |         Type          | Required |                    Description                     |
 | :----------: | :-------------------: | :------: | :------------------------------------------------: |
 | `userAgent`  |       `String`        |   Yes    | You must provide name of user agent or wildcard |
-|  `disallow`  | `String` / `String[]` |    No    |                 disallowed pathes                  |
-|   `allow`    | `String` / `String[]` |    No    |                   allowed pathes                   |
+|  `disallow`  | `String` / `String[]` |    No    |                 disallowed paths                  |
+|   `allow`    | `String` / `String[]` |    No    |                   allowed paths                   |
 | `crawlDelay` |       `Number`        |    No    |                                                    |
 | `cleanParam` | `String` / `String[]` |    No    |                                                    |
 
