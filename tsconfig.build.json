@@ -3,6 +3,6 @@
   "include": ["src"],
   "exclude": ["__tests__"],
   "compilerOptions": {
-     "removeComments": true
+    "removeComments": true
   }
 }

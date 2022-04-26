@@ -6,25 +6,14 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    // requireConfigFile: false,
-    // experimentalObjectRestSpread: true,
     sourceType: 'module',
-    ecmaFeatures: {
-      // globalReturn: false,
-      // jsx: true,
-    },
-    // tsconfigRootDir: './',
     project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint', /* 'import', */ 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier'],
   extends: [
-    // 'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    // 'plugin:@typescript-eslint/recommended',
-    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'airbnb-base',
     'airbnb-typescript/base',
-    // 'plugin:import/recommended',
     'plugin:prettier/recommended',
     'prettier',
   ],
@@ -35,19 +24,7 @@ module.exports = {
     semi: ['error', 'always'],
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
-    'no-plusplus': 'off',
-    'no-restricted-exports': 'off',
 
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'import/no-unresolved': 'error',
-    'import/prefer-default-export': 0,
-
-    '@typescript-eslint/no-empty-interface': [
-      'warn',
-      {
-        allowSingleExtends: false,
-      },
-    ],
     '@typescript-eslint/no-var-requires': 0,
     'prettier/prettier': 'error',
   },

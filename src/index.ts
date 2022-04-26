@@ -2,7 +2,9 @@ import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
 
 const logError = (s: string) => {
-  console.info('Couldn\'t create robots.txt');
+  // eslint-disable-next-line no-console
+  console.info("Couldn't create robots.txt");
+  // eslint-disable-next-line no-console
   console.info(s, '\n');
 };
 
@@ -145,11 +147,9 @@ const isValidHostname = (value: string) => {
     return false;
   }
 
-  return value.split('.').every((label) =>
-    /^([a-zA-Z0-9-]+)$/g.test(label) &&
-    label.length < 64 &&
-    !label.startsWith('-') &&
-    !label.endsWith('-'));
+  return value
+    .split('.')
+    .every((label) => /^([a-zA-Z0-9-]+)$/g.test(label) && label.length < 64 && !label.startsWith('-') && !label.endsWith('-'));
 };
 
 const isValidCleanParamItem = (item: any) => {

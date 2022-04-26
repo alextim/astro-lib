@@ -6,7 +6,6 @@ The **robots.txt** file informs search engines which pages on your website shoul
 
 ## Installation
 
-
 If you run into any hiccups, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-robots-txt/issues).
 
 ### Install dependencies manually
@@ -81,13 +80,13 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 
 ### Policy
 
-|     Name     |         Type          | Required |                    Description                     |
-| :----------: | :-------------------: | :------: | :------------------------------------------------: |
+|     Name     |         Type          | Required |                   Description                   |
+| :----------: | :-------------------: | :------: | :---------------------------------------------: |
 | `userAgent`  |       `String`        |   Yes    | You must provide name of user agent or wildcard |
-|  `disallow`  | `String` / `String[]` |    No    |                 disallowed paths                  |
-|   `allow`    | `String` / `String[]` |    No    |                   allowed paths                   |
-| `crawlDelay` |       `Number`        |    No    |                                                    |
-| `cleanParam` | `String` / `String[]` |    No    |                                                    |
+|  `disallow`  | `String` / `String[]` |    No    |                disallowed paths                 |
+|   `allow`    | `String` / `String[]` |    No    |                  allowed paths                  |
+| `crawlDelay` |       `Number`        |    No    |                                                 |
+| `cleanParam` | `String` / `String[]` |    No    |                                                 |
 
 Sample of **astro.config.mjs**
 
@@ -127,13 +126,11 @@ export default defineConfig({
 });
 ```
 
-
 :bulb: Important Notes
 
-Only official "@astrojs/*" integrations are currently supported.  
+Only official "@astrojs/\*" integrations are currently supported.  
 To enable 3rd-party integrations, use the "--experimental-integrations" flag.  
-Breaking changes may occur in this API before Astro v1.0 is released.  
-
+Breaking changes may occur in this API before Astro v1.0 is released.
 
 Use the following to build your Astro site:
 
@@ -143,6 +140,7 @@ astro build --experimental-integrations
 
 [astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
 
-Inspirations: 
+Inspirations:
+
 - [gatsby-plugin-robots-txt](https://github.com/mdreizin/gatsby-plugin-robots-txt)
 - [is-valid-hostname](https://github.com/miguelmota/is-valid-hostname)
