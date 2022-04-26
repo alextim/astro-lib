@@ -131,11 +131,7 @@ export default defineConfig({
 :bulb: Important Notes
 
 Only official "@astrojs/*" integrations are currently supported.  
-
-
 To enable 3rd-party integrations, use the "--experimental-integrations" flag.  
-
-
 Breaking changes may occur in this API before Astro v1.0 is released.  
 
 
