@@ -6,7 +6,6 @@ The **robots.txt** file informs search engines which pages on your website shoul
 
 ## Installation
 
-````
 
 If you run into any hiccups, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-robots-txt/issues).
 
