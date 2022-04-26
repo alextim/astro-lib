@@ -1,0 +1,12 @@
+.cache
+.git
+.husky
+.netlify
+.vscode
+node_modules
+
+dist
+public
+
+src/vendor/gumshoe
+src/vendor/photoswipe
