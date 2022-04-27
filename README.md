@@ -9,11 +9,11 @@ The **robots.txt** file informs search engines which pages on your website shoul
 
 ## Why astro-robots-txt?
 
-For Astro project you usually create the `robots.txt` in a text editor and place it to the `public/` directory.
-In that case you must manually synchronize `site` option in `astro.config.*` with `Sitemap:` record in `robots.txt`. It brakes DRY principle.  
-Sometimes, especially during development, it's needed to prohibit site indexing by robots. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or `X-Robots-Tag:noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to `robots.txt`. Again you do it manually in two separate places.
+For Astro project you usually create the **robots.txt** in a text editor and place it to the `public/` directory.
+In that case you must manually synchronize `site` option in __astro.config.*__ with `Sitemap:` record in **robots.txt**. It brakes DRY principle.  
+Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the **<head>** section of pages or `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to **robots.txt**. Again you do it manually in two separate places.
 
-**astro-robots-txt** could help to solve both two problems.
+**astro-robots-txt** could help in both two cases.
 
 ------
 
