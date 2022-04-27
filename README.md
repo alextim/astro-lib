@@ -2,8 +2,12 @@
 
 This **[Astro integration][astro-integration]** generates a robots.txt for your Astro project during build.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Build Status](https://img.shields.io/github/workflow/status/alextim/astro-robots-txt/publish)
+
+------
 The **robots.txt** file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
 
+------
 ## Installation
 
 If you run into any hiccups, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-robots-txt/issues).

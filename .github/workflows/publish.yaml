@@ -1,18 +1,8 @@
 name: publish
-
+# https://github.com/MZanggl/flooent/blob/latest/package.json
 on:
-  push:
-    branches:
-      - main
-    #tags:
-    #  - 'v[0-9]+.[0-9]+.[0-9]+*'
-    # test
-  pull_request:
-    branches:
-      - main
-    #tags:
-    #  - 'v[0-9]+.[0-9]+.[0-9]+*'
-
+  release:
+    types: [published]
 concurrency:
   # Ensures that only one deploy task per branch/environment will run at a time.
   group: environment-${{ github.ref }}
@@ -25,11 +15,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - name: '☁️ checkout repository'
         uses: actions/checkout@v3
+        with:
+        # "ref" specifies the branch to check out.
+        # "github.event.release.target_commitish" is a global variable and specifies the branch the release targeted
+          ref: ${{ github.event.release.target_commitish }}
 
       - name: '🔧 setup node'
         uses: actions/setup-node@v3
@@ -52,9 +46,24 @@ jobs:
           run_install: |
             - recursive: false
 
+      # set up git since we will later push to the repo
+      - run: |
+          git config --global user.name "$GITHUB_ACTOR"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      # upgrade npm version in package.json to the tag used in the release.
+      - run: pnpm version ${{ github.event.release.tag_name }}
+
+      - run: pnpm build
       - run: pnpm test
 
       - name: '🚀 Publish'
-        run: pnpm publish --ignore-scripts --access public
+        run: pnpm publish --ignore-scripts --access public  --tag ${{ github.event.release.target_commitish }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # push the version changes to GitHub
+      - run: git push
+        env:
+          # The secret is passed automatically. Nothing to configure.
+          github-token: ${{ secrets.GITHUB_TOKEN }}
