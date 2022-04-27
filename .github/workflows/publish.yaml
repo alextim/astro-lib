@@ -36,12 +36,21 @@ jobs:
         with:
           node-version: '16'
 
-      - run: pnpm ci --ignore-scripts
-      - run: pnpm run build --if-present
-        name: Build
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - name: '🔧 setup pnpm'
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: latest
+          run_install: true
+
       - run: pnpm test
-        env:
-          CI: true
 
   publish:
     if: github.ref == 'refs/heads/main'
