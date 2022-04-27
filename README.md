@@ -13,7 +13,7 @@ For Astro project you usually create the _robots.txt_ in a text editor and place
 In that case you must manually synchronize `site` option in _astro.config.*_ with `Sitemap:` record in _robots.txt_.  
 It brakes DRY principle.  
 
-Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the **<head>** section of pages or `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
+Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
 Again you do it manually in two separate places.
 
 **astro-robots-txt** could help in both two cases.
