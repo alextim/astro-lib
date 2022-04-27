@@ -5,13 +5,16 @@ This **[Astro integration][astro-integration]** generates a _robots.txt_ for you
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Build Status](https://img.shields.io/github/workflow/status/alextim/astro-robots-txt/publish)
 
 ------
-The **robots.txt** file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
+The _robots.txt_ file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
 
 ## Why astro-robots-txt?
 
 For Astro project you usually create the _robots.txt_ in a text editor and place it to the `public/` directory.
-In that case you must manually synchronize `site` option in _astro.config.*_ with `Sitemap:` record in _robots.txt_. It brakes DRY principle.  
-Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the _<head>_ section of pages or `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_. Again you do it manually in two separate places.
+In that case you must manually synchronize `site` option in _astro.config.*_ with `Sitemap:` record in _robots.txt_.  
+It brakes DRY principle.  
+
+Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the **<head>** section of pages or `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
+Again you do it manually in two separate places.
 
 **astro-robots-txt** could help in both two cases.
 
