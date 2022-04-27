@@ -141,11 +141,11 @@ export default defineConfig({
 
 :exclamation: Important Notes
 
-Only official "@astrojs/\*" integrations are currently supported.  
-To enable 3rd-party integrations, use the "--experimental-integrations" flag.  
-Breaking changes may occur in this API before Astro v1.0 is released.
+Only official "@astrojs/\*" integrations are currently supported by Astro at present moment.  
 
-Use the following to build your Astro site:
+To enable **astro-robots-txt** integrations working, use the `--experimental-integrations` flag during build.  
+
+Use the following command to build your Astro site:
 
 ```sh
 astro build --experimental-integrations
