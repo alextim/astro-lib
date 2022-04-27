@@ -8,7 +8,7 @@ importers:
       '@types/node': ^17.0.29
       '@typescript-eslint/eslint-plugin': ^5.21.0
       '@typescript-eslint/parser': ^5.21.0
-      astro: ^1.0.0-beta.18
+      astro: ^1.0.0-beta.19
       eslint: ^8.14.0
       eslint-config-airbnb-base: ^15.0.0
       eslint-config-airbnb-typescript: ^17.0.0
@@ -25,7 +25,7 @@ importers:
       '@types/node': 17.0.29
       '@typescript-eslint/eslint-plugin': 5.21.0_829e74f28e9c9eb05edda582d47d45b8
       '@typescript-eslint/parser': 5.21.0_eslint@8.14.0+typescript@4.6.3
-      astro: 1.0.0-beta.18
+      astro: 1.0.0-beta.19
       eslint: 8.14.0
       eslint-config-airbnb-base: 15.0.0_662e1b2e8ef3f6aa5d22c3f7cd670612
       eslint-config-airbnb-typescript: 17.0.0_88b0eb2dbdd8a2ae89ac4fc8a3dd4354
@@ -40,10 +40,10 @@ importers:
 
   demo:
     specifiers:
-      astro: ^1.0.0-beta.18
+      astro: ^1.0.0-beta.19
       astro-robots-txt: workspace:*
     devDependencies:
-      astro: 1.0.0-beta.18
+      astro: 1.0.0-beta.19
       astro-robots-txt: link:..
 
 packages:
@@ -1226,8 +1226,8 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /astro/1.0.0-beta.18:
-    resolution: {integrity: sha512-ttrJDf20s3jd1SrHvv8vJ6tkjrhNylHGpsmDOuMy36EMk5fmoL5NOtXzoex7FevwMfmQ90+mOOYst2TNnOjScA==}
+  /astro/1.0.0-beta.19:
+    resolution: {integrity: sha512-CXw4KDIAJdQG1ofDD+gDjp+Pb7yKjcU/bWm8+bDipRzlbZ8V2P0I3LScFd9eRgZ54Sz3AjEYR/WClT0n6aeJKg==}
     engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
