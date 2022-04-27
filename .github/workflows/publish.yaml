@@ -34,7 +34,8 @@ jobs:
       - name: '🔧 setup node'
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Cache pnpm modules
         uses: actions/cache@v3
@@ -51,19 +52,6 @@ jobs:
           run_install: true
 
       - run: pnpm test
-
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: '☁️ checkout repository'
-        uses: actions/checkout@v3
-
-      - name: '🔧 setup node'
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: '🚀 Publish'
         run: pnpm publish --ignore-scripts --access public
