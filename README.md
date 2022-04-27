@@ -1,4 +1,4 @@
-# astro-robots-txt 🗺
+# astro-robots-txt
 
 This **[Astro integration][astro-integration]** generates a robots.txt for your Astro project during build.
 
@@ -7,7 +7,16 @@ This **[Astro integration][astro-integration]** generates a robots.txt for your 
 ------
 The **robots.txt** file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
 
+## Why astro-robots-txt?
+
+In Astro project you usually create `robots.txt` in text editor and place it to the `public/` directory.
+In that case you must manually synchronize `site` option in `astro.config.*` with `Sitemap:` record in `robots.txt`. It brakes DRY principle.  
+Sometimes, especially during development, it's needed prohibit site indexing. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or `X-Robots-Tag:noindex` in HTTP header response, add lines `User-agent: *` and `Disallow: \` in `robots.txt`. Again you do it manually in two separate places.
+
+**astro-robots-txt** helps to solve both two problems.
+
 ------
+
 ## Installation
 
 If you run into any hiccups, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-robots-txt/issues).
