@@ -3,13 +3,14 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    'jest/globals': true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'jest', 'prettier'],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'airbnb-base',
@@ -25,7 +26,6 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
 
-    '@typescript-eslint/no-var-requires': 0,
     'prettier/prettier': 'error',
   },
   ignorePatterns: ['.prettierrc.cjs', '.eslintrc.cjs', 'astro.config.mjs'],

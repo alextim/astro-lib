@@ -23,9 +23,6 @@ pnpm-debug.log
 .pnpm-store
 .pnpm-store/
 
-# Local Netlify folder
-.netlify
-
 
 
 

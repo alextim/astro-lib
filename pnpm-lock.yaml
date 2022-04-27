@@ -14,6 +14,7 @@ importers:
       eslint-config-airbnb-typescript: ^17.0.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-import: ^2.26.0
+      eslint-plugin-jest: ^26.1.5
       eslint-plugin-prettier: ^4.0.0
       jest: 27.5.1
       prettier: ^2.6.2
@@ -30,6 +31,7 @@ importers:
       eslint-config-airbnb-typescript: 17.0.0_88b0eb2dbdd8a2ae89ac4fc8a3dd4354
       eslint-config-prettier: 8.5.0_eslint@8.14.0
       eslint-plugin-import: 2.26.0_eslint@8.14.0
+      eslint-plugin-jest: 26.1.5_72bfbe73153672dd84de82801f95c66a
       eslint-plugin-prettier: 4.0.0_665eb419c9d7860ca0c224f7f6dcdace
       jest: 27.5.1
       prettier: 2.6.2
@@ -38,10 +40,10 @@ importers:
 
   demo:
     specifiers:
-      astro: ^1.0.0-beta.17
+      astro: ^1.0.0-beta.18
       astro-robots-txt: workspace:*
     devDependencies:
-      astro: 1.0.0-beta.17
+      astro: 1.0.0-beta.18
       astro-robots-txt: link:..
 
 packages:
@@ -737,27 +739,11 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
-  /@proload/core/0.2.2:
-    resolution: {integrity: sha512-HYQEblYXIpW77kvGyW4penEl9D9e9MouPhTqVaDz9+QVFliYjsq18inTfnfTa81s3oraPVtTk60tqCWOf2fKGQ==}
-    dependencies:
-      deepmerge: 4.2.2
-      escalade: 3.1.1
-    dev: true
-
   /@proload/core/0.3.2:
     resolution: {integrity: sha512-4ga4HpS0ieVYWVMS+F62W++6SNACBu0lkw8snw3tEdH6AeqZu8i8262n3I81jWAWXVcg3sMfhb+kBexrfGrTUQ==}
     dependencies:
       deepmerge: 4.2.2
       escalade: 3.1.1
-    dev: true
-
-  /@proload/plugin-tsm/0.1.1_@proload+core@0.2.2:
-    resolution: {integrity: sha512-qfGegg6I3YBCZDjYR9xb41MTc2EfL0sQQmw49Z/yi9OstIpUa/67MBy4AuNhoyG9FuOXia9gPoeBk5pGnBOGtA==}
-    peerDependencies:
-      '@proload/core': ^0.2.1
-    dependencies:
-      '@proload/core': 0.2.2
-      tsm: 2.2.1
     dev: true
 
   /@proload/plugin-tsm/0.2.1_@proload+core@0.3.2:
@@ -1238,77 +1224,6 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       tslib: 2.4.0
-    dev: true
-
-  /astro/1.0.0-beta.17:
-    resolution: {integrity: sha512-CpPJVBiuz4twPH4XgabEpj3py2YMhPnrIxrduJZzSY5NuVs+K7h23wq1umbDZnIY67pRFaPZZtdx0YqKajIXHw==}
-    engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
-    hasBin: true
-    dependencies:
-      '@astrojs/compiler': 0.14.2
-      '@astrojs/language-server': 0.13.4
-      '@astrojs/markdown-remark': 0.9.2
-      '@astrojs/prism': 0.4.1
-      '@astrojs/webapi': 0.11.1
-      '@babel/core': 7.17.9
-      '@babel/generator': 7.17.9
-      '@babel/parser': 7.17.9
-      '@babel/traverse': 7.17.9
-      '@proload/core': 0.2.2
-      '@proload/plugin-tsm': 0.1.1_@proload+core@0.2.2
-      ast-types: 0.14.2
-      boxen: 6.2.1
-      ci-info: 3.3.0
-      common-ancestor-path: 1.0.1
-      debug: 4.3.4
-      diff: 5.0.0
-      eol: 0.9.1
-      es-module-lexer: 0.10.5
-      esbuild: 0.14.38
-      estree-walker: 3.0.1
-      execa: 6.1.0
-      fast-glob: 3.2.11
-      fast-xml-parser: 4.0.7
-      gray-matter: 4.0.3
-      html-entities: 2.3.3
-      html-escaper: 3.0.3
-      htmlparser2: 7.2.0
-      kleur: 4.1.4
-      magic-string: 0.25.9
-      micromorph: 0.1.2
-      mime: 3.0.0
-      ora: 6.1.0
-      path-browserify: 1.0.1
-      path-to-regexp: 6.2.0
-      postcss: 8.4.12
-      postcss-load-config: 3.1.4_postcss@8.4.12
-      preferred-pm: 3.0.3
-      prismjs: 1.28.0
-      prompts: 2.4.2
-      recast: 0.20.5
-      rehype-slug: 5.0.1
-      resolve: 1.22.0
-      rollup: 2.70.2
-      semver: 7.3.7
-      serialize-javascript: 6.0.0
-      shiki: 0.10.1
-      shorthash: 0.0.2
-      sirv: 2.0.2
-      slash: 4.0.0
-      sourcemap-codec: 1.4.8
-      string-width: 5.1.2
-      strip-ansi: 7.0.1
-      supports-esm: 1.0.0
-      tsconfig-resolver: 3.0.1
-      vite: 2.9.6
-      yargs-parser: 21.0.1
-      zod: 3.14.4
-    transitivePeerDependencies:
-      - less
-      - sass
-      - stylus
-      - supports-color
-      - ts-node
     dev: true
 
   /astro/1.0.0-beta.18:
@@ -2316,6 +2231,28 @@ packages:
       object.values: 1.1.5
       resolve: 1.22.0
       tsconfig-paths: 3.14.1
+    dev: true
+
+  /eslint-plugin-jest/26.1.5_72bfbe73153672dd84de82801f95c66a:
+    resolution: {integrity: sha512-su89aDuljL9bTjEufTXmKUMSFe2kZUL9bi7+woq+C2ukHZordhtfPm4Vg+tdioHBaKf8v3/FXW9uV0ksqhYGFw==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': ^5.0.0
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      jest: '*'
+    peerDependenciesMeta:
+      '@typescript-eslint/eslint-plugin':
+        optional: true
+      jest:
+        optional: true
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 5.21.0_829e74f28e9c9eb05edda582d47d45b8
+      '@typescript-eslint/utils': 5.21.0_eslint@8.14.0+typescript@4.6.3
+      eslint: 8.14.0
+      jest: 27.5.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /eslint-plugin-prettier/4.0.0_665eb419c9d7860ca0c224f7f6dcdace:

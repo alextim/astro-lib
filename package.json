@@ -30,12 +30,8 @@
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.ts",
-  "main": "dist/index.js",
   "files": [
     "dist/",
-    "dist/index.js",
-    "dist/index.js.map",
-    "dist/index.d.ts",
     "README.md"
   ],
   "scripts": {
@@ -48,7 +44,7 @@
     "format": "prettier -w  .",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix --ext .ts",
-    "ncu": "ncu -u -x jest",
+    "ncu": "ncu -u --deep -x jest",
     "test": "jest"
   },
   "devDependencies": {
@@ -62,6 +58,7 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
     "prettier": "^2.6.2",
