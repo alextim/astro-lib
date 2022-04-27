@@ -156,7 +156,8 @@ astro build --experimental-integrations
 
 [astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
 
-Inspirations:
+
+**Inspirations:**
 
 - [gatsby-plugin-robots-txt](https://github.com/mdreizin/gatsby-plugin-robots-txt)
 - [is-valid-hostname](https://github.com/miguelmota/is-valid-hostname)
