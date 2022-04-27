@@ -31,7 +31,7 @@
   },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
+    "dist/*",
     "README.md"
   ],
   "scripts": {
