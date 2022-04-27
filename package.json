@@ -1,6 +1,6 @@
 {
   "name": "astro-robots-txt",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Generate a robots.txt for Astro",
   "keywords": [
     "astro",
@@ -30,8 +30,11 @@
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.ts",
+
   "files": [
-    "dist/*",
+    "/dist/index.js",
+    "/dist/index.js.map",
+    "/dist/index.d.ts",
     "README.md"
   ],
   "scripts": {
