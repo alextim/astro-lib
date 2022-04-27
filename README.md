@@ -1,6 +1,6 @@
 # astro-robots-txt
 
-This **[Astro integration][astro-integration]** generates a robots.txt for your Astro project during build.
+This **[Astro integration][astro-integration]** generates a _robots.txt_ for your Astro project during build.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Build Status](https://img.shields.io/github/workflow/status/alextim/astro-robots-txt/publish)
 
@@ -9,9 +9,9 @@ The **robots.txt** file informs search engines which pages on your website shoul
 
 ## Why astro-robots-txt?
 
-For Astro project you usually create the **robots.txt** in a text editor and place it to the `public/` directory.
-In that case you must manually synchronize `site` option in __astro.config.*__ with `Sitemap:` record in **robots.txt**. It brakes DRY principle.  
-Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the **<head>** section of pages or `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to **robots.txt**. Again you do it manually in two separate places.
+For Astro project you usually create the _robots.txt_ in a text editor and place it to the `public/` directory.
+In that case you must manually synchronize `site` option in _astro.config.*_ with `Sitemap:` record in _robots.txt_. It brakes DRY principle.  
+Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the _<head>_ section of pages or `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_. Again you do it manually in two separate places.
 
 **astro-robots-txt** could help in both two cases.
 
@@ -23,7 +23,7 @@ If you run into any hiccups, [feel free to log an issue on my GitHub](https://gi
 
 ### Install dependencies manually
 
-First, install the `astro-robots-txt` integration like so:
+First, install the **astro-robots-txt** integration like so:
 
 ```sh
 #npm
@@ -36,7 +36,7 @@ yarn add -D astro-robots-txt
 pnpm add -D astro-robots-txt
 ```
 
-Then, apply this integration to your `astro.config.*` file using the `integrations` property:
+Then, apply this integration to your _astro.config.*_ file using the `integrations` property:
 
 **astro.config.mjs**
 
@@ -52,7 +52,7 @@ export default defineConfig({
 
 ## Getting started
 
-`astro-robots-txt` requires a deployment / site URL for generation. Add your site's URL under your `astro.config.*` using the `site` property:
+`astro-robots-txt` requires a deployment / site URL for generation. Add your site's URL under your _astro.config.*_ using the `site` property:
 
 **astro.config.mjs**
 
@@ -67,9 +67,9 @@ export default defineConfig({
 });
 ```
 
-Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your **robots.txt** under `dist/robots.txt`!
+Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _robots.txt_ under `dist/robots.txt`!
 
-The **robots.txt**'s content will be
+The _robots.txt_'s content will be
 
 ```text
 User-agent: *
@@ -101,7 +101,7 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 | `crawlDelay` |       `Number`        |    No    |                                                 |
 | `cleanParam` | `String` / `String[]` |    No    |                                                 |
 
-Sample of **astro.config.mjs**
+**Sample of _astro.config.mjs_**
 
 ```js
 import { defineConfig } from 'astro/config';
@@ -141,7 +141,7 @@ export default defineConfig({
 
 :exclamation: Important Notes
 
-Only official "@astrojs/\*" integrations are currently supported by Astro at present moment.  
+Only official **@astrojs/\*** integrations are currently supported by Astro at present moment.  
 
 To enable **astro-robots-txt** integrations working, use the `--experimental-integrations` flag during build.  
 
