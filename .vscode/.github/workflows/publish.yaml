@@ -2,21 +2,39 @@ name: publish
 
 on:
   push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+    branches:
+      - main
+    #tags:
+    #  - 'v[0-9]+.[0-9]+.[0-9]+*'
   pull_request:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+    branches:
+      - main
+    #tags:
+    #  - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+concurrency:
+  # Ensures that only one deploy task per branch/environment will run at a time.
+  group: environment-${{ github.ref }}
+
+  # cancel any in-progress job or run
+  # group: ${{ github.head_ref }}
+
+  # Automatically cancel in-progress actions on the same branch
+  # group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build on Node.js
+      - name: '☁️ checkout repository'
+        uses: actions/checkout@v3
+
+      - name: '🔧 setup node'
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: '16'
+
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
         name: Build
@@ -29,12 +47,16 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: '☁️ checkout repository'
+        uses: actions/checkout@v3
+
+      - name: '🔧 setup node'
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: '16'
           registry-url: 'https://registry.npmjs.org'
-      - name: Publish
+
+      - name: '🚀 Publish'
         run: npm publish --ignore-scripts --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

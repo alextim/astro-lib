@@ -35,10 +35,10 @@
     "README.md"
   ],
   "scripts": {
-    "build:ts": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json",
     "dev": "astro --root demo dev",
     "start": "astro --root demo dev",
-    "build": "astro --root demo build --experimental-integrations",
+    "build:demo": "astro --root demo build --experimental-integrations",
     "preview": "astro --root demo preview",
     "i:all": "pnpm recursive install",
     "format": "prettier -w  .",
