@@ -2,7 +2,7 @@
 
 This **[Astro integration][astro-integration]** generates a _robots.txt_ for your Astro project during build.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ------
 The _robots.txt_ file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
@@ -16,7 +16,7 @@ It brakes DRY principle.
 Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or add `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
 Again you do it manually in two separate places.
 
-**astro-robots-txt** could help in both two cases.
+**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See sample [demo](https://github.com/alextim/astro-robots-txt/tree/main/demo).
 
 ------
 
@@ -147,7 +147,7 @@ export default defineConfig({
 
 :exclamation: Important Notes
 
-Only official **@astrojs/\*** integrations are currently supported by Astro at present moment.  
+Only official **@astrojs/\*** integrations are currently supported by Astro at the present moment.  
 
 To make **astro-robots-txt** integrations working, use the `--experimental-integrations` flag during build.  
 
@@ -158,7 +158,6 @@ astro build --experimental-integrations
 ```
 
 [astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
-
 
 **Inspirations:**
 

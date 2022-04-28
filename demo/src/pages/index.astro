@@ -1,10 +1,11 @@
 ---
-
+import config from '../../site.config.mjs';
 ---
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
+    {config.preventIndexing && <meta name="robots" content="noindex, nofollow">}
 		<title>Astro</title>
 	</head>
 	<body>
