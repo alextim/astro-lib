@@ -58,7 +58,8 @@ jobs:
       - run: pnpm test
 
       - name: '🚀 Publish'
-        run: pnpm publish --ignore-scripts --access public  --tag ${{ github.event.release.target_commitish }}
+        run: pnpm publish --ignore-scripts --access public  --tag latest
+        # ${{ github.event.release.target_commitish }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
