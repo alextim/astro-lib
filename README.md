@@ -115,7 +115,10 @@ export default defineConfig({
   integrations: [
     robotsTxt({
       host: 'example.com',
-      sitemap: ['https://example.com/main-sitemap.xml', 'https://example.com/images-sitemap.xml'],
+      sitemap: [
+        'https://example.com/main-sitemap.xml', 
+        'https://example.com/images-sitemap.xml'
+      ],
       policy: [
         {
           userAgent: 'Googlebot',
@@ -146,7 +149,7 @@ export default defineConfig({
 
 Only official **@astrojs/\*** integrations are currently supported by Astro at present moment.  
 
-To enable **astro-robots-txt** integrations working, use the `--experimental-integrations` flag during build.  
+To make **astro-robots-txt** integrations working, use the `--experimental-integrations` flag during build.  
 
 Use the following command to build your Astro site:
 
@@ -160,4 +163,5 @@ astro build --experimental-integrations
 **Inspirations:**
 
 - [gatsby-plugin-robots-txt](https://github.com/mdreizin/gatsby-plugin-robots-txt)
+- [generate-robotstxt](https://github.com/itgalaxy/generate-robotstxt)
 - [is-valid-hostname](https://github.com/miguelmota/is-valid-hostname)
