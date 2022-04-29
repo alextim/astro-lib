@@ -39,38 +39,36 @@ yarn add -D astro-robots-txt
 pnpm add -D astro-robots-txt
 ```
 
-Then, apply this integration to your _astro.config.*_ file using the `integrations` property:
-
-**astro.config.mjs**
-
-```js
-import { defineConfig } from 'astro/config';
-import robotsTxt from 'astro-robots-txt';
-
-export default defineConfig({
-  // ...
-  integrations: [robotsTxt()],
-});
-```
-
 ## Getting started
 
-`astro-robots-txt` requires a deployment / site URL for generation. Add your site's URL under your _astro.config.*_ using the `site` property:
+The `astro-robots-txt` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.*_ using the `site` property.  
+
+:exclamation: Provide the `experimental` property to your _astro.config.*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true`.  
+
+Then, apply this integration to your _astro.config.*_ file using the `integrations` property.  
+
 
 **astro.config.mjs**
 
 ```js
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import robotsTxt from 'astro-robots-txt';
 
 export default defineConfig({
   // ...
   site: 'https://example.com',
+  // Important!
+  // Only official '@astrojs/*' integrations are currently supported by Astro. 
+  // Add 'experimental.integrations: true' to make 'astro-robots-txt' working with 'astro build' command
+  experimental: {
+    integrations: true,
+  },  
   integrations: [robotsTxt()],
 });
 ```
 
-Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build --experimental-integrations` command. You should find your _robots.txt_ under `dist/robots.txt`!
+Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _robots.txt_ under `dist/robots.txt`!
 
 The _robots.txt_'s content will be
 
@@ -107,11 +105,15 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 **Sample of _astro.config.mjs_**
 
 ```js
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import robotsTxt from 'astro-robots-txt';
 
 export default defineConfig({
   site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },  
   integrations: [
     robotsTxt({
       host: 'example.com',
@@ -147,11 +149,23 @@ export default defineConfig({
 
 :exclamation: Important Notes
 
-Only official **@astrojs/\*** integrations are currently supported by Astro at the present moment.  
+Only official **@astrojs/\*** integrations are currently supported by Astro.  
 
-To make **astro-robots-txt** integrations working, use the `--experimental-integrations` flag during build.  
+There are two possibilities to make **astro-robots-txt** integration working with current version of Astro.  
 
-Use the following command to build your Astro site:
+Set the `experimental.integrations` option to `true` in _astro.config.*_.
+
+```js
+// astro.config.mjs
+export default defineConfig({
+  // ...
+  experimental: {
+    integrations: true,
+  },  
+});
+```
+
+Use the `--experimental-integrations` flag for build command.  
 
 ```sh
 astro build --experimental-integrations
