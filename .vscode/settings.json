@@ -12,7 +12,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "cSpell.words": ["Astro", "vite", "pnpm"],
+  "cSpell.words": ["Astro", "vite", "pnpm", "astrojs", "googlebot", "robotstxt"],
   "cSpell.language": "en,ru",
   "prettier.documentSelectors": ["**/*.ts"]
 }

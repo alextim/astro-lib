@@ -47,7 +47,6 @@ The `astro-robots-txt` integration requires a deployment / site URL for generati
 
 Then, apply this integration to your _astro.config.*_ file using the `integrations` property.  
 
-
 **astro.config.mjs**
 
 ```js
