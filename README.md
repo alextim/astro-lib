@@ -59,7 +59,8 @@ export default defineConfig({
   site: 'https://example.com',
   // Important!
   // Only official '@astrojs/*' integrations are currently supported by Astro. 
-  // Add 'experimental.integrations: true' to make 'astro-robots-txt' working with 'astro build' command.
+  // Add 'experimental.integrations: true' to make 'astro-robots-txt' working
+  // with 'astro build' command.
   experimental: {
     integrations: true,
   },  
@@ -141,6 +142,28 @@ export default defineConfig({
           cleanParam: 'ref /articles/',
         },
       ],
+    }),
+  ],
+});
+```
+
+if you want your _robots.txt_ without `Sitemap: ...` record please set `sitemap` option to `false`.
+
+```js
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import robotsTxt from 'astro-robots-txt';
+
+export default defineConfig({
+  // ...
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },    
+  integrations: [
+    robotsTxt({
+      sitemap: false,
+      // ...
     }),
   ],
 });
