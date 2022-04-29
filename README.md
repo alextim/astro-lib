@@ -60,7 +60,7 @@ export default defineConfig({
   site: 'https://example.com',
   // Important!
   // Only official '@astrojs/*' integrations are currently supported by Astro. 
-  // Add 'experimental.integrations: true' to make 'astro-robots-txt' working with 'astro build' command
+  // Add 'experimental.integrations: true' to make 'astro-robots-txt' working with 'astro build' command.
   experimental: {
     integrations: true,
   },  
@@ -153,7 +153,7 @@ Only official **@astrojs/\*** integrations are currently supported by Astro.
 
 There are two possibilities to make **astro-robots-txt** integration working with current version of Astro.  
 
-Set the `experimental.integrations` option to `true` in _astro.config.*_.
+Set the `experimental.integrations` option to `true` in your _astro.config.*_.
 
 ```js
 // astro.config.mjs
@@ -165,7 +165,7 @@ export default defineConfig({
 });
 ```
 
-Use the `--experimental-integrations` flag for build command.  
+Or use the `--experimental-integrations` flag for build command.  
 
 ```sh
 astro build --experimental-integrations
