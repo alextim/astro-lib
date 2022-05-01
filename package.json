@@ -44,7 +44,6 @@
     "format": "prettier -w  .",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix --ext .ts",
-    "ncu": "ncu -u --deep -x jest",
     "test": "jest"
   },
   "devDependencies": {
@@ -52,7 +51,7 @@
     "@types/node": "^17.0.30",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
-    "astro": "^1.0.0-beta.19",
+    "astro": "^1.0.0-beta.20",
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",

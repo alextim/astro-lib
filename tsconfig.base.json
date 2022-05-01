@@ -1,5 +1,5 @@
 {
-  "include": ["src", "__tests__"],
+  // "include": ["src", "__tests__"],
   "compilerOptions": {
     "module": "ES2020",
     "outDir": "./dist",
@@ -11,6 +11,7 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
   }
 }

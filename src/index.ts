@@ -1,12 +1,40 @@
 import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
+import pkg from '../package.json';
 
-const logError = (s: string) => {
-  // eslint-disable-next-line no-console
-  console.info("Couldn't create robots.txt");
-  // eslint-disable-next-line no-console
-  console.info(s, '\n');
-};
+class Logger {
+  private colors = {
+    reset: '\x1b[0m',
+    fg: {
+      red: '\x1b[31m',
+      green: '\x1b[32m',
+      yellow: '\x1b[33m',
+    },
+  } as const;
+
+  private log(msg: string, prefix: string = '') {
+    // eslint-disable-next-line no-console
+    console.log(`%s${pkg.name}: ${msg}%s\n`, prefix, prefix ? this.colors.reset : '');
+  }
+
+  info(msg: string) {
+    this.log(msg);
+  }
+
+  success(msg: string) {
+    this.log(msg, this.colors.fg.green);
+  }
+
+  warn(msg: string) {
+    this.log(`Skipped!\n${msg}`, this.colors.fg.yellow);
+  }
+
+  error(msg: string) {
+    this.log(`Failed to create 'robots.txt'!\n${msg}`, this.colors.fg.red);
+  }
+}
+
+const logger = new Logger();
 
 const capitaliseFirstLetter = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -92,7 +120,7 @@ const isValidUrl = (s: any) => {
 
 const isValidSitemap = (sitemap: string | string[] | boolean) => {
   if (typeof sitemap !== 'string' && typeof sitemap !== 'boolean' && !Array.isArray(sitemap)) {
-    logError('The robots.txt integration requires `sitemap` option to be string, array of strings or boolean.');
+    logger.warn('The robots.txt integration requires `sitemap` option to be string, array of strings or boolean.');
     return false;
   }
   if (!sitemap) {
@@ -100,7 +128,7 @@ const isValidSitemap = (sitemap: string | string[] | boolean) => {
   }
   if (typeof sitemap === 'string') {
     if (!isValidUrl(sitemap)) {
-      logError('Option `sitemap` contains not valid url.');
+      logger.warn('Option `sitemap` contains not valid url.');
       return false;
     }
   } else if (Array.isArray(sitemap)) {
@@ -154,11 +182,11 @@ const isValidHostname = (value: string) => {
 
 const isValidCleanParamItem = (item: any) => {
   if (typeof item !== 'string') {
-    logError('String in `cleanParam` option should be a string');
+    logger.warn('String in `cleanParam` option should be a string.');
     return false;
   }
   if (item.length > 500) {
-    logError('String in `cleanParam` option should have no more than 500 characters');
+    logger.warn('String in `cleanParam` option should have no more than 500 characters.');
     return false;
   }
   return true;
@@ -166,27 +194,27 @@ const isValidCleanParamItem = (item: any) => {
 
 const isValidPolicy = (policy: PolicyItem[]) => {
   if (!policy) {
-    logError('Options `policy` should be define');
+    logger.warn('Options `policy` should be defined.');
     return false;
   }
   if (!Array.isArray(policy)) {
-    logError('Options `policy` must be array');
+    logger.warn('Options `policy` must be array.');
     return false;
   }
   if (policy.length === 0) {
-    logError('Options `policy` must be not empty array');
+    logger.warn('Options `policy` must be not empty array.');
     return false;
   }
 
   // eslint-disable-next-line no-restricted-syntax
   for (const item of policy) {
     if (!item.userAgent || item.userAgent.length === 0) {
-      logError('Each `policy` should have a single string `userAgent` option');
+      logger.warn('Each `policy` should have a single string `userAgent` option.');
       return false;
     }
 
     if (item.crawlDelay && typeof item.crawlDelay !== 'number' && !Number.isFinite(item.crawlDelay)) {
-      logError('Option `crawlDelay` must be an integer or a float');
+      logger.warn('Option `crawlDelay` must be an integer or a float.');
       return false;
     }
 
@@ -203,7 +231,7 @@ const isValidPolicy = (policy: PolicyItem[]) => {
           return false;
         }
       } else {
-        logError('Option `cleanParam` should be a string or an array');
+        logger.warn('Option `cleanParam` should be a string or an array.');
         return false;
       }
     }
@@ -241,12 +269,12 @@ export const getRobotsTxtContent = (
   { host = '', sitemap = true, policy = [{ allow: '/', userAgent: '*' }] }: RobotsTxtOptions,
 ) => {
   if (!site) {
-    logError('site is required in astro.config.mjs');
+    logger.warn('`site` property is required in `astro.config.mjs`.');
     return undefined;
   }
 
   if (host && !isValidHostname(host)) {
-    logError('Option `host` does not contain correct host');
+    logger.warn('Option `host` does not contain correct host.');
     return undefined;
   }
 
@@ -273,9 +301,12 @@ const createPlugin = (pluginOptions = defaultOptions): AstroIntegration => {
      * To enable 3rd-party integrations, use the "--experimental-integrations" flag.
      * Breaking changes may occur in this API before Astro v1.0 is released.
      *
+     * We've been using the 'name' property from 'package.json', ie 'astro-robots-txt'
+     *
+     * Official name should be '@astrojs/robotstxt' :)
      */
-    // name: '@astrojs/robots',
-    name: 'astro-robots-txt',
+
+    name: pkg.name,
     hooks: {
       'astro:config:done': async ({ config: _config }) => {
         config = _config;
@@ -289,10 +320,9 @@ const createPlugin = (pluginOptions = defaultOptions): AstroIntegration => {
         try {
           const url = new URL('robots.txt', dir);
           fs.writeFileSync(url, robotsTxtContent);
-          // eslint-disable-next-line no-console
-          console.info('`robots.txt` is created\n');
+          logger.success('`robots.txt` is created.');
         } catch (err) {
-          logError((err as any).toString());
+          logger.error((err as any).toString());
         }
       },
     },
