@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
-import pkg from '../package.json';
+
+const packageName = 'astro-robots.txt';
 
 class Logger {
   private colors = {
@@ -14,7 +15,7 @@ class Logger {
 
   private log(msg: string, prefix: string = '') {
     // eslint-disable-next-line no-console
-    console.log(`%s${pkg.name}: ${msg}%s\n`, prefix, prefix ? this.colors.reset : '');
+    console.log(`%s${packageName}: ${msg}%s\n`, prefix, prefix ? this.colors.reset : '');
   }
 
   info(msg: string) {
@@ -306,7 +307,7 @@ const createPlugin = (pluginOptions = defaultOptions): AstroIntegration => {
      * Official name should be '@astrojs/robotstxt' :)
      */
 
-    name: pkg.name,
+    name: packageName,
     hooks: {
       'astro:config:done': async ({ config: _config }) => {
         config = _config;
