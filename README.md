@@ -1,5 +1,5 @@
 <a href="https://war.ukraine.ua/">
-  <img src="https://github.com/alextim/help-ukraine-win-flag/blob/master/stop-russian-agressian-help-ukraine-now-x1.png?raw=true" alt="Help Ukraine win!">
+  <img src="https://github.com/alextim/help-ukraine-win-flag/blob/master/stop-russian-agressian-help-ukraine-now.png?raw=true" alt="Help Ukraine win!">
 </a>
 
 # astro-robots-txt
