@@ -1,7 +1,9 @@
-<a href="https://war.ukraine.ua/" style="display: grid; place-items: center; width: 30em; height: 19em; border: 1px solid #999; margin: 4em; box-shadow: 1px 1px 1px #ccc; background: linear-gradient(-180deg, #0066cc 50%, #ffcc00 50%);">
+<a href="https://war.ukraine.ua/">
+<div style="display: grid; place-items: center; width: 30em; height: 19em; border: 1px solid #999; margin: 4em; box-shadow: 1px 1px 1px #ccc; background: linear-gradient(-180deg, #0066cc 50%, #ffcc00 50%);">
   <div style="color: white; font-family: Arial, sans-serif; text-transform: uppercase; text-shadow: 2px 1px 5px black; font-weight: bold; font-size: 2.5em;">
     Help Ukraine win
   </div>
+</div>  
 </a>
 
 # astro-robots-txt
