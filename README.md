@@ -1,8 +1,14 @@
+<a href="https://war.ukraine.ua/" style="display: grid; place-items: center; width: 30em; height: 19em; border: 1px solid #999; margin: 4em; box-shadow: 1px 1px 1px #ccc; background: linear-gradient(-180deg, #0066cc 50%, #ffcc00 50%);">
+  <div style="color: white; font-family: Arial, sans-serif; text-transform: uppercase; text-shadow: 2px 1px 5px black; font-weight: bold; font-size: 2.5em;">
+    Help Ukraine win
+  </div>
+</a>
+
 # astro-robots-txt
 
 This **[Astro integration][astro-integration]** generates a _robots.txt_ for your Astro project during build.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+![Publish](https://github.com/alextim/astro-robots-txt/actions/workflows/publish.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ------
 The _robots.txt_ file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
@@ -22,22 +28,41 @@ Again you do it manually in two separate places.
 
 ## Installation
 
+There are two ways to add **astro-robots-txt** integration to your Astro project.
+
+### Astro CLI tool
+
+You should run `astro add` command in your project directory. This command after prompt will install required dependencies and apply changes to _astro.config.*_.
+
+```sh
+# Using NPM
+npx astro add astro-robots-txt
+
+# Using Yarn
+yarn astro add astro-robots-txt
+
+# Using PNPM
+pnpx astro add astro-robots-txt
+```
+
 If you run into any hiccups, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-robots-txt/issues).
 
-### Install dependencies
+### Install dependencies manually
 
 First, install the **astro-robots-txt** integration like so:
 
 ```sh
-#npm
+# Using NPM
 npm install --save-dev astro-robots-txt
 
-#yarn
+# Using Yarn
 yarn add -D astro-robots-txt
 
-#pnpm
+# Using PNPM
 pnpm add -D astro-robots-txt
 ```
+
+Then apply this integration to your _astro.config.*_. All details below in **Getting started**.
 
 ## Getting started
 
@@ -87,9 +112,9 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 |   Name    |              Type               |             Default              |                             Description                              |
 | :-------: | :-----------------------------: | :------------------------------: | :------------------------------------------------------------------: |
 |  `host`   |            `String`             |                ``                |                          Host of your site                           |
-| `sitemap` | `Boolean / String` / `String[]` |              `true`              |    Resulting output will be `Sitemap: your-site-url/sitemap.xml`     |
-|           |                                 |                                  |        If `sitemap: false` - no `Sitemap` line in the output         |
-|           |                                 |                                  | You could use for `sitemap` valid url string or array of url strings |
+| `sitemap` | `Boolean / String` / `String[]` |              `true`              |    Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap.xml`     |
+|           |                                 |                                  |        If `sitemap: false` - no `Sitemap` line in the output.         |
+|           |                                 |                                  | You could use for the `sitemap` a valid url string or array of url strings. |
 | `policy`  |           `Policy[]`            | [{ allow: '/', userAgent: '*' }] |                        List of `Policy` rules                        |
 
 ### Policy
@@ -97,8 +122,8 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 |     Name     |         Type          | Required |                   Description                   |
 | :----------: | :-------------------: | :------: | :---------------------------------------------: |
 | `userAgent`  |       `String`        |   Yes    | You must provide name of user agent or wildcard |
-|  `disallow`  | `String` / `String[]` |    No    |                disallowed paths                 |
-|   `allow`    | `String` / `String[]` |    No    |                  allowed paths                  |
+|  `disallow`  | `String` / `String[]` |    No    |                Disallowed paths                 |
+|   `allow`    | `String` / `String[]` |    No    |                  Allowed paths                  |
 | `crawlDelay` |       `Number`        |    No    |                                                 |
 | `cleanParam` | `String` / `String[]` |    No    |                                                 |
 
@@ -147,7 +172,7 @@ export default defineConfig({
 });
 ```
 
-if you want your _robots.txt_ without `Sitemap: ...` record please set `sitemap` option to `false`.
+if you want to get a _robots.txt_ without `Sitemap: ...` record please set the `sitemap` option to `false`.
 
 ```js
 // astro.config.mjs

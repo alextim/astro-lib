@@ -1,4 +1,4 @@
-name: publish
+name: Publish
 # https://github.com/MZanggl/flooent/blob/latest/package.json
 on:
   release:
