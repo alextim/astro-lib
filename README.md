@@ -1,6 +1,7 @@
 <a href="https://war.ukraine.ua/">
   <img src="https://github.com/alextim/help-ukraine-win-flag/blob/master/help-ukraine-win.png?raw=true" alt="Help Ukraine win!">
 </a>
+
 # astro-robots-txt
 
 This **[Astro integration][astro-integration]** generates a _robots.txt_ for your Astro project during build.
