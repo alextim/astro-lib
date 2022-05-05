@@ -25,6 +25,7 @@ module.exports = {
     semi: ['error', 'always'],
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
+    'import/prefer-default-export': 0,
 
     'prettier/prettier': 'error',
   },

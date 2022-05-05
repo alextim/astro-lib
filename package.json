@@ -31,11 +31,12 @@
   },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist/",
-    "README.md"
+    "dist/index.js",
+    "dist/index.d.ts"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node scripts/build.mjs && pnpm run build:declarations",
+    "build:declarations": "tsc -p tsconfig.build.json",
     "dev": "astro --root demo dev",
     "start": "astro --root demo dev",
     "build:demo": "astro --root demo build",
@@ -44,14 +45,16 @@
     "format": "prettier -w  .",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix --ext .ts",
-    "test": "jest"
+    "test": "jest",
+    "publish:dry": "pnpm publish --dry-run"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.30",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
-    "astro": "^1.0.0-beta.20",
+    "@types/jest": "^27.5.0",
+    "@types/node": "^17.0.31",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "astro": "^1.0.0-beta.24",
+    "esbuild": "^0.14.38",
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -59,9 +62,9 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-prettier": "^4.0.0",
-    "jest": "27.5.1",
+    "jest": "28.0.3",
     "prettier": "^2.6.2",
-    "ts-jest": "^27.1.4",
+    "ts-jest": "^28.0.1",
     "typescript": "^4.6.4"
   }
 }
