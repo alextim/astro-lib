@@ -45,8 +45,7 @@
     "format": "prettier -w  .",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix --ext .ts",
-    "test": "jest",
-    "publish:dry": "pnpm publish --dry-run"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/jest": "^27.5.0",
