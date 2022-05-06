@@ -1,8 +1,8 @@
 import type { PolicyItem, RobotsTxtOptions } from '../index';
 
-import { ILogger } from '../utils/logger';
+import { ILogger } from '../utils/Logger';
 import { isValidHostname } from '../utils/isValidHostname';
-import { isValidUrl } from '../utils/isValidUrl';
+import { isValidHttpUrl } from '../utils/isValidHttpUrl';
 import { addLine, generatePoliceItem } from './helpers';
 
 let logger: ILogger;
@@ -34,14 +34,14 @@ const isValidSitemap = (sitemap: string | string[] | boolean) => {
     return true;
   }
   if (typeof sitemap === 'string') {
-    if (!isValidUrl(sitemap)) {
+    if (!isValidHttpUrl(sitemap)) {
       logger.warn('Option `sitemap` contains not valid url.');
       return false;
     }
   } else if (Array.isArray(sitemap)) {
     // eslint-disable-next-line no-restricted-syntax
     for (const item of sitemap) {
-      if (!isValidUrl(item)) {
+      if (!isValidHttpUrl(item)) {
         return false;
       }
     }

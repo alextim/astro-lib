@@ -112,7 +112,7 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 |  `host`   |            `String`             |                ``                |                          Host of your site                           |
 | `sitemap` | `Boolean / String` / `String[]` |              `true`              |    Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap.xml`     |
 |           |                                 |                                  |        If `sitemap: false` - no `Sitemap` line in the output.         |
-|           |                                 |                                  | You could use for the `sitemap` a valid url string or array of url strings. |
+|           |                                 |                                  | You could use for the `sitemap` a valid http url string or array of http url strings. |
 | `policy`  |           `Policy[]`            | [{ allow: '/', userAgent: '*' }] |                        List of `Policy` rules                        |
 
 ### Policy

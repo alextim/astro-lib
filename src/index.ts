@@ -6,7 +6,7 @@ import type { AstroConfig, AstroIntegration } from 'astro';
  */
 import { packageName } from './data/package-name';
 import { getRobotsTxtContent } from './get-robots-txt-content';
-import { Logger } from './utils/logger';
+import { Logger } from './utils/Logger';
 
 export type PolicyItem = {
   userAgent: string;

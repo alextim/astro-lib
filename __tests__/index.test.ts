@@ -1,6 +1,6 @@
 import type { RobotsTxtOptions } from '../src/index';
 import { getRobotsTxtContent } from '../src/get-robots-txt-content';
-import { Logger } from '../src/utils/logger';
+import { Logger } from '../src/utils/Logger';
 
 const logger = new Logger('dummy-astro-robots-txt');
 
