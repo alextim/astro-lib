@@ -3,8 +3,8 @@ export const isValidHttpUrl = (s: any) => {
     return false;
   }
   try {
-    const url = new URL(s);
-    return url.protocol === "http:" || url.protocol === "https:";
+    const { protocol } = new URL(s);
+    return protocol === 'http:' || protocol === 'https:';
   } catch {
     return false;
   }

@@ -6,5 +6,5 @@ The _site.config.mjs_ file exports singe flag named `disableIndexing`.
 
 This flag is used in two places:
 
-- _astro.config.mjs_:  in the **astro-robots-txt** integration options to set a pattern for `disallow` in a _robots.txt_;
-- _index.astro_:  to set the robots meta in the page's `<head>` section.
+- _astro.config.mjs_: in the **astro-robots-txt** integration options to set a pattern for `disallow` in a _robots.txt_;
+- _index.astro_: to set the robots meta in the page's `<head>` section.

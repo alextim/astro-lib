@@ -2,11 +2,16 @@ import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
 
 /**
- * `package-name.ts` is generated during build from `name` property of `package.json`
+ * `package-name.ts` is generated during build from the `name` property of a `package.json`
  */
 import { packageName } from './data/package-name';
-import { getRobotsTxtContent } from './get-robots-txt-content';
+
+import { withOptions } from './withOptions';
 import { Logger } from './utils/Logger';
+import { isOptsValid } from './isOptsValid';
+import { getRobotsTxtContent } from './getRobotsTxtContent';
+
+const logger = new Logger(packageName);
 
 export type PolicyItem = {
   userAgent: string;
@@ -22,20 +27,7 @@ export type RobotsTxtOptions = {
   policy?: PolicyItem[];
 };
 
-const logger = new Logger(packageName);
-
-const defaultOptions: RobotsTxtOptions = {
-  host: '',
-  sitemap: true,
-  policy: [
-    {
-      allow: '/',
-      userAgent: '*',
-    },
-  ],
-};
-
-const createPlugin = (pluginOptions = defaultOptions): AstroIntegration => {
+const createPlugin = (pluginOptions: RobotsTxtOptions = {}): AstroIntegration => {
   let config: AstroConfig;
   return {
     /**
@@ -47,17 +39,21 @@ const createPlugin = (pluginOptions = defaultOptions): AstroIntegration => {
      *
      * Official name should be '@astrojs/robotstxt' :)
      */
-
     name: packageName,
+
     hooks: {
-      'astro:config:done': async ({ config: _config }) => {
-        config = _config;
+      'astro:config:done': async ({ config: cfg }) => {
+        config = cfg;
       },
+
       'astro:build:done': async ({ dir }) => {
-        const robotsTxtContent = getRobotsTxtContent(config.site, pluginOptions, logger);
-        if (!robotsTxtContent) {
+        const opts = withOptions(pluginOptions);
+
+        if (!isOptsValid(config.site, opts, logger)) {
           return;
         }
+
+        const robotsTxtContent = getRobotsTxtContent(config.site!, opts);
 
         try {
           const url = new URL('robots.txt', dir);

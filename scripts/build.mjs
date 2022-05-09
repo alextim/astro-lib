@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const pkgPath = path.join(process.cwd(), 'package.json');
-const pkgContent = fs.readFileSync(pkgPath, 'utf8')
+const pkgContent = fs.readFileSync(pkgPath, 'utf8');
 const { name: packageName, dependencies = {}, peerDependencies = {} } = JSON.parse(pkgContent);
 
 const fileName = 'package-name.ts';
@@ -32,7 +32,7 @@ const config = {
   tsconfig: 'tsconfig.build.json',
 };
 
-esbuild.build(config)
+esbuild
+  .build(config)
   .then(() => console.log('⚡ Done'))
   .catch(() => process.exit(1));
-

@@ -5,7 +5,7 @@ describe('test isValidHttpUrl', () => {
     expect(isValidHttpUrl(undefined)).toBeFalsy();
   });
   it('"", should return false', () => {
-    expect(isValidHttpUrl("")).toBeFalsy();
+    expect(isValidHttpUrl('')).toBeFalsy();
   });
   it('not url = 1, should return false', () => {
     expect(isValidHttpUrl(1)).toBeFalsy();

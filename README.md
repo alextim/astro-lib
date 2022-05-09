@@ -8,21 +8,22 @@ This **[Astro integration][astro-integration]** generates a _robots.txt_ for you
 
 ![Publish](https://github.com/alextim/astro-robots-txt/actions/workflows/publish.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-------
+---
+
 The _robots.txt_ file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
 
 ## Why astro-robots-txt?
 
 For Astro project you usually create the _robots.txt_ in a text editor and place it to the `public/` directory.
-In that case you must manually synchronize `site` option in _astro.config.*_ with `Sitemap:` record in _robots.txt_.  
-It brakes DRY principle.  
+In that case you must manually synchronize `site` option in _astro.config.\*_ with `Sitemap:` record in _robots.txt_.  
+It brakes DRY principle.
 
 Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or add `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
 Again you do it manually in two separate places.
 
 **astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in the demo [repo](https://github.com/alextim/astro-robots-txt/tree/main/demo).
 
-------
+---
 
 ## Installation
 
@@ -30,7 +31,7 @@ There are two ways to add **astro-robots-txt** integration to your Astro project
 
 ### Astro CLI tool
 
-You should run `astro add` command in your project directory. This command after prompt will install required dependencies and apply changes to _astro.config.*_.
+You should run `astro add` command in your project directory. This command after prompt will install required dependencies and apply changes to _astro.config.\*_.
 
 ```sh
 # Using NPM
@@ -60,15 +61,15 @@ yarn add -D astro-robots-txt
 pnpm add -D astro-robots-txt
 ```
 
-Then apply this integration to your _astro.config.*_. All details below in **Getting started**.
+Then apply this integration to your _astro.config.\*_. All details below in **Getting started**.
 
 ## Getting started
 
-The `astro-robots-txt` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.*_ using the `site` property.  
+The `astro-robots-txt` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.\*_ using the `site` property.
 
-:exclamation: Provide the `experimental` property to your _astro.config.*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true`.  
+:exclamation: Provide the `experimental` property to your _astro.config.\*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true`.
 
-Then, apply this integration to your _astro.config.*_ file using the `integrations` property.  
+Then, apply this integration to your _astro.config.\*_ file using the `integrations` property.
 
 **astro.config.mjs**
 
@@ -81,12 +82,12 @@ export default defineConfig({
   // ...
   site: 'https://example.com',
   // Important!
-  // Only official '@astrojs/*' integrations are currently supported by Astro. 
+  // Only official '@astrojs/*' integrations are currently supported by Astro.
   // Add 'experimental.integrations: true' to make 'astro-robots-txt' working
   // with 'astro build' command.
   experimental: {
     integrations: true,
-  },  
+  },
   integrations: [robotsTxt()],
 });
 ```
@@ -107,13 +108,13 @@ You can also check our [Astro Integration Documentation][astro-integration] for 
 
 ## Options
 
-|   Name    |              Type               |             Default              |                             Description                              |
-| :-------: | :-----------------------------: | :------------------------------: | :------------------------------------------------------------------: |
-|  `host`   |            `String`             |                ``                |                          Host of your site                           |
-| `sitemap` | `Boolean / String` / `String[]` |              `true`              |    Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap.xml`     |
-|           |                                 |                                  |        If `sitemap: false` - no `Sitemap` line in the output.         |
-|           |                                 |                                  | You could use for the `sitemap` a valid http url string or array of http url strings. |
-| `policy`  |           `Policy[]`            | [{ allow: '/', userAgent: '*' }] |                        List of `Policy` rules                        |
+|   Name    |              Type               |             Default              |                                          Description                                          |
+| :-------: | :-----------------------------: | :------------------------------: | :-------------------------------------------------------------------------------------------: |
+|  `host`   |            `String`             |                ``                |                                       Host of your site                                       |
+| `sitemap` | `Boolean / String` / `String[]` |              `true`              |        Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap.xml`        |
+|           |                                 |                                  |                    If `sitemap: false` - no `Sitemap` line in the output.                     |
+|           |                                 |                                  | You could use for the `sitemap` a valid **http** url string or array of **http** url strings. |
+| `policy`  |           `Policy[]`            | [{ allow: '/', userAgent: '*' }] |                                    List of `Policy` rules                                     |
 
 ### Policy
 
@@ -136,14 +137,11 @@ export default defineConfig({
   site: 'https://example.com',
   experimental: {
     integrations: true,
-  },  
+  },
   integrations: [
     robotsTxt({
       host: 'example.com',
-      sitemap: [
-        'https://example.com/main-sitemap.xml', 
-        'https://example.com/images-sitemap.xml'
-      ],
+      sitemap: ['https://example.com/main-sitemap.xml', 'https://example.com/images-sitemap.xml'],
       policy: [
         {
           userAgent: 'Googlebot',
@@ -182,7 +180,7 @@ export default defineConfig({
   site: 'https://example.com',
   experimental: {
     integrations: true,
-  },    
+  },
   integrations: [
     robotsTxt({
       sitemap: false,
@@ -194,11 +192,11 @@ export default defineConfig({
 
 :exclamation: Important Notes
 
-Only official **@astrojs/\*** integrations are currently supported by Astro.  
+Only official **@astrojs/\*** integrations are currently supported by Astro.
 
-There are two possibilities to make **astro-robots-txt** integration working with current version of Astro.  
+There are two possibilities to make **astro-robots-txt** integration working with current version of Astro.
 
-Set the `experimental.integrations` option to `true` in your _astro.config.*_.
+Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
 
 ```js
 // astro.config.mjs
@@ -206,11 +204,11 @@ export default defineConfig({
   // ...
   experimental: {
     integrations: true,
-  },  
+  },
 });
 ```
 
-Or use the `--experimental-integrations` flag for build command.  
+Or use the `--experimental-integrations` flag for build command.
 
 ```sh
 astro build --experimental-integrations

@@ -21,8 +21,8 @@ jobs:
       - name: '☁️ checkout repository'
         uses: actions/checkout@v3
         with:
-        # "ref" specifies the branch to check out.
-        # "github.event.release.target_commitish" is a global variable and specifies the branch the release targeted
+          # "ref" specifies the branch to check out.
+          # "github.event.release.target_commitish" is a global variable and specifies the branch the release targeted
           ref: ${{ github.event.release.target_commitish }}
 
       - name: '🔧 setup node'

@@ -1,7 +1,8 @@
-export const isValidHostname = (value: string) => {
-  if (typeof value !== 'string') {
+export const isValidHostname = (x: any) => {
+  if (typeof x !== 'string') {
     return false;
   }
+  let value = x.toString();
 
   const validHostnameChars = /^[a-zA-Z0-9-.]{1,253}\.?$/g;
   if (!validHostnameChars.test(value)) {
@@ -9,7 +10,6 @@ export const isValidHostname = (value: string) => {
   }
 
   if (value.endsWith('.')) {
-    // eslint-disable-next-line no-param-reassign
     value = value.slice(0, value.length - 1);
   }
 

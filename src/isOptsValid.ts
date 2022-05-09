@@ -1,28 +1,22 @@
-import type { PolicyItem, RobotsTxtOptions } from '../index';
+import type { PolicyItem, RobotsTxtOptions } from './index';
 
-import { ILogger } from '../utils/Logger';
-import { isValidHostname } from '../utils/isValidHostname';
-import { isValidHttpUrl } from '../utils/isValidHttpUrl';
-import { addLine, generatePoliceItem } from './helpers';
+import { ILogger } from './utils/Logger';
+import { isValidHostname } from './utils/isValidHostname';
+import { isValidUrl } from './utils/isValidUrl';
+import { isValidHttpUrl } from './utils/isValidHttpUrl';
 
 let logger: ILogger;
 
-const generateRobotsTxt = (policy: PolicyItem[], sitemap: string[], host: string) => {
-  let contents = '';
-
-  policy.forEach((item, index) => {
-    contents += generatePoliceItem(item, index);
-  });
-
-  sitemap.forEach((item) => {
-    contents += addLine('Sitemap', item);
-  });
-
-  if (host) {
-    contents += addLine('Host', host);
+const validateSitemapItem = (sitemap: string): boolean => {
+  if (!isValidUrl(sitemap)) {
+    logger.warn('Option `sitemap` contains not valid url.');
+    return false;
   }
-
-  return contents;
+  if (!isValidHttpUrl(sitemap)) {
+    logger.warn('Option `sitemap` needs `http` or `https` protocol in url.');
+    return false;
+  }
+  return true;
 };
 
 const isValidSitemap = (sitemap: string | string[] | boolean) => {
@@ -30,37 +24,22 @@ const isValidSitemap = (sitemap: string | string[] | boolean) => {
     logger.warn('The robots.txt integration requires `sitemap` option to be string, array of strings or boolean.');
     return false;
   }
-  if (!sitemap) {
-    return true;
-  }
-  if (typeof sitemap === 'string') {
-    if (!isValidHttpUrl(sitemap)) {
-      logger.warn('Option `sitemap` contains not valid url.');
-      return false;
-    }
-  } else if (Array.isArray(sitemap)) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const item of sitemap) {
-      if (!isValidHttpUrl(item)) {
+  if (sitemap) {
+    if (typeof sitemap === 'string') {
+      if (!validateSitemapItem(sitemap)) {
         return false;
+      }
+    } else if (Array.isArray(sitemap)) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const item of sitemap) {
+        if (!validateSitemapItem(item)) {
+          return false;
+        }
       }
     }
   }
 
   return true;
-};
-
-const getSitemap = (sitemap: string | string[] | boolean, siteUrl: string) => {
-  if (!sitemap) {
-    return [];
-  }
-  if (typeof sitemap === 'string') {
-    return [sitemap];
-  }
-  if (Array.isArray(sitemap)) {
-    return sitemap;
-  }
-  return [`${siteUrl}${siteUrl.endsWith('/') ? '' : '/'}sitemap.xml`];
 };
 
 const isValidCleanParamItem = (item: any) => {
@@ -122,33 +101,25 @@ const isValidPolicy = (policy: PolicyItem[]) => {
   return true;
 };
 
-export const getRobotsTxtContent = (
-  site: string | undefined,
-  { host = '', sitemap = true, policy = [{ allow: '/', userAgent: '*' }] }: RobotsTxtOptions,
-  _logger: ILogger,
-) => {
+export const isOptsValid = (site: string | undefined, { host, sitemap, policy }: RobotsTxtOptions, _logger: ILogger) => {
   logger = _logger;
   if (!site) {
     logger.warn('`site` property is required in `astro.config.mjs`.');
-    return undefined;
+    return false;
   }
 
   if (host && !isValidHostname(host)) {
     logger.warn('Option `host` does not contain correct host.');
-    return undefined;
+    return false;
   }
 
-  if (!isValidSitemap(sitemap)) {
-    return undefined;
+  if (sitemap && !isValidSitemap(sitemap)) {
+    return false;
   }
 
-  const siteMap = getSitemap(sitemap, site);
-
-  if (!isValidPolicy(policy)) {
-    return undefined;
+  if (policy && !isValidPolicy(policy)) {
+    return false;
   }
 
-  const robotsTxtContent = generateRobotsTxt(policy, siteMap, host);
-
-  return robotsTxtContent;
+  return true;
 };
