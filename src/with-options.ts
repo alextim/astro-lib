@@ -1,5 +1,5 @@
 import type { RobotsTxtOptions } from './index';
-import { isObjectEmpty } from './utils/isObjectEmpty';
+import { isObjectEmpty } from './utils/is-object-empty';
 
 const defaultOptions: Readonly<RobotsTxtOptions> = {
   host: '',

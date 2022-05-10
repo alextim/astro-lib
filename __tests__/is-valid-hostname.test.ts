@@ -1,4 +1,4 @@
-import { isValidHostname } from '../src/utils/isValidHostname';
+import { isValidHostname } from '../src/utils/is-valid-hostname';
 
 describe('is valid hostname', () => {
   // tld and subdomains

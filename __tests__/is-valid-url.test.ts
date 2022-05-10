@@ -1,4 +1,4 @@
-import { isValidUrl } from '../src/utils/isValidUrl';
+import { isValidUrl } from '../src/utils/is-valid-url';
 
 describe('test isValidUrl', () => {
   it('undefined, should return false', () => {

@@ -1,9 +1,9 @@
 import type { PolicyItem, RobotsTxtOptions } from './index';
 
-import { ILogger } from './utils/Logger';
-import { isValidHostname } from './utils/isValidHostname';
-import { isValidUrl } from './utils/isValidUrl';
-import { isValidHttpUrl } from './utils/isValidHttpUrl';
+import { ILogger } from './utils/logger';
+import { isValidHostname } from './utils/is-valid-hostname';
+import { isValidUrl } from './utils/is-valid-url';
+import { isValidHttpUrl } from './utils/is-valid-http-url';
 
 let logger: ILogger;
 

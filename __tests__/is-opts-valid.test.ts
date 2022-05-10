@@ -1,6 +1,6 @@
 import type { RobotsTxtOptions } from '../src/index';
-import { isOptsValid } from '../src/isOptsValid';
-import { Logger } from '../src/utils/Logger';
+import { isOptsValid } from '../src/is-opts-valid';
+import { Logger } from '../src/utils/logger';
 
 const logger = new Logger('dummy-astro-robots-txt');
 

@@ -1,4 +1,4 @@
-import { isObjectEmpty } from '../src/utils/isObjectEmpty';
+import { isObjectEmpty } from '../src/utils/is-object-empty';
 
 describe('test isObjectEmpty', () => {
   it('undefined, should return true', () => {

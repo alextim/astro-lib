@@ -6,10 +6,10 @@ import type { AstroConfig, AstroIntegration } from 'astro';
  */
 import { packageName } from './data/package-name';
 
-import { withOptions } from './withOptions';
-import { Logger } from './utils/Logger';
-import { isOptsValid } from './isOptsValid';
-import { getRobotsTxtContent } from './getRobotsTxtContent';
+import { withOptions } from './with-options';
+import { Logger } from './utils/logger';
+import { isOptsValid } from './is-opts-valid';
+import { getRobotsTxtContent } from './get-robots-txt-content';
 
 const logger = new Logger(packageName);
 
