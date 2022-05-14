@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import { isValidHostname } from '../src/utils/is-valid-hostname';
 
 describe('is valid hostname', () => {
@@ -106,6 +107,7 @@ describe('is valid hostname', () => {
   // invalid types
   it('', () => expect(isValidHostname(3434)).toBeFalsy());
   it('', () => expect(isValidHostname({})).toBeFalsy());
+  // eslint-disable-next-line no-restricted-syntax
   it('', () => expect(isValidHostname(function () {})).toBeFalsy());
 
   // invalid values

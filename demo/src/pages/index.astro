@@ -5,7 +5,8 @@ import config from '../../site.config.mjs';
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-    {config.disableIndexing ? <meta name="robots" content="noindex, nofollow"> : <meta name="robots" content="index, follow">}
+    <!-- With the config const we can enable or disable a page indexing by robots -->
+    <meta name="robots" content={config.disableIndexing ? 'noindex, nofollow' : 'index, follow'} />
 		<title>Astro</title>
 	</head>
 	<body>
