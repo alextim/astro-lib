@@ -8,8 +8,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "removeComments": true,
-    "declaration": true,
-    "emitDeclarationOnly": true
+    "removeComments": true
   }
 }

@@ -101,8 +101,10 @@ const isValidPolicy = (policy: PolicyItem[]) => {
   return true;
 };
 
-export const isOptsValid = (site: string | undefined, { host, sitemap, policy }: RobotsTxtOptions, _logger: ILogger) => {
+export const isOptsValid = (site: string | undefined, opts: RobotsTxtOptions, _logger: ILogger) => {
   logger = _logger;
+  const { host, sitemap, policy } = opts || {};
+
   if (!site) {
     logger.warn('`site` property is required in `astro.config.mjs`.');
     return false;

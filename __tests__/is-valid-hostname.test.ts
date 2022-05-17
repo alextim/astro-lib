@@ -107,7 +107,7 @@ describe('is valid hostname', () => {
   // invalid types
   it('', () => expect(isValidHostname(3434)).toBeFalsy());
   it('', () => expect(isValidHostname({})).toBeFalsy());
-  // eslint-disable-next-line no-restricted-syntax
+  // eslint-disable-next-line func-names
   it('', () => expect(isValidHostname(function () {})).toBeFalsy());
 
   // invalid values

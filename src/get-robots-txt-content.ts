@@ -50,29 +50,28 @@ const generatePoliceItem = (item: PolicyItem, index: number) => {
 };
 
 const getSitemapArr = (sitemap: string | string[] | boolean | undefined, site: string) => {
-  if (typeof sitemap === 'boolean' && !sitemap) {
-    return [];
-  }
-  if (!sitemap) {
-    return [];
-  }
-  if (typeof sitemap === 'string') {
-    return [sitemap];
-  }
-  if (Array.isArray(sitemap)) {
-    return sitemap;
+  if (typeof sitemap !== 'undefined') {
+    if (!sitemap) {
+      return undefined;
+    }
+    if (Array.isArray(sitemap)) {
+      return sitemap.length > 0 ? sitemap : undefined;
+    }
+    if (typeof sitemap === 'string') {
+      return [sitemap];
+    }
   }
   return [`${addBackslash(site)}sitemap.xml`];
 };
 
-export const getRobotsTxtContent = (site: string, { host, sitemap, policy }: RobotsTxtOptions) => {
+export const getRobotsTxtContent = (site: string, { host, sitemap, policy }: RobotsTxtOptions = {}) => {
   let result = '';
 
   policy?.forEach((item, index) => {
     result += generatePoliceItem(item, index);
   });
 
-  getSitemapArr(sitemap, site).forEach((item) => {
+  getSitemapArr(sitemap, site)?.forEach((item) => {
     result += addLine('Sitemap', item);
   });
 

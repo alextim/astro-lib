@@ -46,6 +46,9 @@ jobs:
           run_install: |
             - recursive: false
 
+      - run: pnpm typecheck
+      - run: pnpm test
+
       # set up git since we will later push to the repo
       - run: |
           git config --global user.name "$GITHUB_ACTOR"
@@ -53,9 +56,7 @@ jobs:
 
       # upgrade npm version in package.json to the tag used in the release.
       - run: pnpm version ${{ github.event.release.tag_name }}
-
       - run: pnpm build
-      - run: pnpm test
 
       - name: '🚀 Publish'
         run: pnpm publish --ignore-scripts --access public  --tag latest

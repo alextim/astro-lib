@@ -1,196 +1,112 @@
-import fs from 'node:fs';
+/* eslint-disable import/first */
+import { fs as memoryFs } from 'memfs';
 import type { AstroConfig } from 'astro';
+
+jest.doMock(
+  'node:fs',
+  jest.fn(() => memoryFs),
+);
+
+import fs from 'node:fs';
 import type { RobotsTxtOptions } from '../src/index';
 import createPlugin from '../src/index';
 
-const site = 'https://example.com';
-const config = { site } as AstroConfig;
-const dir = new URL('file:./robots.txt');
+const getRobotsTxt = async (opts: RobotsTxtOptions) => {
+  const site = 'https://example.com';
+  const config = { site } as AstroConfig;
+  const dir = new URL('file:/');
 
-const defaultContent = 'User-agent: *\nAllow: /\nSitemap: https://example.com/sitemap.xml\n';
-const nositemap = 'User-agent: *\nAllow: /\n';
+  const plugin = createPlugin(opts);
 
-describe('test createPlugin', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  const fnTestParam = async (pluginOptions: RobotsTxtOptions, param: string) => {
-    const writeFileSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
-
-    const plugin = createPlugin(pluginOptions);
-
-    const fnConf = plugin.hooks['astro:config:done'];
-    const fnDone = plugin.hooks['astro:build:done'];
-    if (fnConf) {
-      await fnConf({ config, setAdapter: () => {} });
+  const astroConfigDone = plugin.hooks['astro:config:done'];
+  const astroBuildDone = plugin.hooks['astro:build:done'];
+  if (astroConfigDone) {
+    await astroConfigDone({ config, setAdapter: () => {} });
+  }
+  if (astroBuildDone) {
+    await astroBuildDone({ dir, pages: [], routes: [] });
+  }
+  const fileUrl = new URL('robots.txt', dir);
+  try {
+    const content = fs.readFileSync(fileUrl, 'utf8');
+    fs.unlinkSync(fileUrl);
+    return content;
+  } catch (err: any) {
+    if (err.code !== 'ENOENT') {
+      console.error(err);
     }
-    if (fnDone) {
-      await fnDone({ dir, pages: [], routes: [] });
-    }
-    expect(writeFileSpy).toHaveBeenCalledWith(dir, param);
-  };
+    return undefined;
+  }
+};
 
-  const fnNotCalled = async (pluginOptions: RobotsTxtOptions) => {
-    const writeFileSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
-
-    const plugin = createPlugin(pluginOptions);
-
-    const fnConf = plugin.hooks['astro:config:done'];
-    const fnDone = plugin.hooks['astro:build:done'];
-    if (fnConf) {
-      await fnConf({ config, setAdapter: () => {} });
-    }
-    if (fnDone) {
-      await fnDone({ dir, pages: [], routes: [] });
-    }
-    expect(writeFileSpy).toBeCalledTimes(0);
-  };
-
+describe('createPlugin', () => {
   it('options = {}, should return default robots.txt', async () => {
-    await fnTestParam({}, defaultContent);
+    expect(await getRobotsTxt({})).toMatchSnapshot();
   });
   it('options = undefined, should return default robots.txt', async () => {
-    await fnTestParam({}, defaultContent);
+    expect(await getRobotsTxt(undefined)).toMatchSnapshot();
   });
 
   /**
    * sitemap
    */
   it('sitemap = true, should return default robots.txt', async () => {
-    await fnTestParam({ sitemap: true }, defaultContent);
+    expect(await getRobotsTxt({ sitemap: true })).toMatchSnapshot();
   });
   it('sitemap = false, should return robots.txt without `Sitemap:`', async () => {
-    await fnTestParam({ sitemap: false }, nositemap);
+    expect(await getRobotsTxt({ sitemap: false })).toMatchSnapshot();
   });
   it('sitemap = "", should return robots.txt without `Sitemap:`', async () => {
-    await fnTestParam({ sitemap: false }, nositemap);
+    expect(await getRobotsTxt({ sitemap: '' })).toMatchSnapshot();
   });
-
   it('sitemap is valid URL string, should return `Sitemap: https://test`', async () => {
-    await fnTestParam(
-      {
-        sitemap: 'https://test',
-      },
-      'User-agent: *\nAllow: /\nSitemap: https://test\n',
-    );
+    expect(await getRobotsTxt({ sitemap: 'https://test' })).toMatchSnapshot();
   });
-
   it('sitemap is valid array of URL string, should return array of Sitemap', async () => {
-    await fnTestParam(
-      {
-        sitemap: ['https://test1', 'https://test2'],
-      },
-      'User-agent: *\nAllow: /\nSitemap: https://test1\nSitemap: https://test2\n',
-    );
+    expect(await getRobotsTxt({ sitemap: ['https://test1', 'https://test2'] })).toMatchSnapshot();
   });
   it('sitemap = [], should return robots.txt without `Sitemap:`', async () => {
-    await fnTestParam({ sitemap: [] }, nositemap);
+    expect(await getRobotsTxt({ sitemap: [] })).toMatchSnapshot();
   });
 
   /**
    * host
    */
   it('host = "", should return robots.txt without `Host:`', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        host: '',
-      },
-      nositemap,
-    );
+    expect(await getRobotsTxt({ host: '' })).toMatchSnapshot();
   });
-
   it('host is valid, should return robots.txt with `Host: abc`', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        host: 'abc',
-      },
-      'User-agent: *\nAllow: /\nHost: abc\n',
-    );
+    expect(await getRobotsTxt({ host: 'abc' })).toMatchSnapshot();
   });
-
   it('host is valid, should return robots.txt with `Host: abc.com`', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        host: 'abc.com',
-      },
-      'User-agent: *\nAllow: /\nHost: abc.com\n',
-    );
+    expect(await getRobotsTxt({ host: 'abc.com' })).toMatchSnapshot();
   });
-
   it('host is not valid, no call`', async () => {
-    await fnNotCalled({
-      sitemap: false,
-      host: 'abc:1',
-    });
+    const writeFileSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
+    await getRobotsTxt({ host: 'abc:1' });
+    expect(writeFileSpy).toBeCalledTimes(0);
   });
 
   /**
    * policy
    */
   it('policy is undefined, should return default robots.txt', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        policy: undefined,
-      },
-      nositemap,
-    );
+    expect(await getRobotsTxt({ policy: undefined })).toMatchSnapshot();
   });
-
   it('crawlDelay: 34, should return `Crawl-delay: 34`', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        policy: [{ allow: '/', userAgent: 'test', crawlDelay: 34 }],
-      },
-      'User-agent: test\nAllow: /\nCrawl-delay: 34\n',
-    );
+    expect(await getRobotsTxt({ policy: [{ allow: '/', userAgent: 'test', crawlDelay: 34 }] })).toMatchSnapshot();
   });
-
   it('allow is array, and disallow is array, should return arrays', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        policy: [{ allow: ['/3', '/4'], disallow: ['/1', '/2'], userAgent: 'test' }],
-      },
-      'User-agent: test\nDisallow: /1\nDisallow: /2\nAllow: /3\nAllow: /4\n',
-    );
+    expect(await getRobotsTxt({ policy: [{ allow: ['/3', '/4'], disallow: ['/1', '/2'], userAgent: 'test2' }] })).toMatchSnapshot();
   });
-
   it('Disallow is empty', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        policy: [{ disallow: '', userAgent: 'test' }],
-      },
-      'User-agent: test\nDisallow:\n',
-    );
+    expect(await getRobotsTxt({ policy: [{ disallow: '', userAgent: 'test3' }] })).toMatchSnapshot();
   });
 
   it('cleanParam: "s"', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        policy: [{ disallow: '/', cleanParam: 's', userAgent: 'test' }],
-      },
-      'User-agent: test\nDisallow: /\nClean-param: s\n',
-    );
+    expect(await getRobotsTxt({ policy: [{ disallow: '/', cleanParam: 's', userAgent: 'test4' }] })).toMatchSnapshot();
   });
-
   it('cleanParam is empty', async () => {
-    await fnTestParam(
-      {
-        sitemap: false,
-        policy: [{ allow: '/', cleanParam: '', userAgent: '*' }],
-      },
-      nositemap,
-    );
+    expect(await getRobotsTxt({ policy: [{ allow: '/', cleanParam: '', userAgent: '*' }] })).toMatchSnapshot();
   });
 });

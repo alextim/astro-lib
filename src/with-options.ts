@@ -2,7 +2,6 @@ import type { RobotsTxtOptions } from './index';
 import { isObjectEmpty } from './utils/is-object-empty';
 
 const defaultOptions: Readonly<RobotsTxtOptions> = {
-  host: '',
   sitemap: true,
   policy: [
     {
@@ -17,7 +16,7 @@ export const withOptions = (pluginOptions: RobotsTxtOptions | undefined) => {
     return defaultOptions;
   }
   const options: RobotsTxtOptions = {
-    host: pluginOptions?.host || '',
+    host: pluginOptions?.host,
     sitemap: typeof pluginOptions?.sitemap === 'undefined' ? true : pluginOptions.sitemap,
     policy: pluginOptions?.policy || defaultOptions.policy,
   };

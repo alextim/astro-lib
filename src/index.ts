@@ -21,11 +21,13 @@ export type PolicyItem = {
   crawlDelay?: number;
 };
 
-export type RobotsTxtOptions = {
-  host?: string;
-  sitemap?: string | string[] | boolean;
-  policy?: PolicyItem[];
-};
+export type RobotsTxtOptions =
+  | {
+      host?: string;
+      sitemap?: string | string[] | boolean;
+      policy?: PolicyItem[];
+    }
+  | undefined;
 
 const createPlugin = (pluginOptions: RobotsTxtOptions = {}): AstroIntegration => {
   let config: AstroConfig;
