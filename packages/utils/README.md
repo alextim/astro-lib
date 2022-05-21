@@ -1,9 +1,11 @@
 # utils
 
-Shared code. Directly imported. No package used.
+Shared code. Directly imported. Not used as a package.
+
+Exports:
 
 - isObjectEmpty
 - isValidHostname
 - isValidHttpUrl
 - isValidUrl
-- Logger
+- Logger, ILogger
