@@ -4,16 +4,15 @@
 
 # Astro Lib
 
-Here are a set of helpful additions for [Astro](https://astro.build).  
-
+Here are a set of helpful additions for [Astro](https://astro.build).
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ## Directory
 
-| Package                                                 | Release Notes                                                                                                                     |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| [astro-robots-txt](packages/astro-robots-txt)                                 | [![astro-robots-txt version](https://img.shields.io/npm/v/astro-robots-txt.svg?label=%20)](packages/astro-robots-txt/CHANGELOG.md)                                 |
+| Package                                       | Release Notes                                                                                                                      |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| [astro-robots-txt](packages/astro-robots-txt) | [![astro-robots-txt version](https://img.shields.io/npm/v/astro-robots-txt.svg?label=%20)](packages/astro-robots-txt/CHANGELOG.md) |
 
 ## License
 
