@@ -4,7 +4,7 @@
 
 # Astro Lib
 
-Here are a set of helpful additions for [Astro](https://astro.build).
+Here are useful additions for [Astro](https://astro.build).
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
