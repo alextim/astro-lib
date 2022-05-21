@@ -17,14 +17,12 @@ on:
     paths:
       - '**.ts'
       - '**.js'
-      - '**.astro'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [main]
     paths:
       - '**.ts'
       - '**.js'
-      - '**.astro'
   schedule:
     - cron: '18 21 * * 2'
 

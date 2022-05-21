@@ -8,3 +8,5 @@ This flag is used in two places:
 
 - _astro.config.mjs_: in the **astro-robots-txt** integration options to set a pattern for `disallow` in a _robots.txt_;
 - _index.astro_: to set the `robots` meta in the page's `<head>` section.
+
+Play this demo [online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/robots-txt).
