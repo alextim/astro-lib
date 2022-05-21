@@ -6,15 +6,11 @@ module.exports = {
     'jest/globals': true,
   },
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    sourceType: 'module',
-    project: './tsconfig.json',
-  },
   plugins: ['@typescript-eslint', 'jest', 'prettier'],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
-    'airbnb-base',
-    'airbnb-typescript/base',
+    // 'airbnb-base',
+    // 'airbnb-typescript/base',
     'plugin:prettier/recommended',
     'prettier',
   ],
@@ -26,6 +22,8 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'import/prefer-default-export': 0,
+    // "dot-notation": 0,
+    // "@typescript-eslint/dot-notation": 0,
 
     'prettier/prettier': 'error',
   },

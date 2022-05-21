@@ -1,0 +1,13 @@
+{
+  "name": "at-scripts",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./index.mjs",
+  "bin": {
+    "at-scripts": "./index.mjs"
+  },
+  "dependencies": {
+    "esbuild": "^0.14.39"
+  }
+}

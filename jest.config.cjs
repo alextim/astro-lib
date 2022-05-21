@@ -1,10 +1,9 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+const base = require('./jest.config.base.cjs');
+
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  transform: {
-    '^.+\\.ts?$': 'ts-jest',
-  },
-  transformIgnorePatterns: ['<rootDir>/node_modules/'],
-  restoreMocks: true,
+  ...base,
+  projects: [
+    // '<rootDir>/packages/*',
+    '<rootDir>/packages/*/jest.config.cjs',
+  ],
 };
