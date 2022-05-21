@@ -7,6 +7,8 @@ on:
     paths:
       - '.changeset/**'
       - 'packages/**'
+      - '!packages/**/README.md'
+      - '!packages/**/__tests__/**'
 
 # Automatically cancel in-progress actions on the same branch
 concurrency:
