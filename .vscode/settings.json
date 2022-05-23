@@ -1,4 +1,5 @@
 {
+  "vitest.enable": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
@@ -20,7 +21,8 @@
     "pnpm",
     "robotstxt",
     "vite",
-    "changesets"
+    "changesets",
+    "vitest"
   ],
   "prettier.documentSelectors": ["**/*.ts"]
 }

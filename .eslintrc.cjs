@@ -3,10 +3,9 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    'jest/globals': true,
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'jest', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     // 'airbnb-base',

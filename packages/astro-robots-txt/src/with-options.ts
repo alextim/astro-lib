@@ -13,7 +13,7 @@ const defaultOptions: Readonly<RobotsTxtOptions> = {
 };
 
 // @internal
-export const withOptions = (pluginOptions: RobotsTxtOptions | undefined) => {
+export const withOptions = (pluginOptions: RobotsTxtOptions) => {
   if (isObjectEmpty(pluginOptions)) {
     return defaultOptions;
   }

@@ -8,3 +8,5 @@ export { isValidHttpUrl } from './is-valid-http-url';
 export { isValidUrl } from './is-valid-url';
 // @internal
 export { Logger, ILogger } from './logger';
+// @internal
+export { isFileExists } from './is-file-exists';

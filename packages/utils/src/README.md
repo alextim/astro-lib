@@ -1,9 +1,10 @@
 # Utils
 
-Here are the utility functions used directly by the `astro-robots-txt` package:
+Here are the utility functions used directly:
 
 - isObjectEmpty
 - isValidHostname
 - isValidHttpUrl
 - isValidUrl
 - Logger
+- isFileExists

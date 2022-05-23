@@ -10,9 +10,10 @@ Here are useful additions for [Astro](https://astro.build).
 
 ## Directory
 
-| Package                                       | Release Notes                                                                                                                      |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| [astro-robots-txt](packages/astro-robots-txt) | [![astro-robots-txt version](https://img.shields.io/npm/v/astro-robots-txt.svg?label=%20)](packages/astro-robots-txt/CHANGELOG.md) |
+| Package                                         | Release Notes                                                                                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| [astro-robots-txt](packages/astro-robots-txt)   | [![astro-robots-txt version](https://img.shields.io/npm/v/astro-robots-txt.svg?label=%20)](packages/astro-robots-txt/CHANGELOG.md)    |
+| [astro-webmanifest](packages/astro-webmanifest) | [![astro-webmanifest version](https://img.shields.io/npm/v/astro-webmanifest.svg?label=%20)](packages/astro-webmanifest/CHANGELOG.md) |
 
 ## License
 

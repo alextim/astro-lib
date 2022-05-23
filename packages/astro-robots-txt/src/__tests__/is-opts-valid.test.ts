@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { Logger } from '@at-utils';
 
 import type { RobotsTxtOptions } from '../index';
@@ -7,7 +8,7 @@ const logger = new Logger('dummy-astro-robots-txt');
 
 const site = 'https://example.com';
 
-describe('test Robots txt', () => {
+describe('test isOptsValid', () => {
   it('site = undefined, should return false', () => {
     expect(isOptsValid(undefined, {}, logger)).toBeFalsy();
   });

@@ -40,7 +40,7 @@ const createPlugin = (pluginOptions: RobotsTxtOptions = {}): AstroIntegration =>
      *
      * We've been using the 'name' property from 'package.json', ie 'astro-robots-txt'
      *
-     * Official name should be '@astrojs/robotstxt' :)
+     * Official name should be '@astrojs/robotstxt', but this integration is not official  :).
      */
     name: packageName,
 

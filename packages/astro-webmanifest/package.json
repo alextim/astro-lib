@@ -1,0 +1,58 @@
+{
+  "name": "astro-webmanifest",
+  "version": "0.0.1",
+  "description": "Generate a webmanifest for Astro to make progressive web apps",
+  "keywords": [
+    "astro",
+    "astro-component",
+    "favicon",
+    "icons",
+    "manifest.webmanifest",
+    "progressive-web-app",
+    "pwa"
+  ],
+  "author": {
+    "name": "Oleksii Tymoshenko"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alextim/astro-lib.git",
+    "directory": "packages/astro-webmanifest"
+  },
+  "homepage": "https://github.com/alextim/astro-lib/tree/main/packages/astro-webmanifest#readme",
+  "bugs": "https://github.com/alextim/astro-lib/issues",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts"
+  ],
+  "scripts": {
+    "build": "at-scripts create-pkg-name && at-scripts build && tsc -p tsconfig.build.json && at-scripts copy-index.d.ts",
+    "typecheck": "tsc --noEmit --pretty",
+    "test": "vitest run",
+    "test:pub": "pnpm publish --dry-run --no-git-checks"
+  },
+  "dependencies": {
+    "sharp": "^0.30.5",
+    "valid-filename": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.35",
+    "@types/sharp": "^0.30.2",
+    "astro": "^1.0.0-beta.31",
+    "at-scripts": "workspace:*",
+    "typescript": "^4.6.4",
+    "vite": "^2.9.9",
+    "vitest": "^0.12.9"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

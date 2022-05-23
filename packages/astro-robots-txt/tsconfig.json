@@ -6,6 +6,7 @@
     "paths": {
       "@at-utils": ["../utils/src/index.ts"]
     },
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["vitest/globals"]
   }
 }
