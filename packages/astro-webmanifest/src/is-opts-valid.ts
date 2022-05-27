@@ -1,6 +1,7 @@
 import isValidFilename from 'valid-filename';
-import { isValidUrl, ILogger } from '@at-utils';
+import { isValidUrl, isFileExists, ILogger } from '@at-utils';
 import type { WebmanifestOptions } from './index';
+import { isIconSquare } from './utils/is-icon-square';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
 let logger: ILogger;
@@ -128,7 +129,7 @@ const isHeadingValid = (name: any, short_name: any, description: any, prefix: st
   return true;
 };
 
-export const isOptsValid = (
+export const isOptsValid = async (
   {
     name,
     short_name,
@@ -157,9 +158,10 @@ export const isOptsValid = (
 
     iconOptions,
     outfile,
+    icon,
   }: WebmanifestOptions = { name: '' },
   _logger: ILogger,
-): boolean => {
+) => {
   logger = _logger;
 
   /**
@@ -355,6 +357,19 @@ export const isOptsValid = (
   if (outfile && !isValidFilename(outfile)) {
     logger.warn('`outfile` is not valid');
     return false;
+  }
+
+  if (icon) {
+    if (!isFileExists(icon)) {
+      logger.warn(`icon (${icon}) does not exist`);
+      return false;
+    }
+    if (!(await isIconSquare(icon))) {
+      logger.warn(`
+        The icon(${icon}) provided is not square.
+        The generated icons will be square and for the best results it's recommend to provide a square icon.
+        `);
+    }
   }
 
   return true;

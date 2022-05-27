@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { Logger } from '@at-utils';
 
 import type { RobotsTxtOptions } from '../index';
@@ -6,6 +5,11 @@ import type { RobotsTxtOptions } from '../index';
 import { withOptions } from '../with-options';
 import { isOptsValid } from '../is-opts-valid';
 import { getRobotsTxtContent } from '../get-robots-txt-content';
+
+vi.mock('@at-utils', async () => {
+  const utils = await vi.importActual('@at-utils');
+  return { ...(utils as object), Logger: vi.fn().mockImplementation(() => ({ warn: vi.fn() })) };
+});
 
 const logger = new Logger('dummy-astro-robots-txt');
 

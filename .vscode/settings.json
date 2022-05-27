@@ -22,7 +22,10 @@
     "robotstxt",
     "vite",
     "changesets",
-    "vitest"
+    "vitest",
+    "outfile",
+    "favicon",
+    "favicons",
   ],
   "prettier.documentSelectors": ["**/*.ts"]
 }

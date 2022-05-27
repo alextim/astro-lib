@@ -1,9 +1,9 @@
-import type { WebmanifestOptions, Webmanifest, Icon, Shortcut, WebmanifestIcon, WebmanifestShortcut, IconPurpose } from './index';
+import type { WebmanifestOptions, WebmanifestOutput, Icon, Shortcut, WebmanifestIcon, WebmanifestShortcut } from './index';
 import { defaultIcons } from './default-icons';
 
 export const getManifest = (
   { icon, iconOptions, outfile, name, icons, shortcuts, ...opts }: WebmanifestOptions = { name: '' },
-): Webmanifest => {
+): WebmanifestOutput => {
   const getIcon = ({ purpose, ...rest }: Icon): WebmanifestIcon => {
     const result: WebmanifestIcon = { ...rest };
     const a = [...new Set([...(iconOptions?.purpose || []), ...(purpose || [])])];
@@ -21,7 +21,7 @@ export const getManifest = (
     return result;
   };
 
-  const manifest: Webmanifest = {
+  const manifest: WebmanifestOutput = {
     name,
     icons: (icons || defaultIcons).map(getIcon),
     ...opts,

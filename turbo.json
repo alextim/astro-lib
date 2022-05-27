@@ -12,6 +12,10 @@
     "test": {
       "outputs": []
     },
+    "coverage": {
+      "outputs": []
+    },
+
     "typecheck": {
       "outputs": []
     },

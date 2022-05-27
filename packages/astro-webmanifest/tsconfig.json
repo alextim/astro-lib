@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src", "../utils/src/**/*", "raw/generate-icon.ts", "raw/create-icons.ts"],
+  "include": ["src", "../utils/src/**/*", "src/utils/generate-icon.ts", "raw/create-icons.ts"],
   "exclude": ["raw"],
   "compilerOptions": {
     "baseUrl": ".",

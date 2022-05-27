@@ -1,14 +1,16 @@
-import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import { Logger } from '@at-utils';
+import { Logger, isObjectEmpty } from '@at-utils';
 /**
  * `package-name.ts` is generated during build from `name` property of `package.json`
  */
 import { packageName } from './data/pkg-name';
 import { withOptions } from './with-options';
-import { getManifest } from './get-manifest';
+import { createManifest } from './create-manifest';
+import { createFavicon } from './create-favicon';
+import { processIconsSet } from './utils/process-icon-set';
 import { isOptsValid } from './is-opts-valid';
+import { defaultIcons } from './default-icons';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
 export type IconPurpose = typeof iconPurposeValues[number];
@@ -68,7 +70,7 @@ export type ProtocolHandler = {
   url: string;
 };
 
-export type WebmanifestBase = {
+export type Webmanifest = {
   name: string;
   short_name?: string;
   description?: string;
@@ -97,8 +99,10 @@ export type WebmanifestBase = {
   screenshots?: Image[];
 };
 
+export type Locales = Record<string, Webmanifest>;
+
 export type WebmanifestOptions =
-  | (WebmanifestBase & {
+  | (Webmanifest & {
       icons?: Icon[];
       shortcuts?: Shortcut[];
 
@@ -106,11 +110,14 @@ export type WebmanifestOptions =
       iconOptions?: {
         purpose?: IconPurpose[];
       };
+      locales?: Locales;
+      includeFavicon?: boolean;
       outfile?: string;
     })
   | undefined;
 
-export type Webmanifest = WebmanifestBase & {
+// @internal
+export type WebmanifestOutput = Webmanifest & {
   icons?: WebmanifestIcon[];
   shortcuts?: WebmanifestShortcut[];
 };
@@ -133,17 +140,29 @@ const createPlugin = (pluginOptions: WebmanifestOptions = { name: '' }): AstroIn
     hooks: {
       'astro:build:done': async ({ dir }) => {
         const opts = withOptions(pluginOptions);
-        if (!isOptsValid(opts, logger)) {
+        if (!(await isOptsValid(opts, logger))) {
           return;
         }
-        const manifest = getManifest(opts);
-        try {
-          const { outfile = '' } = opts;
-          const outfileUrl = new URL(outfile, dir);
-          fs.writeFileSync(outfileUrl, JSON.stringify(manifest));
-          logger.success(`\`${outfile}\` is created.`);
-        } catch (err) {
-          logger.error((err as any).toString());
+
+        const { outfile = '', icon = '', includeFavicon, icons } = opts;
+        if (icon) {
+          if (includeFavicon) {
+            await createFavicon(icon, dir);
+          }
+          await processIconsSet(icons || defaultIcons, icon, dir);
+        }
+
+        if (!createManifest(opts, outfile, dir, logger)) {
+          return;
+        }
+
+        if (!isObjectEmpty(opts.locales) && opts.locales) {
+          const a = Object.entries(opts.locales);
+          for (let i = 0; i < a.length; i++) {
+            const locale = a[i][0];
+            const entry = a[i][1];
+            createManifest({ ...opts, ...entry }, outfile, dir, logger, locale);
+          }
         }
       },
     },

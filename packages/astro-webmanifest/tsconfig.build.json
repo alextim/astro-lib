@@ -10,6 +10,6 @@
     "outDir": "./dist",
     "emitDeclarationOnly": true,
     "declaration": true,
-    "allowJs": true,
+    "allowJs": true
   }
 }

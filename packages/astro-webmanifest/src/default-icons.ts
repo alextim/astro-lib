@@ -1,15 +1,15 @@
 import type { Icon } from './index';
 
-export const favicons: Readonly<Icon[]> = [
+export const favicons: Icon[] = [
   {
     src: 'favicon-32x32.png',
     sizes: '32x32',
     type: 'image/png',
   },
-] as const;
+];
 
 // default icons for generating icons
-export const defaultIcons: Readonly<Icon[]> = [
+export const defaultIcons: Icon[] = [
   {
     src: 'icons/icon-48x48.png',
     sizes: '48x48',
@@ -50,4 +50,4 @@ export const defaultIcons: Readonly<Icon[]> = [
     sizes: '512x512',
     type: 'image/png',
   },
-] as const;
+];
