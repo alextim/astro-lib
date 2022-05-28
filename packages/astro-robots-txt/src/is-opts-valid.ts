@@ -1,4 +1,4 @@
-import { ILogger, isValidHostname, isValidUrl, isValidHttpUrl } from '@at-utils';
+import { ILogger, isValidHostname, isValidUrl, isValidHttpUrl } from '@/at-utils';
 import type { PolicyItem, RobotsTxtOptions } from './index';
 
 let logger: ILogger;

@@ -1,6 +1,6 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import { Logger, isObjectEmpty } from '@at-utils';
+import { Logger, isObjectEmpty } from '@/at-utils';
 /**
  * `package-name.ts` is generated during build from `name` property of `package.json`
  */
@@ -8,9 +8,7 @@ import { packageName } from './data/pkg-name';
 import { withOptions } from './with-options';
 import { createManifest } from './create-manifest';
 import { createFavicon } from './create-favicon';
-import { processIconsSet } from './utils/process-icon-set';
 import { isOptsValid } from './is-opts-valid';
-import { defaultIcons } from './default-icons';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
 export type IconPurpose = typeof iconPurposeValues[number];
@@ -30,10 +28,6 @@ export type Image = {
 };
 
 export type Icon = Image & {
-  purpose?: IconPurpose[];
-};
-
-export type WebmanifestIcon = Image & {
   purpose?: string;
 };
 
@@ -42,21 +36,14 @@ export type Fingerprint = {
   type: string;
 };
 
-export type ShortcutBase = {
+export type Shortcut = {
   name: string;
   short_name?: string;
   description?: string;
   url: string;
   min_version?: string;
   fingerprints?: Fingerprint[];
-};
-
-export type Shortcut = ShortcutBase & {
   icons?: Icon[];
-};
-
-export type WebmanifestShortcut = ShortcutBase & {
-  icons?: WebmanifestIcon[];
 };
 
 export type Display = typeof displayValues[number];
@@ -97,15 +84,15 @@ export type Webmanifest = {
   related_applications?: RelatedApplication[];
 
   screenshots?: Image[];
+
+  icons?: Icon[];
+  shortcuts?: Shortcut[];
 };
 
-export type Locales = Record<string, Webmanifest>;
+export type Locales = Record<string, Omit<Webmanifest, 'icons'>>;
 
 export type WebmanifestOptions =
   | (Webmanifest & {
-      icons?: Icon[];
-      shortcuts?: Shortcut[];
-
       icon?: string;
       iconOptions?: {
         purpose?: IconPurpose[];
@@ -115,12 +102,6 @@ export type WebmanifestOptions =
       outfile?: string;
     })
   | undefined;
-
-// @internal
-export type WebmanifestOutput = Webmanifest & {
-  icons?: WebmanifestIcon[];
-  shortcuts?: WebmanifestShortcut[];
-};
 
 const logger = new Logger(packageName);
 
@@ -144,15 +125,12 @@ const createPlugin = (pluginOptions: WebmanifestOptions = { name: '' }): AstroIn
           return;
         }
 
-        const { outfile = '', icon = '', includeFavicon, icons } = opts;
-        if (icon) {
-          if (includeFavicon) {
-            await createFavicon(icon, dir);
-          }
-          await processIconsSet(icons || defaultIcons, icon, dir);
+        const { outfile = '', icon = '', includeFavicon } = opts;
+        if (icon && includeFavicon) {
+          await createFavicon(icon, dir);
         }
 
-        if (!createManifest(opts, outfile, dir, logger)) {
+        if (!(await createManifest(opts, outfile, dir, logger))) {
           return;
         }
 
@@ -161,7 +139,7 @@ const createPlugin = (pluginOptions: WebmanifestOptions = { name: '' }): AstroIn
           for (let i = 0; i < a.length; i++) {
             const locale = a[i][0];
             const entry = a[i][1];
-            createManifest({ ...opts, ...entry }, outfile, dir, logger, locale);
+            await createManifest({ ...opts, ...entry }, outfile, dir, logger, locale);
           }
         }
       },

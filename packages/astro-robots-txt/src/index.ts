@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import { Logger } from '@at-utils';
+import { Logger } from '@/at-utils';
 
 /**
  * `package-name.ts` is generated during build from the `name` property of a `package.json`

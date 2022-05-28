@@ -1,10 +1,10 @@
 import { getManifest } from '../get-manifest';
 
 describe('test getManifest', () => {
-  it('`purpose` from array to string', () => {
+  it('`purpose` from string to string', () => {
     const opts = {
       name: 'n',
-      icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['maskable', 'any'] }],
+      icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'maskable any' }],
     };
     const manifest = getManifest(opts);
     const result = manifest.icons ? manifest.icons[0]?.purpose : '';
@@ -16,7 +16,7 @@ describe('test getManifest', () => {
       iconOptions: {
         purpose: ['any', 'maskable', 'monochrome'],
       },
-      icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['maskable', 'badge'] }],
+      icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'maskable badge' }],
     };
     const manifest = getManifest(opts);
     const result = manifest.icons ? manifest.icons[0]?.purpose : '';

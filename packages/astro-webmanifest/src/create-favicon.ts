@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 import fs from 'node:fs';
 
-import { processIconsSet } from './utils/process-icon-set';
+import { processIconsSet } from './helpers/process-icon-set';
 import { favicons } from './default-icons';
 
 export async function createFavicon(srcIcon: string, dir: URL) {

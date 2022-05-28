@@ -1,4 +1,4 @@
-import { Logger } from '@at-utils';
+import { Logger } from '@/at-utils';
 
 import type { RobotsTxtOptions } from '../index';
 
@@ -6,8 +6,8 @@ import { withOptions } from '../with-options';
 import { isOptsValid } from '../is-opts-valid';
 import { getRobotsTxtContent } from '../get-robots-txt-content';
 
-vi.mock('@at-utils', async () => {
-  const utils = await vi.importActual('@at-utils');
+vi.mock('@/at-utils', async () => {
+  const utils = await vi.importActual('@/at-utils');
   return { ...(utils as object), Logger: vi.fn().mockImplementation(() => ({ warn: vi.fn() })) };
 });
 

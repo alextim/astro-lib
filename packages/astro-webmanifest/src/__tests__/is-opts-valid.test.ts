@@ -1,11 +1,11 @@
-import { Logger } from '@at-utils';
+import { Logger } from '@/at-utils';
 import { type Shortcut } from '../index';
 
 // import type { WebmanifestOptions } from '../index';
 import { isOptsValid } from '../is-opts-valid';
 
-vi.mock('@at-utils', async () => {
-  const utils = await vi.importActual('@at-utils');
+vi.mock('@/at-utils', async () => {
+  const utils = await vi.importActual('@/at-utils');
   return { ...(utils as object), Logger: vi.fn().mockImplementation(() => ({ warn: vi.fn() })) };
 });
 
@@ -224,26 +224,22 @@ describe('test isOptsValid', () => {
   });
 
   // icons === screenshots + purpose
-  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['maskable', 'any'] }], should return true", async () => {
-    expect(
-      isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['maskable', 'any'] }] }, logger),
-    ).toBeTruthy();
+  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'maskable any'] }], should return true", async () => {
+    expect(isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'maskable any' }] }, logger)).toBeTruthy();
   });
-  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: [] }], should return true", async () => {
-    expect(await isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: [] }] }, logger)).toBeTruthy();
+  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: '' }], should return true", async () => {
+    expect(await isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: '' }] }, logger)).toBeTruthy();
   });
   it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: undefined }], should return true", async () => {
     expect(
       await isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: undefined }] }, logger),
     ).toBeTruthy();
   });
-  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['aa'] }], should return false", async () => {
-    expect(await isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['aa'] }] }, logger)).toBeFalsy();
+  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'aa' }], should return false", async () => {
+    expect(await isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'aa' }] }, logger)).toBeFalsy();
   });
-  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['any', ''] }], should return false", async () => {
-    expect(
-      await isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['any', ''] }] }, logger),
-    ).toBeFalsy();
+  it("`icons` is [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'any '] }], should return true", async () => {
+    expect(await isOptsValid({ name: 'name', icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'any ' }] }, logger)).toBeFalsy();
   });
 
   // shortcuts
@@ -323,7 +319,7 @@ describe('test isOptsValid', () => {
     const shortcut: Shortcut = {
       name: 'n',
       url: 'https://test',
-      icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: ['maskable'] }],
+      icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'maskable' }],
     };
     expect(await isOptsValid({ name: 'name', shortcuts: [shortcut] }, logger)).toBeTruthy();
   });
@@ -367,5 +363,19 @@ describe('test isOptsValid', () => {
   });
   it('`outfile` is `/abc`, should return false', async () => {
     expect(await isOptsValid({ name: 'name', outfile: '/abc' }, logger)).toBeFalsy();
+  });
+
+  // locales
+  it('`locales` is undefined, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', locales: undefined }, logger)).toBeTruthy();
+  });
+  it('`locales` is empty, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', locales: {} }, logger)).toBeTruthy();
+  });
+  it('`locales` is ok, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', locales: { fr: { name: 'fr' } } }, logger)).toBeTruthy();
+  });
+  it('`locales` is not ok, should return false', async () => {
+    expect(await isOptsValid({ name: 'name', locales: { fr: { name: '' } } }, logger)).toBeFalsy();
   });
 });

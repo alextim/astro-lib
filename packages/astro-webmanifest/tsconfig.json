@@ -1,11 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src", "../utils/src/**/*", "src/utils/generate-icon.ts", "raw/create-icons.ts"],
+  "include": ["src", "../utils/src/**/*", "src/helpers/generate-icon.ts", "raw/create-icons.ts"],
   "exclude": ["raw"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@at-utils": ["../utils/src/index.ts"]
+      "@/at-utils": ["../utils/src/index.ts"]
     },
     "outDir": "dist",
     "types": ["vitest/globals"]

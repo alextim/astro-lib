@@ -1,4 +1,4 @@
-import { isObjectEmpty } from '@at-utils';
+import { isObjectEmpty } from '@/at-utils';
 
 import type { RobotsTxtOptions } from './index';
 

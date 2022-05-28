@@ -1,7 +1,7 @@
 import isValidFilename from 'valid-filename';
-import { isValidUrl, isFileExists, ILogger } from '@at-utils';
+import { isValidUrl, isFileExists, ILogger } from '@/at-utils';
 import type { WebmanifestOptions } from './index';
-import { isIconSquare } from './utils/is-icon-square';
+import { isIconSquare } from './helpers/is-icon-square';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
 let logger: ILogger;
@@ -66,12 +66,28 @@ const isValidSize = (x: any, name: string) => {
   return true;
 };
 
-const isValidIconPurpose = (purpose: any, prefix: string) => {
+const isValidIconPurposeArr = (purpose: any, prefix: string) => {
   if (purpose) {
     if (!isStringArray(purpose, `${prefix}purpose`)) {
       return false;
     }
     for (const p of purpose) {
+      if (iconPurposeValues.indexOf(p) === -1) {
+        logger.warn(`\`${prefix}purpose\` ${p} not valid`);
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+const isValidIconPurpose = (purpose: any, prefix: string) => {
+  if (purpose) {
+    if (!isString(purpose, `${prefix}purpose`)) {
+      return false;
+    }
+    const arr = purpose.split(' ');
+    for (const p of arr) {
       if (iconPurposeValues.indexOf(p) === -1) {
         logger.warn(`\`${prefix}purpose\` ${p} not valid`);
         return false;
@@ -129,7 +145,7 @@ const isHeadingValid = (name: any, short_name: any, description: any, prefix: st
   return true;
 };
 
-export const isOptsValid = async (
+const isManifestValid = async (
   {
     name,
     short_name,
@@ -153,17 +169,11 @@ export const isOptsValid = async (
     related_applications,
     screenshots,
 
+    icon,
     icons,
     shortcuts,
-
-    iconOptions,
-    outfile,
-    icon,
   }: WebmanifestOptions = { name: '' },
-  _logger: ILogger,
 ) => {
-  logger = _logger;
-
   /**
    * name
    * short_name
@@ -347,17 +357,6 @@ export const isOptsValid = async (
       }
     }
   }
-  /**
-   * iconOptions
-   */
-  if (iconOptions?.purpose && !isValidIconPurpose(iconOptions.purpose, 'iconOptions.')) {
-    return false;
-  }
-
-  if (outfile && !isValidFilename(outfile)) {
-    logger.warn('`outfile` is not valid');
-    return false;
-  }
 
   if (icon) {
     if (!isFileExists(icon)) {
@@ -369,6 +368,38 @@ export const isOptsValid = async (
         The icon(${icon}) provided is not square.
         The generated icons will be square and for the best results it's recommend to provide a square icon.
         `);
+    }
+  }
+
+  return true;
+};
+
+export const isOptsValid = async (opts: WebmanifestOptions = { name: '' }, _logger: ILogger) => {
+  logger = _logger;
+  const { iconOptions, outfile, locales } = opts;
+
+  if (!(await isManifestValid(opts))) {
+    return false;
+  }
+
+  /**
+   * iconOptions
+   */
+  if (iconOptions?.purpose && !isValidIconPurposeArr(iconOptions.purpose, 'iconOptions.')) {
+    return false;
+  }
+
+  if (outfile && !isValidFilename(outfile)) {
+    logger.warn('`outfile` is not valid');
+    return false;
+  }
+
+  if (locales) {
+    for (const [key, entry] of Object.entries(locales)) {
+      if (!(await isManifestValid(entry))) {
+        logger.warn(`\`locales[${key}]\` is not valid`);
+        return false;
+      }
     }
   }
 
