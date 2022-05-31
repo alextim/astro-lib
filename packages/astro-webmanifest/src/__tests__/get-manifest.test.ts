@@ -1,8 +1,9 @@
 import { getManifest } from '../get-manifest';
+import type { WebmanifestOptions } from '../index';
 
 describe('test getManifest', () => {
   it('`purpose` from string to string', () => {
-    const opts = {
+    const opts: WebmanifestOptions = {
       name: 'n',
       icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'maskable any' }],
     };
@@ -11,10 +12,10 @@ describe('test getManifest', () => {
     expect(result).toBe('maskable any');
   });
   it('`add `iconOptions.purpose` to non empty purpose, unique result', () => {
-    const opts = {
+    const opts: WebmanifestOptions = {
       name: 'n',
-      iconOptions: {
-        purpose: ['any', 'maskable', 'monochrome'],
+      config: {
+        iconPurpose: ['any', 'maskable', 'monochrome'],
       },
       icons: [{ src: 'a', sizes: '32x32', type: 'jpg', purpose: 'maskable badge' }],
     };
@@ -23,10 +24,10 @@ describe('test getManifest', () => {
     expect(result).toBe('any maskable monochrome badge');
   });
   it('add `iconOptions.purpose` to empty purpose', () => {
-    const opts = {
+    const opts: WebmanifestOptions = {
       name: 'n',
-      iconOptions: {
-        purpose: ['any'],
+      config: {
+        iconPurpose: ['any'],
       },
       icons: [{ src: 'a', sizes: '32x32', type: 'jpg' }],
     };

@@ -25,7 +25,7 @@ export class Logger implements ILogger {
 
   private log(msg: string, prefix: string = '') {
     // eslint-disable-next-line no-console
-    console.log(`%s${this.packageName}: ${msg}%s\n`, prefix, prefix ? this.colors.reset : '');
+    console.log(`%s${this.packageName}:%s ${msg}\n`, prefix, prefix ? this.colors.reset : '');
   }
 
   info(msg: string) {
@@ -41,6 +41,6 @@ export class Logger implements ILogger {
   }
 
   error(msg: string) {
-    this.log(`Failed to create 'robots.txt'!\n${msg}`, this.colors.fg.red);
+    this.log(`Failed!\n${msg}`, this.colors.fg.red);
   }
 }

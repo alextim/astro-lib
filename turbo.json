@@ -21,6 +21,9 @@
     },
     "clean": {
       "outputs": []
+    },
+    "preview": {
+      "outputs": []
     }
   }
 }

@@ -1,12 +1,10 @@
 {
   "vitest.enable": true,
+  "search.exclude": {"**/*.log": true, "**/dist": true },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "html"
-  },
   "editor.quickSuggestions": {
     "strings": true
   },
@@ -26,6 +24,7 @@
     "outfile",
     "favicon",
     "favicons",
+    "crossorigin"
   ],
   "prettier.documentSelectors": ["**/*.ts"]
 }

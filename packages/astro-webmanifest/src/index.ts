@@ -1,14 +1,11 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import { Logger, isObjectEmpty } from '@/at-utils';
+import { Logger } from '@/at-utils';
 /**
  * `package-name.ts` is generated during build from `name` property of `package.json`
  */
 import { packageName } from './data/pkg-name';
-import { withOptions } from './with-options';
-import { createManifest } from './create-manifest';
-import { createFavicon } from './create-favicon';
-import { isOptsValid } from './is-opts-valid';
+import onBuildDone from './on-build-done';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
 export type IconPurpose = typeof iconPurposeValues[number];
@@ -17,17 +14,19 @@ export type ApplicationPlatform = typeof applicationPlatformValues[number];
 
 export type RelatedApplication = {
   platform: ApplicationPlatform;
-  url?: string;
-  id: string;
+  url: string;
+  id?: string;
 };
 
 export type Image = {
   src: string;
   sizes?: string;
   type?: string;
+  platform?: ApplicationPlatform;
+  label?: string;
 };
 
-export type Icon = Image & {
+export type Icon = Omit<Image, 'platform' | 'label'> & {
   purpose?: string;
 };
 
@@ -58,6 +57,8 @@ export type ProtocolHandler = {
 };
 
 export type Webmanifest = {
+  icon?: string;
+
   name: string;
   short_name?: string;
   description?: string;
@@ -89,59 +90,47 @@ export type Webmanifest = {
   shortcuts?: Shortcut[];
 };
 
-export type Locales = Record<string, Omit<Webmanifest, 'icons'>>;
+export type Locales = Record<string, Webmanifest>;
 
 export type WebmanifestOptions =
   | (Webmanifest & {
-      icon?: string;
-      iconOptions?: {
-        purpose?: IconPurpose[];
-      };
       locales?: Locales;
-      includeFavicon?: boolean;
-      outfile?: string;
+      config?: {
+        iconPurpose?: IconPurpose[];
+
+        createFavicon?: boolean;
+        insertFaviconLinks?: boolean;
+        insertManifestLink?: boolean;
+        insertThemeColorMeta?: boolean;
+        insertAppleTouchLinks?: boolean;
+        indent?: string;
+        eol?: string;
+
+        outfile?: string;
+      };
     })
   | undefined;
 
-const logger = new Logger(packageName);
-
-const createPlugin = (pluginOptions: WebmanifestOptions = { name: '' }): AstroIntegration => {
+const createPlugin = (pluginOptions: WebmanifestOptions): AstroIntegration => {
+  let config: AstroConfig;
   return {
     /**
      * Only official "@astrojs/*" integrations are currently supported.
      * To enable 3rd-party integrations, use the "--experimental-integrations" flag.
      * Breaking changes may occur in this API before Astro v1.0 is released.
      *
-     * We've been using the 'name' property from 'package.json', ie 'astro-webmanifest'
+     * We've been using the 'name' property from 'package.json', ie 'astro-robots-txt'
      *
-     * Official name should be '@astrojs/webmanifest', but this integration is not official  :).
+     * Official name should be '@astrojs/robotstxt', but this integration is not official  :).
      */
-
     name: packageName,
+
     hooks: {
-      'astro:build:done': async ({ dir }) => {
-        const opts = withOptions(pluginOptions);
-        if (!(await isOptsValid(opts, logger))) {
-          return;
-        }
-
-        const { outfile = '', icon = '', includeFavicon } = opts;
-        if (icon && includeFavicon) {
-          await createFavicon(icon, dir);
-        }
-
-        if (!(await createManifest(opts, outfile, dir, logger))) {
-          return;
-        }
-
-        if (!isObjectEmpty(opts.locales) && opts.locales) {
-          const a = Object.entries(opts.locales);
-          for (let i = 0; i < a.length; i++) {
-            const locale = a[i][0];
-            const entry = a[i][1];
-            await createManifest({ ...opts, ...entry }, outfile, dir, logger, locale);
-          }
-        }
+      'astro:config:done': async ({ config: cfg }) => {
+        config = cfg;
+      },
+      'astro:build:done': async ({ dir, pages }) => {
+        await onBuildDone(pluginOptions, config, dir, pages, new Logger(packageName));
       },
     },
   };

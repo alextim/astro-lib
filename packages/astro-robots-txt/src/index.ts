@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
 
 import { Logger } from '@/at-utils';
@@ -7,12 +6,7 @@ import { Logger } from '@/at-utils';
  * `package-name.ts` is generated during build from the `name` property of a `package.json`
  */
 import { packageName } from './data/package-name';
-
-import { withOptions } from './with-options';
-import { isOptsValid } from './is-opts-valid';
-import { getRobotsTxtContent } from './get-robots-txt-content';
-
-const logger = new Logger(packageName);
+import onBuildDone from './on-build-done';
 
 export type PolicyItem = {
   userAgent: string;
@@ -30,7 +24,7 @@ export type RobotsTxtOptions =
     }
   | undefined;
 
-const createPlugin = (pluginOptions: RobotsTxtOptions = {}): AstroIntegration => {
+const createPlugin = (pluginOptions: RobotsTxtOptions): AstroIntegration => {
   let config: AstroConfig;
   return {
     /**
@@ -49,23 +43,7 @@ const createPlugin = (pluginOptions: RobotsTxtOptions = {}): AstroIntegration =>
         config = cfg;
       },
 
-      'astro:build:done': async ({ dir }) => {
-        const opts = withOptions(pluginOptions);
-
-        if (!isOptsValid(config.site, opts, logger)) {
-          return;
-        }
-
-        const robotsTxtContent = getRobotsTxtContent(config.site!, opts);
-
-        try {
-          const url = new URL('robots.txt', dir);
-          fs.writeFileSync(url, robotsTxtContent);
-          logger.success('`robots.txt` is created.');
-        } catch (err) {
-          logger.error((err as any).toString());
-        }
-      },
+      'astro:build:done': async ({ dir }) => onBuildDone(pluginOptions, config, dir, new Logger(packageName)),
     },
   };
 };

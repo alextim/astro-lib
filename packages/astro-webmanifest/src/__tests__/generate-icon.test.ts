@@ -8,6 +8,13 @@ const icon = {
   type: 'image/png',
 };
 
+vi.mock('fs', () => ({
+  promises: {
+    writeFile: vi.fn().mockResolvedValue(0),
+    stat: vi.fn().mockResolvedValue({ isDirectory: () => true }),
+  },
+}));
+
 vi.mock('sharp', () => {
   return {
     default: vi.fn(
@@ -16,8 +23,13 @@ vi.mock('sharp', () => {
           resize() {
             return this;
           }
+          /*
           toFile() {
             return Promise.resolve({ format: 'png' });
+          }
+          */
+          toBuffer() {
+            return Promise.resolve({ data: '', info: { format: 'png' } });
           }
           metadata() {
             return {
@@ -36,6 +48,14 @@ const dir = new URL('https://abc');
 describe('test generateIcon', () => {
   it('`sizes` is empty, should return undefined', async () => {
     const result = await generateIcon({ ...icon, sizes: '' }, srcIcon, dir);
+    expect(result).toBeUndefined();
+  });
+  it('`sizes` is any, should return undefined', async () => {
+    const result = await generateIcon({ ...icon, sizes: 'any' }, srcIcon, dir);
+    expect(result).toBeUndefined();
+  });
+  it('`sizes` contains more then one entry, should return undefined', async () => {
+    const result = await generateIcon({ ...icon, sizes: '1x2 3x4' }, srcIcon, dir);
     expect(result).toBeUndefined();
   });
   it('all are ok, should return OutputInfo', async () => {

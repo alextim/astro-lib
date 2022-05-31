@@ -1,4 +1,4 @@
-<a href="https://war.ukraine.ua/support-ukraine/">
+<a href="https://bank.gov.ua/en/about/support-the-armed-forces">
   <img src="https://raw.githubusercontent.com/alextim/help-ukraine-win-flag/master/stop-russian-agressian-help-ukraine-now-link.svg" alt="Help Ukraine now!">
 </a>
 

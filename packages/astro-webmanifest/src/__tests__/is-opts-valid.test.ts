@@ -4,10 +4,7 @@ import { type Shortcut } from '../index';
 // import type { WebmanifestOptions } from '../index';
 import { isOptsValid } from '../is-opts-valid';
 
-vi.mock('@/at-utils', async () => {
-  const utils = await vi.importActual('@/at-utils');
-  return { ...(utils as object), Logger: vi.fn().mockImplementation(() => ({ warn: vi.fn() })) };
-});
+vi.mock('@/at-utils');
 
 const logger = new Logger('dummy-astro-webmanifest');
 // name
@@ -77,7 +74,7 @@ describe('test isOptsValid', () => {
     expect(await isOptsValid({ name: 'name', dir: 'auto' }, logger)).toBeTruthy();
   });
 
-  // start_url
+  // start_url (URL)
   it('`start_url` is undefined, should return true', async () => {
     expect(await isOptsValid({ name: 'name', start_url: undefined }, logger)).toBeTruthy();
   });
@@ -87,8 +84,33 @@ describe('test isOptsValid', () => {
   it('`start_url` is `https://example.com`, should return true', async () => {
     expect(await isOptsValid({ name: 'name', start_url: 'https://example.com' }, logger)).toBeTruthy();
   });
-  it('`start_url` is `abc`, should return false', async () => {
-    expect(await isOptsValid({ name: 'name', start_url: 'abc' }, logger)).toBeFalsy();
+  it('`start_url` is `/`, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', start_url: '/' }, logger)).toBeTruthy();
+  });
+  it('`start_url` is `abc`, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', start_url: 'abc' }, logger)).toBeTruthy();
+  });
+  it('`start_url` is `1`, should return false', async () => {
+    expect(await isOptsValid({ name: 'name', start_url: '1' }, logger)).toBeFalsy();
+  });
+  // scope (URL)
+  it('`scope` is undefined, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', scope: undefined }, logger)).toBeTruthy();
+  });
+  it('`scope` is "", should return true', async () => {
+    expect(await isOptsValid({ name: 'name', scope: '' }, logger)).toBeTruthy();
+  });
+  it('`scope` is `https://example.com`, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', scope: 'https://example.com' }, logger)).toBeTruthy();
+  });
+  it('`scope` is `/`, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', scope: '/' }, logger)).toBeTruthy();
+  });
+  it('`scope` is `abc`, should return true', async () => {
+    expect(await isOptsValid({ name: 'name', scope: 'abc' }, logger)).toBeTruthy();
+  });
+  it('`scope` is 1`, should return false', async () => {
+    expect(await isOptsValid({ name: 'name', scope: '1' }, logger)).toBeFalsy();
   });
 
   /**
@@ -96,7 +118,6 @@ describe('test isOptsValid', () => {
    *
    * iarc_rating_id
    * id
-   * scope
    * theme_color
    * background_color
    *
@@ -136,11 +157,11 @@ describe('test isOptsValid', () => {
   it('`protocol_handlers` is [], should return true', async () => {
     expect(await isOptsValid({ name: 'name', protocol_handlers: [] }, logger)).toBeTruthy();
   });
-  it('`protocol_handlers` is [{url:`https://example.com`, protocol:`p`], should return true', async () => {
-    expect(await isOptsValid({ name: 'name', protocol_handlers: [{ url: 'https://example.com', protocol: 'p' }] }, logger)).toBeTruthy();
+  it('`protocol_handlers` is [{url:`/`, protocol:`p`], should return true', async () => {
+    expect(await isOptsValid({ name: 'name', protocol_handlers: [{ url: '/', protocol: 'p' }] }, logger)).toBeTruthy();
   });
-  it('`protocol_handlers` is [{url:`abc`, protocol:`p`], should return false', async () => {
-    expect(await isOptsValid({ name: 'name', protocol_handlers: [{ url: 'abc', protocol: 'p' }] }, logger)).toBeFalsy();
+  it('`protocol_handlers` is [{url:`abc`, protocol:`p`], should return true', async () => {
+    expect(await isOptsValid({ name: 'name', protocol_handlers: [{ url: 'abc', protocol: 'p' }] }, logger)).toBeTruthy();
   });
   it('`protocol_handlers` is [{url:``, protocol:`p`], should return false', async () => {
     expect(await isOptsValid({ name: 'name', protocol_handlers: [{ url: '', protocol: 'p' }] }, logger)).toBeFalsy();
@@ -161,16 +182,21 @@ describe('test isOptsValid', () => {
       await isOptsValid({ name: 'name', related_applications: [{ id: 'id', url: 'https://example.com', platform: 'ios' }] }, logger),
     ).toBeTruthy();
   });
-  it("`related_applications` is [{id: '', url: 'https://example.com', platform: 'ios'}]], should return false", async () => {
+  it("`related_applications` is [{id: undefined, url: 'https://example.com', platform: 'ios'}]], should return true", async () => {
+    expect(
+      await isOptsValid({ name: 'name', related_applications: [{ id: undefined, url: 'https://example.com', platform: 'ios' }] }, logger),
+    ).toBeTruthy();
+  });
+  it("`related_applications` is [{id: '', url: 'https://example.com', platform: 'ios'}]], should return true", async () => {
     expect(
       await isOptsValid({ name: 'name', related_applications: [{ id: '', url: 'https://example.com', platform: 'ios' }] }, logger),
-    ).toBeFalsy();
+    ).toBeTruthy();
   });
-  it("`related_applications` is [{id: 'id', url: undefined, platform: 'ios'}]], should return true", async () => {
-    expect(await isOptsValid({ name: 'name', related_applications: [{ id: 'id', url: undefined, platform: 'ios' }] }, logger)).toBeTruthy();
+  it("`related_applications` is [{id: 'id', url: undefined, platform: 'ios'}]], should return false", async () => {
+    expect(await isOptsValid({ name: 'name', related_applications: [{ id: 'id', url: '', platform: 'ios' }] }, logger)).toBeFalsy();
   });
-  it("`related_applications` is [{id: 'id', url: '', platform: 'ios'}]], should return true", async () => {
-    expect(await isOptsValid({ name: 'name', related_applications: [{ id: 'id', url: '', platform: 'ios' }] }, logger)).toBeTruthy();
+  it("`related_applications` is [{id: 'id', url: '', platform: 'ios'}]], should return false", async () => {
+    expect(await isOptsValid({ name: 'name', related_applications: [{ id: 'id', url: '', platform: 'ios' }] }, logger)).toBeFalsy();
   });
   it("`related_applications` is [{id: 'id', url: 'abc', platform: 'ios'}]], should return false", async () => {
     expect(await isOptsValid({ name: 'name', related_applications: [{ id: 'id', url: 'abc', platform: 'ios' }] }, logger)).toBeFalsy();
@@ -209,8 +235,8 @@ describe('test isOptsValid', () => {
   it("`screenshots` is [{ src: 'a', sizes: '100x200' }], should return true", async () => {
     expect(await isOptsValid({ name: 'name', screenshots: [{ src: 'a', sizes: '100x200' }] }, logger)).toBeTruthy();
   });
-  it("`screenshots` is [{ src: 'a', sizes: ' 100 x 200 ' }], should return true", async () => {
-    expect(await isOptsValid({ name: 'name', screenshots: [{ src: 'a', sizes: ' 100 x 200 ' }] }, logger)).toBeTruthy();
+  it("`screenshots` is [{ src: 'a', sizes: ' 100 x 200 ' }], should return false", async () => {
+    expect(await isOptsValid({ name: 'name', screenshots: [{ src: 'a', sizes: ' 100 x 200 ' }] }, logger)).toBeFalsy();
   });
   it("`screenshots` is [{ src: 'a', sizes: '' }], should return true", async () => {
     expect(await isOptsValid({ name: 'name', screenshots: [{ src: 'a', sizes: '' }] }, logger)).toBeTruthy();
@@ -282,12 +308,12 @@ describe('test isOptsValid', () => {
     };
     expect(await isOptsValid({ name: 'name', shortcuts: [shortcut] }, logger)).toBeFalsy();
   });
-  it('`shortcuts` url is not valid, should return false', async () => {
+  it('`shortcuts` url is not valid, should return true', async () => {
     const shortcut: Shortcut = {
       name: 'n',
       url: 'abc',
     };
-    expect(await isOptsValid({ name: 'name', shortcuts: [shortcut] }, logger)).toBeFalsy();
+    expect(await isOptsValid({ name: 'name', shortcuts: [shortcut] }, logger)).toBeTruthy();
   });
   // fingerprints
   it('`shortcuts` fingerprints name is empty, should return false', async () => {
@@ -342,27 +368,18 @@ describe('test isOptsValid', () => {
 
   // iconOptions.purpose
   it('`iconOptions.purpose` is [], should return true', async () => {
-    expect(await isOptsValid({ name: 'name', iconOptions: { purpose: [] } }, logger)).toBeTruthy();
-  });
-  it('`iconOptions.purpose` is [], should return true', async () => {
-    expect(await isOptsValid({ name: 'name', iconOptions: { purpose: [] } }, logger)).toBeTruthy();
+    expect(await isOptsValid({ name: 'name', config: { iconPurpose: [] } }, logger)).toBeTruthy();
   });
   it("`iconOptions.purpose` is ['any'], should return true", async () => {
-    expect(await isOptsValid({ name: 'name', iconOptions: { purpose: ['any'] } }, logger)).toBeTruthy();
-  });
-  it("`iconOptions.purpose` is [''], should return false", async () => {
-    expect(await isOptsValid({ name: 'name', iconOptions: { purpose: [''] } }, logger)).toBeFalsy();
-  });
-  it("`iconOptions.purpose` is ['ab'], should return false", async () => {
-    expect(await isOptsValid({ name: 'name', iconOptions: { purpose: ['ab'] } }, logger)).toBeFalsy();
+    expect(await isOptsValid({ name: 'name', config: { iconPurpose: ['any'] } }, logger)).toBeTruthy();
   });
 
   // outfile
   it('`outfile` is `abc`, should return true', async () => {
-    expect(await isOptsValid({ name: 'name', outfile: 'abc' }, logger)).toBeTruthy();
+    expect(await isOptsValid({ name: 'name', config: { outfile: 'abc' } }, logger)).toBeTruthy();
   });
   it('`outfile` is `/abc`, should return false', async () => {
-    expect(await isOptsValid({ name: 'name', outfile: '/abc' }, logger)).toBeFalsy();
+    expect(await isOptsValid({ name: 'name', config: { outfile: '/abc' } }, logger)).toBeFalsy();
   });
 
   // locales

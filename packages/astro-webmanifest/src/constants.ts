@@ -1,4 +1,4 @@
-export const iconPurposeValues = ['badge', 'maskable', 'any', 'monochrome'];
+export const iconPurposeValues = ['badge', 'maskable', 'any', 'monochrome'] as const;
 
 export const applicationPlatformValues = [
   'chrome_web_store',

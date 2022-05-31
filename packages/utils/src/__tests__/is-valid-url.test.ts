@@ -16,6 +16,15 @@ describe('test isValidUrl', () => {
   it('file url, should return true', () => {
     expect(isValidUrl('file://test.abc')).toBeTruthy();
   });
+  it('url = /, should return false', () => {
+    expect(isValidUrl('/')).toBeFalsy();
+  });
+  it('url = /abc, should return false', () => {
+    expect(isValidUrl('/abc')).toBeFalsy();
+  });
+  it('url = /abc/, should return false', () => {
+    expect(isValidUrl('/abc/')).toBeFalsy();
+  });
   it('ftp url, should return true', () => {
     expect(isValidUrl('ftp://test.abc')).toBeTruthy();
   });

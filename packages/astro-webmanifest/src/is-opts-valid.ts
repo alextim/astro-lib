@@ -1,9 +1,9 @@
 import isValidFilename from 'valid-filename';
-import { isValidUrl, isFileExists, ILogger } from '@/at-utils';
-import type { WebmanifestOptions } from './index';
+import { isValidUrlEx, isValidUrl, isFileExistsSync, ILogger } from '@/at-utils';
+import type { Webmanifest, WebmanifestOptions } from './index';
 import { isIconSquare } from './helpers/is-icon-square';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
-
+import isValidSizeBase from './helpers/is-valid-size';
 let logger: ILogger;
 
 const isEmpty = (x: any, name: string) => {
@@ -32,12 +32,12 @@ const isArray = (x: any, name: string) => {
   return true;
 };
 
-const isStringArray = (a: any, name: string) => {
-  if (!isArray(a, name)) {
+const isStringArray = (arr: any, name: string) => {
+  if (!isArray(arr, name)) {
     return false;
   }
-  if (a) {
-    for (const el of a) {
+  if (arr) {
+    for (const el of arr) {
       if (!isString(el, `Elements of ${name}`)) {
         return false;
       }
@@ -46,21 +46,24 @@ const isStringArray = (a: any, name: string) => {
   return true;
 };
 
-const isValidSize = (x: any, name: string) => {
-  if (!isString(x, name)) {
+const isValidSize = (size: any, name: string) => {
+  if (!isString(size, name)) {
     return false;
   }
-  if (x) {
-    const a = x.split('x');
-    if (a.length !== 2) {
-      logger.warn(`\`${name}\` ${x} not valid size`);
+
+  if (!isValidSizeBase(size)) {
+    logger.warn(`\`${name}\` ${size} not valid size`);
+    return false;
+  }
+
+  return true;
+};
+
+const isValidPlatform = (platform: any, prefix: string) => {
+  if (platform) {
+    if (applicationPlatformValues.indexOf(platform) === -1) {
+      logger.warn(`\`${prefix}platform\` is not valid`);
       return false;
-    }
-    for (const el of a) {
-      if (isNaN(el)) {
-        logger.warn(`\`${name}\` ${x} not valid size`);
-        return false;
-      }
     }
   }
   return true;
@@ -97,12 +100,12 @@ const isValidIconPurpose = (purpose: any, prefix: string) => {
   return true;
 };
 
-const isValidImageSet = (a: any, name: string) => {
-  if (!isArray(a, name)) {
+const isValidImageSet = (arr: any, name: string) => {
+  if (!isArray(arr, name)) {
     return false;
   }
-  if (a) {
-    for (const { src, sizes, type, purpose } of a) {
+  if (arr) {
+    for (const { src, sizes, type, purpose, platform } of arr) {
       if (!isRequiredString(src, `${name}: src`)) {
         return false;
       }
@@ -115,7 +118,24 @@ const isValidImageSet = (a: any, name: string) => {
       if (!isValidIconPurpose(purpose, `${name}: `)) {
         return false;
       }
+      if (!isValidPlatform(platform, name)) {
+        return false;
+      }
     }
+  }
+  return true;
+};
+
+const isValidURLEx = (url: any, name: string, required = false) => {
+  if (required && isEmpty(url, name)) {
+    return false;
+  }
+  if (!isString(url, name)) {
+    return false;
+  }
+  if (!isValidUrlEx(url)) {
+    logger.warn(`\`${name}\` is not valid`);
+    return false;
   }
   return true;
 };
@@ -172,7 +192,7 @@ const isManifestValid = async (
     icon,
     icons,
     shortcuts,
-  }: WebmanifestOptions = { name: '' },
+  }: Webmanifest = { name: '' },
 ) => {
   /**
    * name
@@ -212,23 +232,23 @@ const isManifestValid = async (
     return false;
   }
 
-  if (start_url && !isValidURL(start_url, 'start_url')) {
+  // start_url
+  if (start_url && !isValidURLEx(start_url, 'start_url')) {
+    return false;
+  }
+
+  // scope
+  if (scope && !isValidURLEx(scope, 'scope')) {
     return false;
   }
 
   /**
    * id
-   * scope
    * theme_color
    * background_color
    *
    */
-  if (
-    !isString(id, 'id') ||
-    !isString(scope, 'scope') ||
-    !isString(theme_color, 'theme_color') ||
-    !isString(background_color, 'background_color')
-  ) {
+  if (!isString(id, 'id') || !isString(theme_color, 'theme_color') || !isString(background_color, 'background_color')) {
     return false;
   }
 
@@ -270,7 +290,7 @@ const isManifestValid = async (
       if (!isRequiredString(protocol, 'protocol_handlers: protocol')) {
         return false;
       }
-      if (!isValidURL(url, 'protocol_handlers: url', true)) {
+      if (!isValidURLEx(url, 'protocol_handlers: url', true)) {
         return false;
       }
     }
@@ -284,20 +304,16 @@ const isManifestValid = async (
   }
   if (related_applications) {
     for (const { id: appId, url, platform } of related_applications) {
-      if (!isRequiredString(appId, 'related_applications: appId')) {
+      if (!isString(appId, 'related_applications: appId')) {
         return false;
       }
-      /**
-       * google: url can be empty - https://developer.chrome.com/blog/app-install-banners-native/
-       */
-      if (url && !isValidURL(url, 'related_applications: url')) {
+      if (!isValidURL(url, 'related_applications: url', true)) {
         return false;
       }
       if (isEmpty(platform, 'related_applications: platform')) {
         return false;
       }
-      if (applicationPlatformValues.indexOf(platform) === -1) {
-        logger.warn('`related_applications: platform` is not valid');
+      if (!isValidPlatform(platform, 'related_applications: ')) {
         return false;
       }
     }
@@ -336,7 +352,7 @@ const isManifestValid = async (
       if (!isHeadingValid(scName, scShort_name, scDescription, 'shortcuts: ')) {
         return false;
       }
-      if (!isValidURL(url, 'shortcuts: url', true)) {
+      if (!isValidURLEx(url, 'shortcuts: url', true)) {
         return false;
       }
       if (!isString(min_version, 'shortcuts: min_version')) {
@@ -359,12 +375,12 @@ const isManifestValid = async (
   }
 
   if (icon) {
-    if (!isFileExists(icon)) {
+    if (!isFileExistsSync(icon)) {
       logger.warn(`icon (${icon}) does not exist`);
       return false;
     }
     if (!(await isIconSquare(icon))) {
-      logger.warn(`
+      logger.info(`
         The icon(${icon}) provided is not square.
         The generated icons will be square and for the best results it's recommend to provide a square icon.
         `);
@@ -376,21 +392,23 @@ const isManifestValid = async (
 
 export const isOptsValid = async (opts: WebmanifestOptions = { name: '' }, _logger: ILogger) => {
   logger = _logger;
-  const { iconOptions, outfile, locales } = opts;
+  const { config = {}, locales } = opts;
 
   if (!(await isManifestValid(opts))) {
     return false;
   }
 
+  const { outfile, iconPurpose } = config;
+
   /**
    * iconOptions
    */
-  if (iconOptions?.purpose && !isValidIconPurposeArr(iconOptions.purpose, 'iconOptions.')) {
+  if (!isValidIconPurposeArr(iconPurpose, 'config.iconPurpose.')) {
     return false;
   }
 
   if (outfile && !isValidFilename(outfile)) {
-    logger.warn('`outfile` is not valid');
+    logger.warn('`config.outfile` is not valid');
     return false;
   }
 

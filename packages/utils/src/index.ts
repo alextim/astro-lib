@@ -5,8 +5,12 @@ export { isValidHostname } from './is-valid-hostname';
 // @internal
 export { isValidHttpUrl } from './is-valid-http-url';
 // @internal
+export { isValidUrlEx } from './is-valid-url-ex';
+// @internal
 export { isValidUrl } from './is-valid-url';
 // @internal
 export { Logger, ILogger } from './logger';
 // @internal
-export { isFileExists } from './is-file-exists';
+export { isFileExistsSync } from './is-file-exists-sync';
+// @internal
+export { isDirExists } from './is-dir-exists';

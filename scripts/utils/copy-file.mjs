@@ -6,8 +6,7 @@ export function copyFile(fileName, src, dest) {
   const destFile = path.join(...[process.cwd(), ...dest, fileName]);
 
   try {
-    const s = fs.readFileSync(srcFile, 'utf8');
-    fs.writeFileSync(destFile, s);
+    fs.copyFileSync(srcFile, destFile);
     // eslint-disable-next-line no-console
     console.log(`Success: "${fileName}" copied to "${dest.join('/')}"`);
   } catch (err) {

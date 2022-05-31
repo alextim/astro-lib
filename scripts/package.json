@@ -1,6 +1,6 @@
 {
   "name": "at-scripts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "type": "module",
   "main": "./index.mjs",
@@ -8,6 +8,6 @@
     "at-scripts": "./index.mjs"
   },
   "dependencies": {
-    "esbuild": "^0.14.41"
+    "esbuild": "^0.14.42"
   }
 }

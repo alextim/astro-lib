@@ -5,11 +5,10 @@
   "compilerOptions": {
     "baseUrl": ".", // This must be specified if "paths" is.
     "paths": {
-      "@at-utils": ["../utils/src/index.ts"] // This mapping is relative to "baseUrl"
+      "@/at-utils": ["../utils/src/index.ts"] // This mapping is relative to "baseUrl"
     },
     "outDir": "./dist",
     "emitDeclarationOnly": true,
-    "declaration": true,
-    "allowJs": true
+    "declaration": true
   }
 }

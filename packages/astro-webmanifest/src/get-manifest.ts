@@ -1,13 +1,11 @@
 import type { WebmanifestOptions, Webmanifest, Icon, Shortcut } from './index';
 import { defaultIcons } from './default-icons';
 
-export const getManifest = (
-  { icon, iconOptions, outfile, name, icons, shortcuts, ...opts }: WebmanifestOptions = { name: '' },
-): Webmanifest => {
+export const getManifest = ({ icon, config, locales, name, icons, shortcuts, ...opts }: WebmanifestOptions = { name: '' }): Webmanifest => {
+  const add: string[] = config?.iconPurpose || [];
   const getIcon = ({ purpose, ...rest }: Icon) => {
     const result: Icon = { ...rest };
     const src: string[] = purpose?.split(' ') || [];
-    const add: string[] = iconOptions?.purpose || [];
     const arr = [...new Set([...add, ...src])];
     if (arr.length > 0) {
       result.purpose = arr.join(' ');
@@ -32,5 +30,6 @@ export const getManifest = (
   if (shortcuts) {
     manifest.shortcuts = shortcuts.map(getShortcut);
   }
+
   return manifest;
 };
