@@ -4,7 +4,7 @@
 
 # astro-robots-txt
 
-This **[Astro integration][astro-integration]** generates a _robots.txt_ for your Astro project during build.
+This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide/)** generates a _robots.txt_ for your Astro project during build.
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -102,7 +102,7 @@ Allow: /
 Sitemap: https://example.com/sitemap.xml
 ```
 
-You can also check our [Astro Integration Documentation][astro-integration] for more on integrations.
+You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
 
 ## Configuration
 
