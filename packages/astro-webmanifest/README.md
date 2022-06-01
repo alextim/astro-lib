@@ -378,11 +378,11 @@ If you need separate icon sets for every language please add `icon` property.
 ...
 ```
 
-In this configuration `en` and `fr` languages will have common icons set, `es` - own icons set.
+In this configuration default `en` language and `fr` language will have common icons set, `es` - own icons set.
 
 :bulb: The favicon will be only one for all languages. The source for generation will be taken from default language.
 
-You could see i18n usage in [demo repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+You could explore i18n usage in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
 
 :exclamation: Only official **@astrojs/\*** integrations are currently supported by Astro.
 
