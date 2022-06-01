@@ -85,7 +85,6 @@ import webmanifest from 'astro-webmanifest';
 
 export default defineConfig({
   // ...
-  site: 'https://example.com',
   // Important!
   // Only official '@astrojs/*' integrations are currently supported by Astro.
   // Add 'experimental.integrations: true' to make 'astro-webmanifest' working
