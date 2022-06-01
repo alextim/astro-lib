@@ -8,11 +8,7 @@ const addBasePath = (s: string) => {
   return `/${s}`;
 };
 
-export const getHeads = (
-  opts: WebmanifestOptions,
-  results: { locale: string; outfile: string; manifest: Webmanifest }[],
-  crossOrigin = 'anonymous',
-) => {
+export const getHeads = (opts: WebmanifestOptions, results: { locale: string; outfile: string; manifest: Webmanifest }[]) => {
   const { icon: srcIcon, config: cfg = {} } = opts || {};
 
   const heads: Record<string, string> = {};
@@ -38,7 +34,7 @@ export const getHeads = (
     }
 
     if (cfg.insertManifestLink) {
-      headComponents.push(`<link rel="manifest" href="${addBasePath(manifestFileName)}" crossorigin="${crossOrigin}">`);
+      headComponents.push(`<link rel="manifest" href="${addBasePath(manifestFileName)}" crossorigin="${cfg.crossOrigin}">`);
     }
 
     if (cfg.insertAppleTouchLinks) {

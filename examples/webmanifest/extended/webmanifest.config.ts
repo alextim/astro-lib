@@ -1,8 +1,4 @@
 import type { WebmanifestOptions } from 'astro-webmanifest';
-import i18n from './src/i18n';
-
-const locales = { ...i18n.locales };
-delete locales[i18n.defaultLocale];
 
 const webmanifest: WebmanifestOptions = {
   config: {
@@ -10,6 +6,7 @@ const webmanifest: WebmanifestOptions = {
     // createFavicon: true,
     // insertFaviconLinks: true,
     // insertManifestLink: true,
+    crossOrigin: 'use-credentials', // default - anonymus
     // insertThemeColorMeta: true,
     insertAppleTouchLinks: true, // default - false
     // indent: '    ',
@@ -18,11 +15,11 @@ const webmanifest: WebmanifestOptions = {
   },
   icon: 'src/images/logomark-light.svg',
 
-  name: i18n.locales[i18n.defaultLocale].name,
-  short_name: 'short name',
-  description: 'description',
-  categories: ['cat0', 'cat1'],
-  lang: i18n.locales[i18n.defaultLocale].lang,
+  name: 'Webmanifest test',
+  short_name: 'Test',
+  description: "It's a basic test of the `astro-webmanifest` integration",
+  categories: ['category first', 'category second'],
+  lang: 'en-GB',
   dir: 'auto',
   iarc_rating_id: 'e84b072d-71b3-4d3e-86ae-31a8ce4e53b7',
 
@@ -30,8 +27,8 @@ const webmanifest: WebmanifestOptions = {
   start_url: '/',
   scope: '/',
 
-  theme_color: '#000000',
-  background_color: '#000001',
+  theme_color: '#3367D6',
+  background_color: '#3367D6',
 
   display: 'standalone',
   display_override: ['browser', 'fullscreen'],
@@ -94,8 +91,6 @@ const webmanifest: WebmanifestOptions = {
       url: '/create/reminder',
     },
   ],
-
-  locales,
 };
 
 export default webmanifest;

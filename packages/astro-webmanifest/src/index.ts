@@ -101,6 +101,7 @@ export type WebmanifestOptions =
         createFavicon?: boolean;
         insertFaviconLinks?: boolean;
         insertManifestLink?: boolean;
+        crossOrigin?: string;
         insertThemeColorMeta?: boolean;
         insertAppleTouchLinks?: boolean;
         indent?: string;

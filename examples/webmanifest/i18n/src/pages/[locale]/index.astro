@@ -15,11 +15,12 @@ export async function getStaticPaths() {
 
 export interface Props {
   name: string;
+  description: string;
   lang: string;
 }
 
 const { locale } = Astro.params;
-const { name, lang } = Astro.props as Props;
+const { name, description, lang } = Astro.props as Props;
 ---
 <html lang={lang}>
 	<head>
@@ -30,6 +31,7 @@ const { name, lang } = Astro.props as Props;
 	<body>
 		<h1>Astro {locale}</h1>
     <p>{name}</p>
-    <LanguageSwitch currentLocale={locale} />
+    <p>{description}</p>
+    <LanguageSwitch currentLocale={locale + ''} />
 	</body>
 </html>

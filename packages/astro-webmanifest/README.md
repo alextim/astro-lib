@@ -74,10 +74,9 @@ The `astro-webmanifest` integration requires configuration object for generation
 
 Then, apply this integration to your _astro.config.\*_ file using the `integrations` property.
 
-To configure integration you should provide at least two properties:
+To configure integration you should provide an object parameter with at one property:
 
 - `name`: your application name;
-- `icon`: source for icon and favicon generation.
 
 **astro.config.mjs**
 
@@ -98,18 +97,25 @@ export default defineConfig({
   },
   integrations: [
     webmanifest({
-      name: 'Your App name',
-      icon: 'src/images/your-icon.svg',
+      icon: 'src/images/your-icon.svg', // source for favicon & icons
+
+      name: 'Your App name', // required
+      short_name: 'App',
+      description: 'Here is your app description',
+      start_url: '/',
+      theme_color: '#3367D6',
+      background_color: '#3367D6',
+      display: 'standalone',
     }),
   ],
 });
 ```
 
-Put a source file for icon generation to the `src/images` folder.
+Put a source file for icons generation to the `src/images` folder.
 
-Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _web manifest_, icons, favicon under `dist/` folder!
+Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _web manifest_, all icons, favicons under `dist/` folder!
 
-The _manifest.webmanifest_'s content will be
+The _manifest.webmanifest_'s content will be:
 
 ```json
 {
@@ -155,109 +161,232 @@ The _manifest.webmanifest_'s content will be
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "short_name": "App",
+  "description": "Here is your app description",
+  "start_url": "/",
+  "theme_color": "#3367D6",
+  "background_color": "#3367D6",
+  "display": "standalone"
 }
 ```
 
-In the `<head>` section of generated pages it will be the links:
+The integration inserts into the `<head>` section of every generated page the following html tags:
 
 ```html
 <link rel="icon" href="/favicon-32x32.png" type="image/png" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<meta name="theme-color" content="#3367D6" />
 <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous" />
 ```
 
 You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
 
-## Configuration
+## Generations modes
+
+There are 3 usage modes of `astro-webmanifest` integration: auto, hybrid and manual.
+
+### Automatic mode
+
+For the most users - you need only the `icon` option to generate all required icons and favicons.
+
+The integration has default preset to generate icons.
+
+```js
+icon: 'src/images/your-icon.svg',
+...
+```
+
+### Hybrid mode
+
+Additionally to the `icon` option you need to provide the `icons` array as a template to generate required icons.
+
+No default icons. Only icons from the array will be created.
+
+```js
+icon: 'src/images/your-icon.svg',
+icons: [
+  {
+    src: 'icons/icon-96x96.png',
+    sizes: '96x96',
+    type: 'image/png',
+  },
+  {
+    src: 'icons/icon-256x256.png',
+    sizes: '256x256',
+    type: 'image/png',
+  },
+  // add any other icon sizes
+],
+...
+```
+
+### Manual mode
+
+No `icon` option, you are fully responsible for manifest configuration.
+
+You should create all icons and favicons manually and put them to the `public` folder.
+
+```js
+icons: [
+  {
+    src: 'icons/icon-96x96.png',
+    sizes: '96x96',
+    type: 'image/png',
+  },
+  {
+    src: 'icons/icon-256x256.png',
+    sizes: '256x256',
+    type: 'image/png',
+  },
+  // add any other icons
+],
+...
+```
+
+:bulb:
+
+If icon entry has the `sizes` property with value of `any` or more then one size as `96x96 128x128` in that case such entry will be excluded from automatic generation.
 
 ## Options
 
-|   Name    |              Type               |             Default              |                                          Description                                          |
-| :-------: | :-----------------------------: | :------------------------------: | :-------------------------------------------------------------------------------------------: |
-|  `host`   |            `String`             |                ``                |                                       Host of your site                                       |
-| `sitemap` | `Boolean / String` / `String[]` |              `true`              |        Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap.xml`        |
-|           |                                 |                                  |                    If `sitemap: false` - no `Sitemap` line in the output.                     |
-|           |                                 |                                  | You could use for the `sitemap` a valid **http** url string or array of **http** url strings. |
-| `policy`  |           `Policy[]`            | [{ allow: '/', userAgent: '*' }] |                                    List of `Policy` rules                                     |
+|          Name           |            Type            | Required |        Default         |                                                                                            Description                                                                                             |
+| :---------------------: | :------------------------: | :------: | :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|         `icon`          |          `String`          |    No    |                        |                                                                      Source to automatically generate the icons and favicons                                                                       |
+|                         | part of `Webmanifest` type |          |                        |                                                                             Format: JPEG, PNG, WebP, TIFF, GIF or SVG                                                                              |
+|                         |                            |          |                        |                                                           Size: at least as big as the largest icon being generated (512x512 by default)                                                           |
+|                         |                            |          |                        |                                                 Form: preferably square, otherwise the results will be padded with transparent bars to be square.                                                  |
+|                         |                            |          |                        |                                                                       If the `icon` is empty - no automatic icon generation.                                                                       |
+|                         |                            |          |                        |                                                                                                                                                                                                    |
+|        `config`         |          `Object`          |    No    |                        |                                                                                                                                                                                                    |
+|      `iconPurpose`      |      `IconPurpose[]`       |    No    |      `undefined`       |                                                       If provided the its value will be appended to a `purpose` property of generated icons.                                                       |
+|     `createFavicon`     |         `Boolean`          |    No    |         `true`         |                                                                   Enable (if `icon` is not empty) or disable favicon generation                                                                    |
+|  `insertFaviconLinks`   |         `Boolean`          |    No    |         `true`         |                                                                Enable (if `icon` is not empty) or disable favicon links in `<head>`                                                                |
+| `insertThemeColorMeta`  |         `Boolean`          |    No    |         `true`         |                                                                Enable (if `theme_color` is not empty) or disable `meta` in `<head>`                                                                |
+|  `insertManifestLink`   |         `Boolean`          |    No    |         `true`         |                                                                            Enable or disable manifest link in `<head>`                                                                             |
+|      `crossOrigin`      |          `String`          |    No    |       `anonymus`       |                      `croossorigin` attribute for manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)                       |
+| `insertAppleTouchLinks` |         `Boolean`          |    No    |        `false`         |                                                                      Enable or disable `apple-touch-icon` links in `<head>`.                                                                       |
+|                         |                            |          |                        | iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed. |
+|        `indent`         |          `String`          |    No    |         `" "`          |                                                            Leading characters for every line in `<head>` to make output more readable.                                                             |
+|          `eol`          |          `String`          |    No    |          `\n`          |                                                           Trailing characters for every line in `<head>` to make output more readable..                                                            |
+|                         |                            |          |                        |                                                                       Set it to `""` to save few bytes on resulting output.                                                                        |
+|        `outfile`        |          `String`          |    No    | `manifest.webmanifest` |                                                                             Template name for generated manifest file.                                                                             |
+|        `locales`        |         `Locales`          |    No    |                        |                                                                     `Record<string, Webmanifest>` - key/object pairs for i18n                                                                      |
 
-### Policy
+### Webmanifest
 
-|     Name     |         Type          | Required |                   Description                   |
-| :----------: | :-------------------: | :------: | :---------------------------------------------: |
-| `userAgent`  |       `String`        |   Yes    | You must provide name of user agent or wildcard |
-|  `disallow`  | `String` / `String[]` |    No    |                Disallowed paths                 |
-|   `allow`    | `String` / `String[]` |    No    |                  Allowed paths                  |
-| `crawlDelay` |       `Number`        |    No    |                                                 |
-| `cleanParam` | `String` / `String[]` |    No    |                                                 |
+|             Name              |          Type          | Required |                                                       Description                                                        |
+| :---------------------------: | :--------------------: | :------: | :----------------------------------------------------------------------------------------------------------------------: |
+|            `icon`             |        `String`        |    No    |                                              See usage in previous section.                                              |
+|            `icons`            |        `Icon[]`        |    No    |                                              See usage in previous section.                                              |
+|                               |                        |          |                                                                                                                          |
+|            `name`             |        `String`        |   Yes    |                                            You must provide name of your app                                             |
+|         `short_name`          |        `String`        |    No    |                                                                                                                          |
+|         `description`         |        `String`        |    No    |                                                                                                                          |
+|         `categories`          |       `String[]`       |    No    |                                                                                                                          |
+|            `lang`             |        `String`        |    No    |                                                                                                                          |
+|             `dir`             |        `Dir` `         |    No    |                                                   'auto', 'ltr', 'rtl'                                                   |
+|       `iarc_rating_id`        |        `String`        |    No    |                                                                                                                          |
+|             `id`              |        `String`        |    No    |                                                                                                                          |
+|          `start_url`          |        `String`        |    No    |                                                                                                                          |
+|            `scope`            |        `String`        |    No    |                                                                                                                          |
+|         `theme_color`         |        `String`        |    No    |                                              source for `meta` in `<head>`                                               |
+|      `background_color`       |        `String`        |    No    |                                                                                                                          |
+|           `display`           |       `Display`        |    No    |                                   'fullscreen', 'standalone', 'minimal-ui', 'browser'                                    |
+|      `display_override`       |      `Display[]`       |    No    |                                                                                                                          |
+|         `orientation`         |     `Orientation`      |    No    | 'any','natural','landscape','landscape-primary','landscape-secondary','portrait','portrait-primary','portrait-secondary' |
+|      `protocol_handlers`      |  `ProtocolHandler[]`   |    No    |                                                                                                                          |
+| `prefer_related_applications` |       `Boolean`        |    No    |                                                                                                                          |
+|    `related_applications`     | `RelatedApplication[]` |    No    |                                                                                                                          |
+|         `screenshots`         |       `Image[]`        |    No    |                                                                                                                          |
+|          `shortcuts`          |      `Shortcut[]`      |    No    |                                                                                                                          |
 
-**Sample of _astro.config.mjs_**
+For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
+You can find detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+
+Demo with extended configuration is in this [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+
+## Localization
+
+Localization allows to create unique manifest, icons set and `<head>` html for every separate language.
+
+To make this you need `locales` property.
+
+Sample configuration below:
 
 ```js
-// astro.config.mjs
-import { defineConfig } from 'astro/config';
-import robotsTxt from 'astro-webmanifest';
+...
+  icon: 'src/images/logomark-light.svg',
 
-export default defineConfig({
-  site: 'https://example.com',
-  experimental: {
-    integrations: true,
+  name: 'Webmanifest i18n test',
+  short_name: 'Test',
+  description: 'This is the application description',
+  lang: 'en-US',
+  start_url: '/',
+
+  theme_color: '#3367D6',
+  background_color: '#3367D6',
+  display: 'standalone',
+
+  locales: {
+    es: {
+      name: 'Prueba Webmanifest i18n',
+      short_name: 'Prueba',
+      description: 'Esta es la descripción de la aplicación.',
+      lang: 'es-ES',
+      start_url: '/es',
+    },
+    fr: {
+      name: 'Test i18n du manifeste Web',
+      short_name: 'Test',
+      description: "Ceci est la description de l'application",
+      lang: 'fr-CA',
+      start_url: '/fr',
+    },
   },
-  integrations: [
-    robotsTxt({
-      host: 'example.com',
-      sitemap: ['https://example.com/main-sitemap.xml', 'https://example.com/images-sitemap.xml'],
-      policy: [
-        {
-          userAgent: 'Googlebot',
-          allow: '/',
-          disallow: ['/search'],
-          crawlDelay: 2,
-        },
-        {
-          userAgent: 'OtherBot',
-          allow: ['/allow-for-all-bots', '/allow-only-for-other-bot'],
-          disallow: ['/admin', '/login'],
-          crawlDelay: 2,
-        },
-        {
-          userAgent: '*',
-          allow: '/',
-          disallow: '/search',
-          crawlDelay: 10,
-          cleanParam: 'ref /articles/',
-        },
-      ],
-    }),
-  ],
-});
+...
 ```
 
-if you want to get a _robots.txt_ without `Sitemap: ...` record please set the `sitemap` option to `false`.
+The integration uses keys of `locales` property to make a manifest name and to determine a page language by path.
+
+It expects the pages paths in the following format: /{locale}{path}, where the locale is a key from `locales` property.
+
+Three separate manifests will be generated:
+
+- `manifest.webmanifest` - for default language;
+- `manifest-fr.webmanifest` - for `fr` language;
+- `manifest-es.webmanifest` - for `es` language.
+
+Appropriate language specific html will be inserted to `<head>` section of generated pages.
+
+If you need separate icon sets for every language please add `icon` property.
 
 ```js
-// astro.config.mjs
-import { defineConfig } from 'astro/config';
-import robotsTxt from 'astro-webmanifest';
-
-export default defineConfig({
-  // ...
-  site: 'https://example.com',
-  experimental: {
-    integrations: true,
+...
+  icon: 'src/images/logo.svg',
+  lang: 'en-US',
+  ...
+  locales: {
+    es: {
+      icon: 'src/images/logo-es.svg',
+      lang: 'es-ES',
+      ...
+    },
+    fr: {
+      lang: 'fr-CA',
+      ...
+    },
   },
-  integrations: [
-    robotsTxt({
-      sitemap: false,
-      // ...
-    }),
-  ],
-});
+...
 ```
 
-:exclamation: Important Notes
+In this configuration `en` and `fr` languages will have common icons set, `es` - own icons set.
 
-Only official **@astrojs/\*** integrations are currently supported by Astro.
+:bulb: The favicon will be only one for all languages. The source for generation will be taken from default language.
+
+You could see i18n usage in [demo repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+
+:important: Only official **@astrojs/\*** integrations are currently supported by Astro.
 
 There are two possibilities to make **astro-webmanifest** integration working with current version of Astro.
 
@@ -278,11 +407,3 @@ Or use the `--experimental-integrations` flag for build command.
 ```sh
 astro build --experimental-integrations
 ```
-
-[astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
-
-**Inspirations:**
-
-- [gatsby-plugin-robots-txt](https://github.com/mdreizin/gatsby-plugin-robots-txt)
-- [generate-robotstxt](https://github.com/itgalaxy/generate-robotstxt)
-- [is-valid-hostname](https://github.com/miguelmota/is-valid-hostname)

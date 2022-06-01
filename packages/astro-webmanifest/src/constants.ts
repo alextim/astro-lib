@@ -1,22 +1,22 @@
 export const iconPurposeValues = ['badge', 'maskable', 'any', 'monochrome'] as const;
 
 export const applicationPlatformValues = [
-  'chrome_web_store',
+  'wide',
+  'narrow',
+  'amazon',
   'play',
   'itunes',
+  'microsoft',
   'webapp',
-  'windows',
   'f-droid',
-  'amazon',
-  'narrow',
-  'wide',
   'chromeos',
   'ios',
   'kaios',
   'macos',
+  'windows',
   'windows10x',
   'xbox',
-  'microsoft',
+  'chrome_web_store',
 ] as const;
 
 export const displayValues = ['fullscreen', 'standalone', 'minimal-ui', 'browser'] as const;
