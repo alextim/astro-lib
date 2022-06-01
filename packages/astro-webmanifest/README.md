@@ -298,12 +298,12 @@ iOS versions before 11.3 don't have support for web app manifest spec and don't 
 
 ### Icon
 
-| Name      |   Type   | Required | Description                                                                                                                |
-| :-------- | :------: | :------: | :------------------------------------------------------------------------------------------------------------------------- |
-| `src`     | `String` |   Yes    | The path to the image file in URL form.                                                                                    |
-| `sizes`   | `String` |    No    | Space-separated image dimensions. Syntax [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-sizes) |
-| `type`    | `String` |    No    | Media type of the image                                                                                                    |
-| `purpose` | `String` |    No    | Space separated list of image purposes. See in [standard](https://w3c.github.io/manifest/#purpose-member)                  |
+| Name      |   Type   | Required | Description                                                                                                                    |
+| :-------- | :------: | :------: | :----------------------------------------------------------------------------------------------------------------------------- |
+| `src`     | `String` |   Yes    | The path to the image file in URL form.                                                                                        |
+| `sizes`   | `String` |    No    | Space-separated image dimensions. Syntax [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-sizes)     |
+| `type`    | `String` |    No    | Media type of the image                                                                                                        |
+| `purpose` | `String` |    No    | Space separated list of image purposes (`IconPurpose` type). See in [standard](https://w3c.github.io/manifest/#purpose-member) |
 
 For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
 You can find detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
