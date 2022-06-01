@@ -242,9 +242,7 @@ icons: [
 ...
 ```
 
-:bulb:
-
-If icon entry `sizes` property has value `any` or contains more then one size (`96x96 128x128`) in that case such entry will be excluded from automatic generation.
+:bulb: If icon entry `sizes` property has value `any` or contains more then one size (`96x96 128x128`) in that case such entry will be excluded from automatic generation.
 
 ## Options
 
