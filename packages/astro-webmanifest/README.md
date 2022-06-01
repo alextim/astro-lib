@@ -299,7 +299,7 @@ icons: [
 For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
 You can find detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 
-Demo with extended configuration is in this [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+Demo with extended configuration is in this [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/extended).
 
 ## Localization
 
