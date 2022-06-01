@@ -4,13 +4,13 @@
 
 # astro-webmanifest
 
-This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide/)** generates a _web application manifest_, favicon, icons and inserts appropriate data to a page `<head>` section for your Astro project during build.
+This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide/)** generates a _web application manifest_, favicon, icons and inserts appropriate html to `<head>` section for your Astro project during build.
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-The _web app manifest_ provides information about a [Progressive Web App (PWA)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) in a JSON text file. [See Google's advice on web app manifest](https://web.dev/add-manifest/) to learn more. Current standard for the manifest is [here](https://w3c.github.io/manifest/). Additional info is on [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+The _web app manifest_ provides information about a [Progressive Web App (PWA)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) in a JSON text file. [See Google's advice on web app manifest](https://web.dev/add-manifest/) to learn more. Current standard for the manifest is on [W3C](https://w3c.github.io/manifest/). See also on [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 
 ## Why astro-webmanifest?
 
@@ -18,19 +18,19 @@ This integration provides numerous features beyond manifest configuration to mak
 
 - automatic icon generation - generates multiple icon sizes from a single source;
 - favicon support;
-- inserts all required `link`s and `meta` to the `<head>` section of generated pages;
+- inserts all required `link`s and `meta` to `<head>` section of generated pages;
 - legacy icon support (iOS);
 - localization - provides unique manifests for path-based localization.
 
 Each of these features has extensive configuration available so you are always in control.
 
-See usage in the demo repos: [basic](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/basic) and [advanced](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+See usage in the demo repos: [basic](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/basic), [advanced](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced) and [i18n](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
 
 ---
 
 ## Installation
 
-There are two ways to add **astro-webmanifest** integration to your Astro project.
+There are two main ways to add **astro-webmanifest** integration to your Astro project.
 
 ### Astro CLI tool
 
@@ -68,15 +68,13 @@ Then apply this integration to your _astro.config.\*_. All details below in **Ge
 
 ## Getting started
 
-The `astro-webmanifest` integration requires configuration object for generation. More details about the configuration is in the next section.
+The `astro-webmanifest` requires the options parameter to configure the integration.
 
 :exclamation: Provide the `experimental` property to your _astro.config.\*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true`.
 
-Then, apply this integration to your _astro.config.\*_ file using the `integrations` property.
+Then, apply this integration to your _astro.config.\*_ by using the `integrations` property.
 
-To configure integration you should provide an object parameter with at one property:
-
-- `name`: your application name;
+The sample configuration is below:
 
 **astro.config.mjs**
 
@@ -111,7 +109,7 @@ export default defineConfig({
 });
 ```
 
-Put a source file for icons generation to the `src/images` folder.
+Next put a source file for icons generation to the `src/images` folder.
 
 Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _web manifest_, all icons, favicons under `dist/` folder!
 
@@ -171,7 +169,7 @@ The _manifest.webmanifest_'s content will be:
 }
 ```
 
-The integration inserts into the `<head>` section of every generated page the following html tags:
+The integration inserts into `<head>` section of every generated page the following html tags:
 
 ```html
 <link rel="icon" href="/favicon-32x32.png" type="image/png" />
@@ -190,7 +188,7 @@ There are 3 usage modes of `astro-webmanifest` integration: auto, hybrid and man
 
 For the most users - you need only the `icon` option to generate all required icons and favicons.
 
-The integration has default preset to generate icons.
+The integration has default icon preset to generate all icons.
 
 ```js
 icon: 'src/images/your-icon.svg',
@@ -223,7 +221,7 @@ icons: [
 
 ### Manual mode
 
-No `icon` option, you are fully responsible for manifest configuration.
+If you don't provide `icon` option, you will be fully responsible for manifest configuration.
 
 You should create all icons and favicons manually and put them to the `public` folder.
 
@@ -246,53 +244,53 @@ icons: [
 
 :bulb:
 
-If icon entry has the `sizes` property with value of `any` or more then one size as `96x96 128x128` in that case such entry will be excluded from automatic generation.
+If icon entry `sizes` property has value `any` or contains more then one size (`96x96 128x128`) in that case such entry will be excluded from automatic generation.
 
 ## Options
 
-|          Name           |            Type            | Required |        Default         |                                                                                            Description                                                                                             |
-| :---------------------: | :------------------------: | :------: | :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|         `icon`          |          `String`          |    No    |                        |                                                                      Source to automatically generate the icons and favicons                                                                       |
-|                         | part of `Webmanifest` type |          |                        |                                                                             Format: JPEG, PNG, WebP, TIFF, GIF or SVG                                                                              |
-|                         |                            |          |                        |                                                           Size: at least as big as the largest icon being generated (512x512 by default)                                                           |
-|                         |                            |          |                        |                                                 Form: preferably square, otherwise the results will be padded with transparent bars to be square.                                                  |
-|                         |                            |          |                        |                                                                       If the `icon` is empty - no automatic icon generation.                                                                       |
+|          Name           |            Type            | Required |        Default         | Description                                                                                                                                                                                        |
+| :---------------------: | :------------------------: | :------: | :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|         `icon`          |          `String`          |    No    |                        | It's a source to automatically generate icons and favicon.                                                                                                                                         |
+|                         | part of `Webmanifest` type |          |                        | Format: JPEG, PNG, WebP, TIFF, GIF or SVG                                                                                                                                                          |
+|                         |                            |          |                        | Size: at least as big as the largest icon being generated (512x512 by default)                                                                                                                     |
+|                         |                            |          |                        | Form: preferably square, otherwise the results will be padded with transparent bars to be square.                                                                                                  |
+|                         |                            |          |                        | If the `icon` is empty - no automatic icon generation.                                                                                                                                             |
 |                         |                            |          |                        |                                                                                                                                                                                                    |
 |        `config`         |          `Object`          |    No    |                        |                                                                                                                                                                                                    |
-|      `iconPurpose`      |      `IconPurpose[]`       |    No    |      `undefined`       |                                                       If provided the its value will be appended to a `purpose` property of generated icons.                                                       |
-|     `createFavicon`     |         `Boolean`          |    No    |         `true`         |                                                                   Enable (if `icon` is not empty) or disable favicon generation                                                                    |
-|  `insertFaviconLinks`   |         `Boolean`          |    No    |         `true`         |                                                                Enable (if `icon` is not empty) or disable favicon links in `<head>`                                                                |
-| `insertThemeColorMeta`  |         `Boolean`          |    No    |         `true`         |                                                                Enable (if `theme_color` is not empty) or disable `meta` in `<head>`                                                                |
-|  `insertManifestLink`   |         `Boolean`          |    No    |         `true`         |                                                                            Enable or disable manifest link in `<head>`                                                                             |
-|      `crossOrigin`      |          `String`          |    No    |       `anonymus`       |                      `croossorigin` attribute for manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)                       |
-| `insertAppleTouchLinks` |         `Boolean`          |    No    |        `false`         |                                                                      Enable or disable `apple-touch-icon` links in `<head>`.                                                                       |
+|      `iconPurpose`      |      `IconPurpose[]`       |    No    |      `undefined`       | If provided it will be appended to the `purpose` property of generated icons.                                                                                                                      |
+|     `createFavicon`     |         `Boolean`          |    No    |         `true`         | Enable (if `icon` is not empty) or disable favicon generation                                                                                                                                      |
+|  `insertFaviconLinks`   |         `Boolean`          |    No    |         `true`         | Enable (if `icon` is not empty) or disable favicon links in `<head>`                                                                                                                               |
+| `insertThemeColorMeta`  |         `Boolean`          |    No    |         `true`         | Enable (if `theme_color` is not empty) or disable `meta` in `<head>`                                                                                                                               |
+|  `insertManifestLink`   |         `Boolean`          |    No    |         `true`         | Enable or disable manifest link in `<head>`                                                                                                                                                        |
+|      `crossOrigin`      |          `String`          |    No    |       `anonymus`       | `croossorigin` attribute for manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)                                            |
+| `insertAppleTouchLinks` |         `Boolean`          |    No    |        `false`         | Enable or disable `apple-touch-icon` links in `<head>`.                                                                                                                                            |
 |                         |                            |          |                        | iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed. |
-|        `indent`         |          `String`          |    No    |         `" "`          |                                                            Leading characters for every line in `<head>` to make output more readable.                                                             |
-|          `eol`          |          `String`          |    No    |          `\n`          |                                                           Trailing characters for every line in `<head>` to make output more readable..                                                            |
-|                         |                            |          |                        |                                                                       Set it to `""` to save few bytes on resulting output.                                                                        |
-|        `outfile`        |          `String`          |    No    | `manifest.webmanifest` |                                                                             Template name for generated manifest file.                                                                             |
-|        `locales`        |         `Locales`          |    No    |                        |                                                                     `Record<string, Webmanifest>` - key/object pairs for i18n                                                                      |
+|        `indent`         |          `String`          |    No    |         `" "`          | Leading characters for every line in `<head>` to make output more readable.                                                                                                                        |
+|          `eol`          |          `String`          |    No    |          `\n`          | Trailing characters for every line in `<head>` to make output more readable..                                                                                                                      |
+|                         |                            |          |                        | Set it to `""` to save few bytes on resulting output.                                                                                                                                              |
+|        `outfile`        |          `String`          |    No    | `manifest.webmanifest` | Template name for generated manifest file.                                                                                                                                                         |
+|        `locales`        |         `Locales`          |    No    |                        | `Record<string, Webmanifest>` - key/object pairs for i18n                                                                                                                                          |
 
 ### Webmanifest
 
-|             Name              |          Type          | Required |                                                       Description                                                        |
-| :---------------------------: | :--------------------: | :------: | :----------------------------------------------------------------------------------------------------------------------: |
-|            `icon`             |        `String`        |    No    |                                              See usage in previous section.                                              |
-|            `icons`            |        `Icon[]`        |    No    |                                              See usage in previous section.                                              |
+|             Name              |          Type          | Required | Description                                                                                                              |
+| :---------------------------: | :--------------------: | :------: | :----------------------------------------------------------------------------------------------------------------------- |
+|            `icon`             |        `String`        |    No    | See usage in previous section.                                                                                           |
+|            `icons`            |        `Icon[]`        |    No    | See usage in previous section.                                                                                           |
 |                               |                        |          |                                                                                                                          |
-|            `name`             |        `String`        |   Yes    |                                            You must provide name of your app                                             |
+|            `name`             |        `String`        |   Yes    | You must provide name of your app                                                                                        |
 |         `short_name`          |        `String`        |    No    |                                                                                                                          |
 |         `description`         |        `String`        |    No    |                                                                                                                          |
 |         `categories`          |       `String[]`       |    No    |                                                                                                                          |
 |            `lang`             |        `String`        |    No    |                                                                                                                          |
-|             `dir`             |        `Dir` `         |    No    |                                                   'auto', 'ltr', 'rtl'                                                   |
+|             `dir`             |        `Dir` `         |    No    | 'auto', 'ltr', 'rtl'                                                                                                     |
 |       `iarc_rating_id`        |        `String`        |    No    |                                                                                                                          |
 |             `id`              |        `String`        |    No    |                                                                                                                          |
 |          `start_url`          |        `String`        |    No    |                                                                                                                          |
 |            `scope`            |        `String`        |    No    |                                                                                                                          |
-|         `theme_color`         |        `String`        |    No    |                                              source for `meta` in `<head>`                                               |
+|         `theme_color`         |        `String`        |    No    | source for `meta` in `<head>`                                                                                            |
 |      `background_color`       |        `String`        |    No    |                                                                                                                          |
-|           `display`           |       `Display`        |    No    |                                   'fullscreen', 'standalone', 'minimal-ui', 'browser'                                    |
+|           `display`           |       `Display`        |    No    | 'fullscreen', 'standalone', 'minimal-ui', 'browser'                                                                      |
 |      `display_override`       |      `Display[]`       |    No    |                                                                                                                          |
 |         `orientation`         |     `Orientation`      |    No    | 'any','natural','landscape','landscape-primary','landscape-secondary','portrait','portrait-primary','portrait-secondary' |
 |      `protocol_handlers`      |  `ProtocolHandler[]`   |    No    |                                                                                                                          |
@@ -310,7 +308,11 @@ Demo with extended configuration is in this [repo](https://github.com/alextim/as
 
 Localization allows to create unique manifest, icons set and `<head>` html for every separate language.
 
-To make this you need `locales` property.
+You need to provide the `locales` property in form of`Record<string, Webmanifest>`.
+
+The integration uses keys of `locales` property to make a manifest name unique and to determine a page language by path.
+
+The integration expects pages paths in the following format: /{locale}{path}, where the locale is a key from `locales` property.
 
 Sample configuration below:
 
@@ -347,17 +349,13 @@ Sample configuration below:
 ...
 ```
 
-The integration uses keys of `locales` property to make a manifest name and to determine a page language by path.
-
-It expects the pages paths in the following format: /{locale}{path}, where the locale is a key from `locales` property.
-
-Three separate manifests will be generated:
+By this configuration three separate manifests will be generated:
 
 - `manifest.webmanifest` - for default language;
 - `manifest-fr.webmanifest` - for `fr` language;
 - `manifest-es.webmanifest` - for `es` language.
 
-Appropriate language specific html will be inserted to `<head>` section of generated pages.
+And language specific html will be inserted to `<head>` section of generated pages.
 
 If you need separate icon sets for every language please add `icon` property.
 

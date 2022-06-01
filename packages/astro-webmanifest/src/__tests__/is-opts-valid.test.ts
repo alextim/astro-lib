@@ -6,6 +6,23 @@ import { isOptsValid } from '../is-opts-valid';
 
 vi.mock('@/at-utils');
 
+vi.mock('sharp', () => {
+  return {
+    default: vi.fn(
+      () =>
+        new (class {
+          metadata() {
+            return {
+              width: 128,
+              height: 128,
+              format: 'png',
+            };
+          }
+        })(),
+    ),
+  };
+});
+
 const logger = new Logger('dummy-astro-webmanifest');
 // name
 describe('test isOptsValid', () => {

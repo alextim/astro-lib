@@ -2,8 +2,8 @@ import isValidFilename from 'valid-filename';
 import { isValidUrlEx, isValidUrl, isFileExistsSync, ILogger } from '@/at-utils';
 import type { Webmanifest, WebmanifestOptions } from './index';
 import { isIconSquare } from './helpers/is-icon-square';
-import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 import isValidSizeBase from './helpers/is-valid-size';
+import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 let logger: ILogger;
 
 const isEmpty = (x: any, name: string) => {
