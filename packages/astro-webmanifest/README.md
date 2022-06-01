@@ -381,7 +381,7 @@ In this configuration `en` and `fr` languages will have common icons set, `es` -
 
 You could see i18n usage in [demo repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
 
-:important: Only official **@astrojs/\*** integrations are currently supported by Astro.
+:exclamation: Only official **@astrojs/\*** integrations are currently supported by Astro.
 
 There are two possibilities to make **astro-webmanifest** integration working with current version of Astro.
 
