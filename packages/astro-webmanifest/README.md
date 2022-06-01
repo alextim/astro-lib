@@ -271,31 +271,31 @@ icons: [
 
 ### Webmanifest
 
-|             Name              |          Type          | Required | Description                                                                                                              |
-| :---------------------------: | :--------------------: | :------: | :----------------------------------------------------------------------------------------------------------------------- |
-|            `icon`             |        `String`        |    No    | See usage in previous section.                                                                                           |
-|            `icons`            |        `Icon[]`        |    No    | See usage in previous section.                                                                                           |
-|                               |                        |          |                                                                                                                          |
-|            `name`             |        `String`        |   Yes    | You must provide name of your app                                                                                        |
-|         `short_name`          |        `String`        |    No    |                                                                                                                          |
-|         `description`         |        `String`        |    No    |                                                                                                                          |
-|         `categories`          |       `String[]`       |    No    |                                                                                                                          |
-|            `lang`             |        `String`        |    No    |                                                                                                                          |
-|             `dir`             |        `Dir` `         |    No    | 'auto', 'ltr', 'rtl'                                                                                                     |
-|       `iarc_rating_id`        |        `String`        |    No    |                                                                                                                          |
-|             `id`              |        `String`        |    No    |                                                                                                                          |
-|          `start_url`          |        `String`        |    No    |                                                                                                                          |
-|            `scope`            |        `String`        |    No    |                                                                                                                          |
-|         `theme_color`         |        `String`        |    No    | source for `meta` in `<head>`                                                                                            |
-|      `background_color`       |        `String`        |    No    |                                                                                                                          |
-|           `display`           |       `Display`        |    No    | 'fullscreen', 'standalone', 'minimal-ui', 'browser'                                                                      |
-|      `display_override`       |      `Display[]`       |    No    |                                                                                                                          |
-|         `orientation`         |     `Orientation`      |    No    | 'any','natural','landscape','landscape-primary','landscape-secondary','portrait','portrait-primary','portrait-secondary' |
-|      `protocol_handlers`      |  `ProtocolHandler[]`   |    No    |                                                                                                                          |
-| `prefer_related_applications` |       `Boolean`        |    No    |                                                                                                                          |
-|    `related_applications`     | `RelatedApplication[]` |    No    |                                                                                                                          |
-|         `screenshots`         |       `Image[]`        |    No    |                                                                                                                          |
-|          `shortcuts`          |      `Shortcut[]`      |    No    |                                                                                                                          |
+|             Name              |          Type          | Required | Description                                                                                                                     |
+| :---------------------------: | :--------------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------ |
+|            `icon`             |        `String`        |    No    | See usage in previous section.                                                                                                  |
+|            `icons`            |        `Icon[]`        |    No    | See usage in previous section.                                                                                                  |
+|                               |                        |          |                                                                                                                                 |
+|            `name`             |        `String`        |   Yes    | You must provide name of your app                                                                                               |
+|         `short_name`          |        `String`        |    No    |                                                                                                                                 |
+|         `description`         |        `String`        |    No    |                                                                                                                                 |
+|         `categories`          |       `String[]`       |    No    |                                                                                                                                 |
+|            `lang`             |        `String`        |    No    |                                                                                                                                 |
+|             `dir`             |         `Dir`          |    No    | `auto`, `ltr`, `rtl`                                                                                                            |
+|       `iarc_rating_id`        |        `String`        |    No    |                                                                                                                                 |
+|             `id`              |        `String`        |    No    |                                                                                                                                 |
+|          `start_url`          |        `String`        |    No    |                                                                                                                                 |
+|            `scope`            |        `String`        |    No    |                                                                                                                                 |
+|         `theme_color`         |        `String`        |    No    | source for `meta` in `<head>`                                                                                                   |
+|      `background_color`       |        `String`        |    No    |                                                                                                                                 |
+|           `display`           |       `Display`        |    No    | `fullscreen`, `standalone`, `minimal-ui`, `browser`                                                                             |
+|      `display_override`       |      `Display[]`       |    No    |                                                                                                                                 |
+|         `orientation`         |     `Orientation`      |    No    | `any`, `natural`, `landscape`, `landscape-primary`, `landscape-secondary`, `portrait`, `portrait-primary`, `portrait-secondary` |
+|      `protocol_handlers`      |  `ProtocolHandler[]`   |    No    |                                                                                                                                 |
+| `prefer_related_applications` |       `Boolean`        |    No    |                                                                                                                                 |
+|    `related_applications`     | `RelatedApplication[]` |    No    |                                                                                                                                 |
+|         `screenshots`         |       `Image[]`        |    No    |                                                                                                                                 |
+|          `shortcuts`          |      `Shortcut[]`      |    No    |                                                                                                                                 |
 
 For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
 You can find detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
