@@ -13,5 +13,19 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     }
+  ],
+  "tasks": [
+    {
+      "type": "typescript",
+      "tsconfig": "packages/imp/tsconfig.json",
+      "problemMatcher": [
+        "$tsc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "tsc: build - packages/imp/tsconfig.json"
+    }
   ]
 }

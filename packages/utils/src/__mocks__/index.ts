@@ -1,6 +1,16 @@
 import { vi } from 'vitest';
 
-export { isObjectEmpty, isValidHostname, isValidHttpUrl, isValidUrlEx, isValidUrl, isFileExistsSync, isDirExists, ILogger } from '../index';
+export {
+  isObjectEmpty,
+  isValidHostname,
+  isValidHttpUrl,
+  isValidUrlEx,
+  isValidUrl,
+  isFileExistsSync,
+  isDirExists,
+  ILogger,
+  cloneDeep,
+} from '../index';
 
 export const Logger = vi.fn().mockImplementation(() => ({
   warn: vi.fn(),

@@ -2,7 +2,7 @@ import { isFileExistsSync } from '../is-file-exists-sync';
 
 import path from 'node:path';
 
-describe('test isFileExists', () => {
+describe('test isFileExistsSync', () => {
   it('file is not exists, should return false', () => {
     expect(isFileExistsSync(path.join(process.cwd(), 'src', 'index1.ts'))).toBeFalsy();
   });
