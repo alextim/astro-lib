@@ -1,6 +1,4 @@
-<a href="https://bank.gov.ua/en/about/support-the-armed-forces">
-  <img src="https://raw.githubusercontent.com/alextim/help-ukraine-win-flag/master/stop-russian-agressian-help-ukraine-now-link.svg" alt="Help Ukraine now!">
-</a>
+[![Help Ukraine now!](https://raw.githubusercontent.com/alextim/help-ukraine-win-flag/master/stop-russian-agressian-help-ukraine-now-link.svg 'Help Ukraine now!')](https://bank.gov.ua/en/about/support-the-armed-forces)
 
 # astro-robots-txt
 
@@ -21,7 +19,7 @@ It brakes DRY principle.
 Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or add `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
 Again you do it manually in two separate places.
 
-**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt).
+**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/extended).
 
 ---
 
@@ -189,6 +187,41 @@ export default defineConfig({
   ],
 });
 ```
+
+## Using Configuration Files
+
+You could configure the integration with external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in offical [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+
+The external config must have default export statement:
+
+```js
+// ESM
+export default {
+  ...
+};
+```
+
+or
+
+```js
+// CommonJS
+exports = {
+  ...
+};
+```
+
+:exclamation: Current version of integration doesn't support typescript configs.
+
+### How does the integration internally resolve a config?
+
+| Options parameter provided? | External config exists? | Result                                           |
+| :-------------------------- | :---------------------: | :----------------------------------------------- |
+| No                          |           No            | Default config used                              |
+| Yes                         |           No            | Options parameter used                           |
+| No                          |           Yes           | External config used                             |
+| Yes                         |           Yes           | External config is merged with options parameter |
+
+The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/extended).
 
 :exclamation: Important Notes
 

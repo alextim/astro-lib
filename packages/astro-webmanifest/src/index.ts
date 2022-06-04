@@ -1,6 +1,7 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import { Logger } from '@/at-utils';
+import { Logger, loadConfig } from '@/at-utils';
+import merge from 'deepmerge';
 /**
  * `package-name.ts` is generated during build from `name` property of `package.json`
  */
@@ -112,7 +113,7 @@ export type WebmanifestOptions =
     })
   | undefined;
 
-const createPlugin = (pluginOptions: WebmanifestOptions): AstroIntegration => {
+const createPlugin = (options?: WebmanifestOptions): AstroIntegration => {
   let config: AstroConfig;
   return {
     /**
@@ -131,7 +132,15 @@ const createPlugin = (pluginOptions: WebmanifestOptions): AstroIntegration => {
         config = cfg;
       },
       'astro:build:done': async ({ dir, pages }) => {
-        await onBuildDone(pluginOptions, config, dir, pages, new Logger(packageName));
+        const namespace = packageName.replace('astro-', '');
+        const external = await loadConfig(namespace, config.root);
+        if (!external && !options) {
+          throw new Error(
+            `${packageName}: no configurations found. Provide external config "${namespace}.config.*" or options in "astro.config.*"`,
+          );
+        }
+        const merged: WebmanifestOptions = merge(external || {}, options || {});
+        await onBuildDone(merged, config, dir, pages, new Logger(packageName));
       },
     },
   };

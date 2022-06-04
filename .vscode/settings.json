@@ -17,6 +17,7 @@
     "astrojs",
     "googlebot",
     "pnpm",
+    "pnpx",
     "robotstxt",
     "vite",
     "changesets",
@@ -24,7 +25,8 @@
     "outfile",
     "favicon",
     "favicons",
-    "crossorigin"
+    "crossorigin",
+    "anonymus"
   ],
   "prettier.documentSelectors": ["**/*.ts"]
 }

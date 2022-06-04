@@ -1,7 +1,7 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import { Logger } from '@/at-utils';
-
+import { Logger, loadConfig } from '@/at-utils';
+import merge from 'deepmerge';
 /**
  * `package-name.ts` is generated during build from the `name` property of a `package.json`
  */
@@ -24,7 +24,7 @@ export type RobotsTxtOptions =
     }
   | undefined;
 
-const createPlugin = (pluginOptions: RobotsTxtOptions): AstroIntegration => {
+const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
   let config: AstroConfig;
   return {
     /**
@@ -43,7 +43,12 @@ const createPlugin = (pluginOptions: RobotsTxtOptions): AstroIntegration => {
         config = cfg;
       },
 
-      'astro:build:done': async ({ dir }) => onBuildDone(pluginOptions, config, dir, new Logger(packageName)),
+      'astro:build:done': async ({ dir }) => {
+        const namespace = packageName.replace('astro-', '');
+        const external = await loadConfig(namespace, config.root);
+        const merged: RobotsTxtOptions = merge(external || {}, options || {});
+        onBuildDone(merged, config, dir, new Logger(packageName));
+      },
     },
   };
 };

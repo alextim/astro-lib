@@ -4,7 +4,7 @@ export async function loadConfig(name: string, base: URL) {
   if (!name) {
     return null;
   }
-  const exts = ['ts', 'js', 'mjs', 'cjs'];
+  const exts = ['js', 'mjs', 'cjs'];
   for (const ext of exts) {
     const fileName = `${name}.config.${ext}`;
     const file = new URL(fileName, base);

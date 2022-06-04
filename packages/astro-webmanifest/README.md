@@ -1,6 +1,4 @@
-<a href="https://bank.gov.ua/en/about/support-the-armed-forces">
-  <img src="https://raw.githubusercontent.com/alextim/help-ukraine-win-flag/master/stop-russian-agressian-help-ukraine-now-link.svg" alt="Help Ukraine now!">
-</a>
+[![Help Ukraine now!](https://raw.githubusercontent.com/alextim/help-ukraine-win-flag/master/stop-russian-agressian-help-ukraine-now-link.svg 'Help Ukraine now!')](https://bank.gov.ua/en/about/support-the-armed-forces)
 
 # astro-webmanifest
 
@@ -254,7 +252,7 @@ icons: [
 | - `insertFaviconLinks`    |    `Boolean`    |    No    |         `true`         | Enable (if `icon` is not empty) or disable favicon links in `<head>`                                                                                                                                                                                                                                                                                                                                      |
 | - `insertThemeColorMeta`  |    `Boolean`    |    No    |         `true`         | Enable (if `theme_color` is not empty) or disable `meta` in `<head>`                                                                                                                                                                                                                                                                                                                                      |
 | - `insertManifestLink`    |    `Boolean`    |    No    |         `true`         | Enable or disable manifest link in `<head>`                                                                                                                                                                                                                                                                                                                                                               |
-| - `crossOrigin`           |    `String`     |    No    |       `anonymus`       | `croossorigin` attribute for manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)                                                                                                                                                                                                                                                   |
+| - `crossOrigin`           |    `String`     |    No    |       `anonymus`       | `crossorigin` attribute for manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)                                                                                                                                                                                                                                                    |
 | - `insertAppleTouchLinks` |    `Boolean`    |    No    |        `false`         | Enable or disable `apple-touch-icon` links in `<head>`.<br/>iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed.                                                                                                                                            |
 | - `indent`                |    `String`     |    No    |        4 spaces        | Leading characters for every line in `<head>` to make output more readable.                                                                                                                                                                                                                                                                                                                               |
 | - `eol`                   |    `String`     |    No    |          `\n`          | Trailing characters for every line in `<head>` to make output more readable.<br/>Set it to `""` to save few bytes on html output.                                                                                                                                                                                                                                                                         |
@@ -383,6 +381,41 @@ In this configuration default `en` language and `fr` language will have common i
 :bulb: The favicon will be only one for all languages. The source for generation will be taken from default language.
 
 You could explore i18n usage in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+
+## Using Configuration Files
+
+You could configure the integration with external file `webmanifest.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in offical [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+
+The external config must have default export statement:
+
+```js
+// ESM
+export default {
+  ...
+};
+```
+
+or
+
+```js
+// CommonJS
+exports = {
+  ...
+};
+```
+
+:exclamation: Current version of integration doesn't support typescript configs.
+
+### How does the integration internally resolve a config?
+
+| Options parameter provided? | External config exists? | Result                                           |
+| :-------------------------- | :---------------------: | :----------------------------------------------- |
+| No                          |           No            | Throw error                                      |
+| Yes                         |           No            | Options parameter used                           |
+| No                          |           Yes           | External config used                             |
+| Yes                         |           Yes           | External config is merged with options parameter |
+
+The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/extended).
 
 :exclamation: Only official **@astrojs/\*** integrations are currently supported by Astro.
 

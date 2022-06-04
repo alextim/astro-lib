@@ -2,8 +2,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
 
-import config from './site.config.mjs';
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
@@ -13,16 +11,5 @@ export default defineConfig({
   experimental: {
     integrations: true,
   },
-  integrations: [
-    robotsTxt({
-      policy: [
-        {
-          userAgent: '*',
-          // The next line enables or disables the crawling on the `robots.txt` level
-          disallow: config.disableIndexing ? '/' : '',
-        },
-      ],
-    }),
-    sitemap(),
-  ],
+  integrations: [sitemap(), robotsTxt()],
 });

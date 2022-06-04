@@ -1,17 +1,16 @@
-import type { WebmanifestOptions } from 'astro-webmanifest';
-
-const webmanifest: WebmanifestOptions = {
+/** @type {import('astro-webmanifest').WebmanifestOptions} */
+const webmanifestConfig = {
   config: {
     iconPurpose: ['maskable'], // default - undefined
-    // createFavicon: true,
-    // insertFaviconLinks: true,
-    // insertManifestLink: true,
-    crossOrigin: 'use-credentials', // default - anonymus
-    // insertThemeColorMeta: true,
+    createFavicon: true, // default - true
+    insertFaviconLinks: true, // default - true
+    insertManifestLink: true, // default - true
+    crossOrigin: 'use-credentials', // default - 'anonymus'
+    insertThemeColorMeta: true, // default - true
     insertAppleTouchLinks: true, // default - false
-    // indent: '    ',
-    // eol: '\n',
-    outfile: 'site.webmanifest', // default - manifest.webmanifest
+    indent: '    ', // default - '    '
+    eol: '\n', // default - '\n'
+    outfile: 'site.webmanifest', // default - 'manifest.webmanifest'
   },
   icon: 'src/images/logomark-light.svg',
 
@@ -93,4 +92,4 @@ const webmanifest: WebmanifestOptions = {
   ],
 };
 
-export default webmanifest;
+export default webmanifestConfig;

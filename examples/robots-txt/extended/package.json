@@ -1,5 +1,5 @@
 {
-  "name": "@example/robots-txt",
+  "name": "@example/robots-txt-extended",
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
@@ -12,6 +12,6 @@
   "devDependencies": {
     "@astrojs/sitemap": "^0.1.0",
     "astro": "^1.0.0-beta.40",
-    "astro-robots-txt": "latest"
+    "astro-robots-txt": "workspace:*"
   }
 }

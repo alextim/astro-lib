@@ -16,3 +16,5 @@ export { isFileExistsSync } from './is-file-exists-sync';
 export { isDirExists } from './is-dir-exists';
 // @internal
 export { cloneDeep } from './clone-deep';
+// @internal
+export { loadConfig } from './load-config';

@@ -10,6 +10,7 @@ export {
   isDirExists,
   ILogger,
   cloneDeep,
+  loadConfig,
 } from '../index';
 
 export const Logger = vi.fn().mockImplementation(() => ({
