@@ -1,5 +1,11 @@
 # astro-robots-txt
 
+## 0.3.1
+
+### Patch Changes
+
+- d76a4f0: no empty string for `sitemap` option
+
 ## 0.3.0
 
 ### Minor Changes
