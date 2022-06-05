@@ -39,7 +39,8 @@
     "test:pub": "pnpm publish --dry-run --no-git-checks"
   },
   "dependencies": {
-    "deepmerge": "^4.2.2"
+    "deepmerge": "^4.2.2",
+     "zod": "^3.17.3"
   },
   "devDependencies": {
     "@types/node": "^17.0.39",

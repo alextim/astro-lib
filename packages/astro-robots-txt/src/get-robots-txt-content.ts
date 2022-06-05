@@ -54,11 +54,15 @@ const getSitemapArr = (sitemap: string | string[] | boolean | undefined, site: s
     if (!sitemap) {
       return undefined;
     }
+    let a: string[] | undefined = undefined;
     if (Array.isArray(sitemap)) {
-      return sitemap.length > 0 ? sitemap : undefined;
+      a = sitemap;
+    } else if (typeof sitemap === 'string') {
+      a = [sitemap];
     }
-    if (typeof sitemap === 'string') {
-      return [sitemap];
+    if (a) {
+      a = a.filter(Boolean);
+      return a.length > 0 ? a : undefined;
     }
   }
   return [`${addBackslash(site)}sitemap.xml`];

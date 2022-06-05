@@ -116,13 +116,13 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 
 ### Policy
 
-|     Name     |         Type          | Required |                   Description                   |
-| :----------: | :-------------------: | :------: | :---------------------------------------------: |
-| `userAgent`  |       `String`        |   Yes    | You must provide name of user agent or wildcard |
-|  `disallow`  | `String` / `String[]` |    No    |                Disallowed paths                 |
-|   `allow`    | `String` / `String[]` |    No    |                  Allowed paths                  |
-| `crawlDelay` |       `Number`        |    No    |                                                 |
-| `cleanParam` | `String` / `String[]` |    No    |                                                 |
+|     Name     |         Type          | Required |                                              Description                                              |
+| :----------: | :-------------------: | :------: | :---------------------------------------------------------------------------------------------------: |
+| `userAgent`  |       `String`        |   Yes    |                            You must provide name of user agent or wildcard                            |
+|  `disallow`  | `String` / `String[]` |    No    |                                       Disallowed paths to index                                       |
+|   `allow`    | `String` / `String[]` |    No    |                                        Allowed paths to index                                         |
+| `crawlDelay` |       `Number`        |    No    | Minimum interval (in secs) for the search robot to wait after loading one page, before starting other |
+| `cleanParam` | `String` / `String[]` |    No    |         Indicates that the page URL contains parameters that should be ignored when indexing          |
 
 **Sample of _astro.config.mjs_**
 
