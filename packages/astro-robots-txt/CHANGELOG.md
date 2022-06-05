@@ -1,5 +1,12 @@
 # astro-robots-txt
 
+## 0.3.0
+
+### Minor Changes
+
+- 587bc97: external configuration support, improved schema validation
+- fb946a2: external config support, 'zod' schema validation, fix typo mistake
+
 ## 0.2.0
 
 ### Minor Changes

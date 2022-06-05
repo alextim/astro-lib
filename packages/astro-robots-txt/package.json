@@ -1,6 +1,6 @@
 {
   "name": "astro-robots-txt",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Generate a robots.txt for Astro",
   "keywords": [
     "astro",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "deepmerge": "^4.2.2",
-     "zod": "^3.17.3"
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@types/node": "^17.0.40",
