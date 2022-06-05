@@ -4,6 +4,7 @@ import { isValidHostname, isValidUrl, isValidHttpUrl } from '@/at-utils';
 const validateSitemapItem = () =>
   z
     .string()
+    .min(1)
     .refine((val) => !val || isValidUrl(val), {
       message: 'Not valid url',
     })

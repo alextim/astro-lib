@@ -84,12 +84,6 @@ Sitemap: https://example.com/sitemap.xml
 "
 `;
 
-exports[`onBuildDone > sitemap = "", should return robots.txt without \`Sitemap:\` 1`] = `
-"User-agent: *
-Allow: /
-"
-`;
-
 exports[`onBuildDone > sitemap = [], should return robots.txt without \`Sitemap:\` 1`] = `
 "User-agent: *
 Allow: /

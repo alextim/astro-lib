@@ -21,8 +21,8 @@ describe('test validateOpts', () => {
   it('sitemap = false, should not throw', () => {
     expect(() => validateOpts(site, { sitemap: false })).not.toThrow();
   });
-  it('sitemap = "", should not throw', () => {
-    expect(() => validateOpts(site, { sitemap: '' })).not.toThrow();
+  it('sitemap = "", should throw', () => {
+    expect(() => validateOpts(site, { sitemap: '' })).toThrow();
   });
   it('sitemap = "aa", should throw', () => {
     expect(() => validateOpts(site, { sitemap: 'aa' })).toThrowError();
@@ -36,8 +36,8 @@ describe('test validateOpts', () => {
   it('sitemap = "[]", should not throw', () => {
     expect(() => validateOpts(site, { sitemap: [] })).not.toThrow();
   });
-  it('sitemap = "[``]", should not throw', () => {
-    expect(() => validateOpts(site, { sitemap: [''] })).not.toThrow();
+  it('sitemap = "[``]", should throw', () => {
+    expect(() => validateOpts(site, { sitemap: [''] })).toThrow();
   });
   it('sitemap = "[`aa`]", should throw', () => {
     expect(() => validateOpts(site, { sitemap: ['aa'] })).toThrowError();
@@ -45,7 +45,7 @@ describe('test validateOpts', () => {
   it('sitemap = "[`ftp://aa`]", should throw', () => {
     expect(() => validateOpts(site, { sitemap: ['ftp://aa'] })).toThrowError();
   });
-  it('sitemap = "[`http://aa`]", should throw', () => {
+  it('sitemap = "[`http://aa`]", should not throw', () => {
     expect(() => validateOpts(site, { sitemap: ['http://aa'] })).not.toThrow();
   });
 

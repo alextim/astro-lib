@@ -37,9 +37,8 @@ describe('onBuildDone', () => {
     getRobotsTxt({ sitemap: false });
     expect(fn.mock.calls[0][1]).toMatchSnapshot();
   });
-  it('sitemap = "", should return robots.txt without `Sitemap:`', () => {
-    getRobotsTxt({ sitemap: '' });
-    expect(fn.mock.calls[0][1]).toMatchSnapshot();
+  it('sitemap = "", should throw', () => {
+    expect(() => getRobotsTxt({ sitemap: '' })).toThrow();
   });
   it('sitemap is valid URL string, should return `Sitemap: https://test`', () => {
     getRobotsTxt({ sitemap: 'https://test' });
@@ -52,6 +51,9 @@ describe('onBuildDone', () => {
   it('sitemap = [], should return robots.txt without `Sitemap:`', () => {
     getRobotsTxt({ sitemap: [] });
     expect(fn.mock.calls[0][1]).toMatchSnapshot();
+  });
+  it('sitemap = [""], should throw', () => {
+    expect(() => getRobotsTxt({ sitemap: [''] })).toThrow();
   });
 
   // host
