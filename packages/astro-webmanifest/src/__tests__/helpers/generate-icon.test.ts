@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { generateIcon } from '../helpers/generate-icon';
+import { generateIcon } from '../../helpers/generate-icon';
 
 const srcIcon = 'src/__tests__/images/logo-sq.png';
 const icon = {

@@ -43,7 +43,7 @@
      "zod": "^3.17.3"
   },
   "devDependencies": {
-    "@types/node": "^17.0.39",
+    "@types/node": "^17.0.40",
     "astro": "^1.0.0-beta.40",
     "at-scripts": "workspace:*",
     "c8": "^7.11.3",

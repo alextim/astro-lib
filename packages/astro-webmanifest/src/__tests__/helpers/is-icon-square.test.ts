@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { isIconSquare } from '../helpers/is-icon-square';
+import { isIconSquare } from '../../helpers/is-icon-square';
 
 describe('test isIconSquare', () => {
   it('icon is not square, should return false', async () => {

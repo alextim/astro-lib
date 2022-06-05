@@ -23,7 +23,8 @@
     "format": "prettier -w  .",
     "prettier:check": "prettier --check .",
     "test": "turbo run test --no-deps --concurrency=1",
-    "test:r": "turbo run test --no-deps --concurrency=1 --scope=astro-robots-txt ",
+    "test:r": "turbo run test --no-deps --concurrency=1 --scope=astro-robots-txt",
+    "test:w": "turbo run test --no-deps --concurrency=1 --scope=astro-webmanifest",
     "coverage": "turbo run coverage --no-deps --concurrency=1",
     "test:pub": "turbo run test:pub --no-deps",
     "prepare": "husky install",
@@ -32,7 +33,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.22.0",
-    "@types/node": "^17.0.39",
+    "@types/node": "^17.0.40",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "astro": "^1.0.0-beta.40",

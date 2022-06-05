@@ -1,5 +1,5 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
-
+import { ZodError } from 'zod';
 import { Logger, loadConfig } from '@/at-utils';
 import merge from 'deepmerge';
 /**
@@ -7,10 +7,10 @@ import merge from 'deepmerge';
  */
 import { packageName } from './data/pkg-name';
 import onBuildDone from './on-build-done';
-import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
+import { crossOriginValues, dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
+export type CrossOrigin = typeof crossOriginValues[number];
 export type IconPurpose = typeof iconPurposeValues[number];
-
 export type ApplicationPlatform = typeof applicationPlatformValues[number];
 
 export type RelatedApplication = {
@@ -102,7 +102,7 @@ export type WebmanifestOptions =
         createFavicon?: boolean;
         insertFaviconLinks?: boolean;
         insertManifestLink?: boolean;
-        crossOrigin?: string;
+        crossOrigin?: CrossOrigin;
         insertThemeColorMeta?: boolean;
         insertAppleTouchLinks?: boolean;
         indent?: string;
@@ -112,6 +112,11 @@ export type WebmanifestOptions =
       };
     })
   | undefined;
+
+function formatConfigErrorMessage(err: ZodError) {
+  const errorList = err.issues.map((issue) => ` ${issue.path.join('.')}  ${issue.message + '.'}`);
+  return errorList.join('\n');
+}
 
 const createPlugin = (options?: WebmanifestOptions): AstroIntegration => {
   let config: AstroConfig;
@@ -140,7 +145,16 @@ const createPlugin = (options?: WebmanifestOptions): AstroIntegration => {
           );
         }
         const merged: WebmanifestOptions = merge(external || {}, options || {});
-        await onBuildDone(merged, config, dir, pages, new Logger(packageName));
+        const logger = new Logger(packageName);
+        try {
+          await onBuildDone(merged, config, dir, pages, logger);
+        } catch (err) {
+          if (err instanceof ZodError) {
+            logger.warn(formatConfigErrorMessage(err));
+          } else {
+            throw err;
+          }
+        }
       },
     },
   };

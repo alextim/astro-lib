@@ -46,10 +46,11 @@
     "deepmerge": "^4.2.2",
     "node-html-parser": "^5.3.3",
     "sharp": "^0.30.6",
-    "valid-filename": "^4.0.0"
+    "valid-filename": "^4.0.0",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
-    "@types/node": "^17.0.39",
+    "@types/node": "^17.0.40",
     "@types/sharp": "^0.30.2",
     "astro": "^1.0.0-beta.40",
     "at-scripts": "workspace:*",

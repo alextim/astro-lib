@@ -1,4 +1,4 @@
-import isValidSize from '../helpers/is-valid-size';
+import isValidSize from '../../helpers/is-valid-size';
 
 describe('test isValidSize', () => {
   it('empty, should return true', () => {

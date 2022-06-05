@@ -8,7 +8,7 @@ const defaultOptions: Readonly<WebmanifestOptions> = {
     createFavicon: true,
     insertFaviconLinks: true,
     insertManifestLink: true,
-    crossOrigin: 'anonymous',
+    crossOrigin: 'anonymus',
     insertThemeColorMeta: true,
     insertAppleTouchLinks: false,
     indent: '    ',

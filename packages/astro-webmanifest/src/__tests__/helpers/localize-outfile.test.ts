@@ -1,4 +1,4 @@
-import localizeOutfile from '../helpers/localize-outfile';
+import localizeOutfile from '../../helpers/localize-outfile';
 
 const outfile = 'site.webmanifest';
 

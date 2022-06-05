@@ -1,6 +1,6 @@
 # Demo for astro-robots-txt integration
 
-This simple demo uses two integrations with default configurations:
+This simple demo uses two integrations with zero configurations:
 
 - `@astrojs/sitemap` (official)
 - `astro-robots-txt`.

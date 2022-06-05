@@ -1,5 +1,5 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
-
+import { ZodError } from 'zod';
 import { Logger, loadConfig } from '@/at-utils';
 import merge from 'deepmerge';
 /**
@@ -24,6 +24,11 @@ export type RobotsTxtOptions =
     }
   | undefined;
 
+function formatConfigErrorMessage(err: ZodError) {
+  const errorList = err.issues.map((issue) => ` ${issue.path.join('.')}  ${issue.message + '.'}`);
+  return errorList.join('\n');
+}
+
 const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
   let config: AstroConfig;
   return {
@@ -47,7 +52,17 @@ const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
         const namespace = packageName.replace('astro-', '');
         const external = await loadConfig(namespace, config.root);
         const merged: RobotsTxtOptions = merge(external || {}, options || {});
-        onBuildDone(merged, config, dir, new Logger(packageName));
+        const logger = new Logger(packageName);
+        try {
+          onBuildDone(merged, config, dir);
+          logger.success('`robots.txt` is created.');
+        } catch (err) {
+          if (err instanceof ZodError) {
+            logger.warn(formatConfigErrorMessage(err));
+          } else {
+            throw err;
+          }
+        }
       },
     },
   };

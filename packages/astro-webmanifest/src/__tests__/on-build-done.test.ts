@@ -45,10 +45,20 @@ describe('onBuildDone', () => {
   const fn = vi.fn();
   fs.writeFileSync = fn;
 
-  const getManifest = (opts: WebmanifestOptions) => onBuildDone(opts, config as AstroConfig, dir, [], logger);
+  it("options = { name: 'test' }, should not throw", () => {
+    const opts: WebmanifestOptions = { name: 'test' };
+    expect(async () => await onBuildDone(opts, config as AstroConfig, dir, [], logger)).not.toThrow();
+  });
+  it("options = { name: 'test' }, should call success", async () => {
+    const opts: WebmanifestOptions = { name: 'test' };
+    await onBuildDone(opts, config as AstroConfig, dir, [], logger);
+    expect(logger.success).toBeCalled();
+  });
 
   it('options = {}, should match snapshot', async () => {
-    await getManifest({ name: 'test' });
+    const opts: WebmanifestOptions = { name: 'test' };
+    await onBuildDone(opts, config as AstroConfig, dir, [], logger);
+
     expect(fn.mock.calls[0][1]).toMatchSnapshot();
     expect(logger.success).toBeCalled();
   });
@@ -163,7 +173,8 @@ describe('onBuildDone', () => {
       },
     };
 
-    await getManifest(opts);
+    await onBuildDone(opts, config as AstroConfig, dir, [], logger);
+
     expect(fs.writeFileSync).toBeCalledTimes(3);
     expect(logger.success).toBeCalledTimes(3);
     expect(fn.mock.calls[0][0].pathname).toBe('/manifest.webmanifest');
