@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "astro": "^1.0.0-beta.41",
-    "astro-sitemap-i18n": "workspace:*"
+    "astro-sitemap": "workspace:*"
   }
 }

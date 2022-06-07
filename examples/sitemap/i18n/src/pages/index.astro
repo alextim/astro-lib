@@ -1,0 +1,20 @@
+---
+import i18n from '../i18n.mjs';
+import LanguageSwitch from '../components/LanguageSwitch.astro';
+
+const locale = i18n.defaultLocale;
+const { lang, name, description } = i18n.locales[locale];
+---
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Astro {locale}</title>
+	</head>
+	<body>
+		<h1>Astro {locale}</h1>
+    <p>{name}</p>
+    <p>{description}</p>
+    <LanguageSwitch currentLocale={locale} />
+	</body>
+</html>

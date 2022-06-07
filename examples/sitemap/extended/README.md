@@ -1,6 +1,6 @@
-# Demo for astro-sitemap-i18n integration
+# Demo for astro-sitemap integration
 
-This demo uses the `astro-sitemap-i18n` instead of official `@astrojs/sitemap` integration.
+This demo uses the `astro-sitemap` instead of official `@astrojs/sitemap` integration.
 
 External configuration is used.
 

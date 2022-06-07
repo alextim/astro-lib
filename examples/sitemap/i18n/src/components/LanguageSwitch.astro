@@ -1,0 +1,29 @@
+---
+import i18n from '../i18n.mjs';
+
+export interface Props {
+  currentLocale: string;
+}
+
+const { currentLocale } = Astro.props as Props;
+
+const getLink = (locale: string) => locale === i18n.defaultLocale ? '/' : `/${locale}`;
+
+---
+<ul>
+{
+  Object.keys(i18n.locales).map((locale) => (
+    <li>
+      {locale === currentLocale ? (
+        <span>
+          {locale}
+        </span>
+        ) : (
+        <a href={getLink(locale)}>
+          {locale}
+        </a>
+      )}
+    </li>
+  ))
+}
+</ul>

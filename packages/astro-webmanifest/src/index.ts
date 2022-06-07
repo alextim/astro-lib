@@ -3,7 +3,7 @@ import { ZodError } from 'zod';
 import { Logger, loadConfig } from '@/at-utils';
 import merge from 'deepmerge';
 /**
- * `package-name.ts` is generated during build from `name` property of `package.json`
+ * `pkg-name.ts` is generated during build from `name` property of `package.json`
  */
 import { packageName } from './data/pkg-name';
 import onBuildDone from './on-build-done';

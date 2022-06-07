@@ -3,9 +3,9 @@ import { ZodError } from 'zod';
 import { Logger, loadConfig } from '@/at-utils';
 import merge from 'deepmerge';
 /**
- * `package-name.ts` is generated during build from the `name` property of a `package.json`
+ * `pkg-name.ts` is generated during build from the `name` property of a `package.json`
  */
-import { packageName } from './data/package-name';
+import { packageName } from './data/pkg-name';
 import onBuildDone from './on-build-done';
 
 export type PolicyItem = {

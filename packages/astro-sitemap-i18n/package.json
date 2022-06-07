@@ -1,0 +1,60 @@
+{
+  "name": "astro-sitemap",
+  "version": "0.3.1",
+  "description": "Generate a sitemap with i18n capabilities for Astro",
+  "keywords": [
+    "astro",
+    "astro-component",
+    "seo",
+    "sitemap",
+    "sitemap.xml",
+    "i18n"
+  ],
+  "author": {
+    "name": "Oleksii Tymoshenko"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alextim/astro-lib.git",
+    "directory": "packages/astro-sitemap"
+  },
+  "homepage": "https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap#readme",
+  "bugs": "https://github.com/alextim/astro-lib/issues",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts"
+  ],
+  "scripts": {
+    "build": "at-scripts create-pkg-name && at-scripts build && tsc -p tsconfig.build.json && at-scripts copy-index.d.ts",
+    "typecheck": "tsc --noEmit --pretty",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "test:pub": "pnpm publish --dry-run --no-git-checks"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2",
+    "sitemap": "^7.1.1",
+    "valid-filename": "^4.0.0",
+    "zod": "^3.17.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.40",
+    "astro": "^1.0.0-beta.41",
+    "at-scripts": "workspace:*",
+    "c8": "^7.11.3",
+    "typescript": "^4.7.3",
+    "vite": "^2.9.10",
+    "vitest": "^0.14.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

@@ -1,4 +1,3 @@
-import { Logger } from '@/at-utils';
 import { WebmanifestOptions, type Shortcut } from '../index';
 
 // import type { WebmanifestOptions } from '../index';
@@ -21,7 +20,6 @@ vi.mock('sharp', () => {
   };
 });
 
-const logger = new Logger('dummy-astro-webmanifest');
 // name
 describe('test validateOpts', () => {
   it('`name` is required, should throw', () => {
@@ -436,6 +434,9 @@ describe('test validateOpts', () => {
   });
   it('`outfile` is `/abc`, should throw', () => {
     expect(() => validateOpts({ name: 'name', config: { outfile: '/abc' } })).toThrowError();
+  });
+  it('`outfile` is ``, should throw', () => {
+    expect(() => validateOpts({ name: 'name', config: { outfile: '' } })).toThrowError();
   });
 
   // crossOrigin

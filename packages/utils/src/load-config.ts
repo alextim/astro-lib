@@ -1,12 +1,12 @@
 import { isFileExists } from './is-file-exists';
 
-export async function loadConfig(name: string, base: URL) {
-  if (!name) {
+export async function loadConfig(namespace: string, base: URL) {
+  if (!namespace) {
     return null;
   }
   const exts = ['js', 'mjs', 'cjs'];
   for (const ext of exts) {
-    const fileName = `${name}.config.${ext}`;
+    const fileName = `${namespace}.config.${ext}`;
     const file = new URL(fileName, base);
     if (await isFileExists(file)) {
       const module = await import(file.pathname);
