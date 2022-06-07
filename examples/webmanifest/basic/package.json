@@ -11,6 +11,6 @@
   },
   "devDependencies": {
     "astro": "^1.0.0-beta.41",
-    "astro-webmanifest": "latest"
+    "astro-robots-txt": "workspace:*"
   }
 }
