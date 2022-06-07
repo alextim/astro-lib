@@ -1,12 +1,10 @@
 const canonicalURL = 'https://example.com';
 /** @type {import('astro-sitemap').SitemapOptions} */
 const sitemapConfig = {
-  filter: (page) => !/404/.test(page), // exclude 404 pages
+  filter: (page) => !/exclude-this/.test(page), // exclude pages from sitemap
   customPages: [`${canonicalURL}/virtual-one.html`, `${canonicalURL}/virtual-two.html`],
   canonicalURL,
 
-  // added
-  locales: { en: 'en-US' },
   outfile: 'custom-sitemap.xml',
 
   // sitemap specific
