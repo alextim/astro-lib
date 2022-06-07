@@ -246,11 +246,11 @@ describe('test validateOpts', () => {
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
-  it('`outfile` is ``, should not throw', () => {
+  it('`outfile` is ``, should throw', () => {
     const opts = {
       outfile: '',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`outfile` is 1, should throw', () => {
     const opts = {

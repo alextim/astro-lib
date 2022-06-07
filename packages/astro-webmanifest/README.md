@@ -300,7 +300,7 @@ icons: [
 For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
 Also you can find detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 
-Demo with extended configuration is in this [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/extended).
+Demo with advanced configuration is in this [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).
 
 ## Localization
 
@@ -415,7 +415,7 @@ exports = {
 | No                          |           Yes           | External config used                             |
 | Yes                         |           Yes           | External config is merged with options parameter |
 
-The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/extended).
+The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).
 
 :exclamation: Only official **@astrojs/\*** integrations are currently supported by Astro.
 

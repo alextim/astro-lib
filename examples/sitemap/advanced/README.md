@@ -4,4 +4,4 @@ This demo uses the `astro-sitemap` instead of official `@astrojs/sitemap` integr
 
 External configuration is used.
 
-Play this demo [online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/extended).
+Play this demo [online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/advanced).

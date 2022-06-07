@@ -1,6 +1,6 @@
 {
   "name": "astro-sitemap",
-  "version": "0.3.1",
+  "version": "0.0.1",
   "description": "Generate a sitemap with i18n capabilities for Astro",
   "keywords": [
     "astro",

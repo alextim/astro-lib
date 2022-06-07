@@ -36,6 +36,7 @@ export const SitemapOptionsSchema = z.object({
 
   outfile: z
     .string()
+    .min(1)
     .refine((val) => !val || isValidFilename(val), { message: 'Not valid file name' })
     .optional(),
 

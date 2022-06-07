@@ -37,6 +37,7 @@ export const validateOpts = (opts: WebmanifestOptions = { name: '' }) => {
         eol: z.string().optional(),
         outfile: z
           .string()
+          .min(1)
           .refine((val) => !val || isValidFilename(val), { message: 'Not valid file name' })
           .optional(),
       })

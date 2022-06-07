@@ -44,6 +44,16 @@ importers:
       vite: 2.9.10
       vitest: 0.14.1_c8@7.11.3
 
+  examples/robots-txt/advanced:
+    specifiers:
+      '@astrojs/sitemap': ^0.1.0
+      astro: ^1.0.0-beta.41
+      astro-robots-txt: latest
+    devDependencies:
+      '@astrojs/sitemap': 0.1.0
+      astro: 1.0.0-beta.41
+      astro-robots-txt: link:../../../packages/astro-robots-txt
+
   examples/robots-txt/basic:
     specifiers:
       '@astrojs/sitemap': ^0.1.0
@@ -54,15 +64,13 @@ importers:
       astro: 1.0.0-beta.41
       astro-robots-txt: link:../../../packages/astro-robots-txt
 
-  examples/robots-txt/extended:
+  examples/sitemap/advanced:
     specifiers:
-      '@astrojs/sitemap': ^0.1.0
       astro: ^1.0.0-beta.41
-      astro-robots-txt: latest
+      astro-sitemap: workspace:*
     devDependencies:
-      '@astrojs/sitemap': 0.1.0
       astro: 1.0.0-beta.41
-      astro-robots-txt: link:../../../packages/astro-robots-txt
+      astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/basic:
     specifiers:
@@ -70,15 +78,7 @@ importers:
       astro-sitemap: workspace:*
     devDependencies:
       astro: 1.0.0-beta.41
-      astro-sitemap: link:../../../packages/astro-sitemap-i18n
-
-  examples/sitemap/extended:
-    specifiers:
-      astro: ^1.0.0-beta.41
-      astro-sitemap: workspace:*
-    devDependencies:
-      astro: 1.0.0-beta.41
-      astro-sitemap: link:../../../packages/astro-sitemap-i18n
+      astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/i18n:
     specifiers:
@@ -86,9 +86,9 @@ importers:
       astro-sitemap: workspace:*
     devDependencies:
       astro: 1.0.0-beta.41
-      astro-sitemap: link:../../../packages/astro-sitemap-i18n
+      astro-sitemap: link:../../../packages/astro-sitemap
 
-  examples/webmanifest/basic:
+  examples/webmanifest/advanced:
     specifiers:
       astro: ^1.0.0-beta.41
       astro-webmanifest: latest
@@ -96,7 +96,7 @@ importers:
       astro: 1.0.0-beta.41
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
-  examples/webmanifest/extended:
+  examples/webmanifest/basic:
     specifiers:
       astro: ^1.0.0-beta.41
       astro-webmanifest: latest
@@ -135,7 +135,7 @@ importers:
       vite: 2.9.10
       vitest: 0.14.1_c8@7.11.3
 
-  packages/astro-sitemap-i18n:
+  packages/astro-sitemap:
     specifiers:
       '@types/node': ^17.0.40
       astro: ^1.0.0-beta.41
@@ -370,7 +370,7 @@ packages:
       '@babel/compat-data': 7.17.10
       '@babel/core': 7.18.2
       '@babel/helper-validator-option': 7.16.7
-      browserslist: 4.20.3
+      browserslist: 4.20.4
       semver: 6.3.0
     dev: true
 
@@ -1633,13 +1633,13 @@ packages:
       wcwidth: 1.0.1
     dev: true
 
-  /browserslist/4.20.3:
-    resolution: {integrity: sha512-NBhymBQl1zM0Y5dQT/O+xiLP9/rzOIQdKM/eMJBAq7yBgaB6krIYLGejrwVYnSHZdqjscB1SPuAjHwxjvN6Wdg==}
+  /browserslist/4.20.4:
+    resolution: {integrity: sha512-ok1d+1WpnU24XYN7oC3QWgTyMhY/avPJ/r9T00xxvUOIparA/gc+UPUMaod3i+G6s+nI2nUb9xZ5k794uIwShw==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001346
-      electron-to-chromium: 1.4.146
+      caniuse-lite: 1.0.30001349
+      electron-to-chromium: 1.4.147
       escalade: 3.1.1
       node-releases: 2.0.5
       picocolors: 1.0.0
@@ -1709,8 +1709,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001346:
-    resolution: {integrity: sha512-q6ibZUO2t88QCIPayP/euuDREq+aMAxFE5S70PkrLh0iTDj/zEhgvJRKC2+CvXY6EWc6oQwUR48lL5vCW6jiXQ==}
+  /caniuse-lite/1.0.30001349:
+    resolution: {integrity: sha512-VFaWW3jeo6DLU5rwdiasosxhYSduJgSGil4cSyX3/85fbctlE58pXAkWyuRmVA0r2RxsOSVYUTZcySJ8WpbTxw==}
     dev: true
 
   /ccount/2.0.1:
@@ -2258,8 +2258,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /electron-to-chromium/1.4.146:
-    resolution: {integrity: sha512-4eWebzDLd+hYLm4csbyMU2EbBnqhwl8Oe9eF/7CBDPWcRxFmqzx4izxvHH+lofQxzieg8UbB8ZuzNTxeukzfTg==}
+  /electron-to-chromium/1.4.147:
+    resolution: {integrity: sha512-czclPqxLMPqPMkahKcske4TaS5lcznsc26ByBlEFDU8grTBVK9C5W6K9I6oEEhm4Ai4jTihGnys90xY1yjXcRg==}
     dev: true
 
   /emmet/2.3.6:

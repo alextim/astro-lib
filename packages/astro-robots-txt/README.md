@@ -19,7 +19,7 @@ It brakes DRY principle.
 Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or add `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
 Again you do it manually in two separate places.
 
-**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/extended).
+**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
 
 ---
 
@@ -219,7 +219,7 @@ exports = {
 | No                          |           Yes           | External config used                             |
 | Yes                         |           Yes           | External config is merged with options parameter |
 
-The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/extended).
+The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
 
 :exclamation: Important Notes
 
