@@ -10,9 +10,13 @@ export default async function run() {
       const { createPkgName } = await import('./cmd/create-pkg-name.mjs');
       createPkgName();
       break;
-    case 'copy-index.d.ts':
-      const { copyIndexD } = await import('./cmd/copy-index-d-ts.mjs');
-      copyIndexD();
+    case 'copy-s':
+      const { copySrc } = await import('./cmd/copy.mjs');
+      copySrc(args);
+      break;
+    case 'copy':
+      const { copyDst } = await import('./cmd/copy.mjs');
+      copyDst(args);
       break;
   }
 }

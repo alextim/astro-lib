@@ -124,111 +124,156 @@ describe('test validateOpts', () => {
     expect(() => validateOpts('', opts as unknown as SitemapOptions)).not.toThrow();
   });
 
+  // i18n
+  it('i18n is {}, should throw', () => {
+    const opts = {
+      i18n: {},
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+  });
+  it('i18n is [], should throw', () => {
+    const opts = {
+      i18n: [],
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+  });
+  it('i18n is "", should throw', () => {
+    const opts = {
+      i18n: '',
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+  });
+
   // defaultLocale
   it('defaultLocale is empty, should throw', () => {
     const opts = {
-      defaultLocale: '',
-      locales: { en: 'en' },
+      i18n: {
+        defaultLocale: '',
+        locales: { en: 'en' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('defaultLocale is number, should throw', () => {
     const opts = {
-      defaultLocale: 0,
-      locales: { en: 'en' },
+      i18n: {
+        defaultLocale: 0,
+        locales: { en: 'en' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   it('defaultLocale is Ok, locales is empty, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
+      i18n: {
+        defaultLocale: 'en',
+      },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow(
-      'Provide both `defaultLocale` and `locales`, also `defaultLocale` must exists as `locales` key',
-    );
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
-  it('defaultLocale do no`t exist in locales, should throw', () => {
+  it('defaultLocale do not exist in locales, should throw', () => {
     const opts = {
-      defaultLocale: 'fr',
-      locales: { en: 'en' },
+      i18n: {
+        defaultLocale: 'fr',
+        locales: { en: 'en' },
+      },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow(
-      'Provide both `defaultLocale` and `locales`, also `defaultLocale` must exists as `locales` key',
-    );
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('`defaultLocale` must exists in `locales` keys');
   });
 
   it('defaultLocale & locales are OK, should not throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: 'en' },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'en' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   // locales
-  it('locales = {}, should not throw', () => {
+  it('locales = {}, should throw', () => {
     const opts = {
-      locales: {},
+      i18n: {
+        defaultLocale: 'en',
+        locales: {},
+      },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('locales = value is undefined, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: undefined },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: undefined },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('locales = value is empty, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: '' },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: '' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('locales = value < 2, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: 1 },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 1 },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   it('locales = value contain space, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: 'zh cmn' },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'zh cmn' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
   });
   it('locales = value contain non english, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: 'zh-фы' },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'zh-фы' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
   });
   it('locales = value = `zh-cmn-Hans_CN`, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: 'zh-cmn-Hans_CN' },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'zh-cmn-Hans_CN' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
   });
 
   it('locales = value = `zh-cmn-Hans-CN`, should not throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { en: 'zh-cmn-Hans-CN' },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'zh-cmn-Hans-CN' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   it('locales = key is empty, should throw', () => {
     const opts = {
-      defaultLocale: 'en',
-      locales: { '': 'zh-cmn-Hans-CN' },
+      i18n: {
+        defaultLocale: 'en',
+        locales: { '': 'zh-cmn-Hans-CN' },
+      },
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });

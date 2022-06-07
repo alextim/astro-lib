@@ -33,10 +33,10 @@
   "files": [
     "dist/index.js",
     "dist/index.d.ts",
-    "dist/constants.d.ts"
+    "dist/constants.ts"
   ],
   "scripts": {
-    "build": "at-scripts create-pkg-name && at-scripts build && tsc -p tsconfig.build.json && at-scripts copy-index.d.ts",
+    "build": "at-scripts create-pkg-name && at-scripts build && tsc -p tsconfig.build.json && at-scripts copy index.d.ts && at-scripts copy-s constants.ts",
     "typecheck": "tsc --noEmit --pretty",
     "test": "vitest run",
     "coverage": "vitest run --coverage",

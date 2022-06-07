@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import isValidFilename from 'valid-filename';
-import { isValidUrl } from '@/at-utils';
+import { isValidUrl, isObjectEmpty } from '@/at-utils';
 import { changefreqValues } from './constants';
 
 const urlSchema = () =>
@@ -23,15 +23,20 @@ export const SitemapOptionsSchema = z.object({
 
   canonicalURL: urlSchema().optional(),
 
-  defaultLocale: localeKeySchema().optional(),
-  locales: z
-    .record(
-      z.string().min(1),
-      z
-        .string()
-        .min(2)
-        .regex(/^[a-zA-Z\-]+$/gm, { message: 'Only English alphabet symbols and hyphen allowed' }),
-    )
+  i18n: z
+    .object({
+      defaultLocale: localeKeySchema(),
+      locales: z.record(
+        localeKeySchema(),
+        z
+          .string()
+          .min(2)
+          .regex(/^[a-zA-Z\-]+$/gm, { message: 'Only English alphabet symbols and hyphen allowed' }),
+      ),
+    })
+    .refine(({ locales, defaultLocale }) => locales[defaultLocale], {
+      message: '`defaultLocale` must exists in `locales` keys',
+    })
     .optional(),
 
   outfile: z

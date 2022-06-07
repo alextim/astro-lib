@@ -6,9 +6,25 @@ export interface Props {
 }
 
 const { currentLocale } = Astro.props as Props;
+const pathname = new URL(Astro.request.url).pathname;
 
-const getLink = (locale: string) => locale === i18n.defaultLocale ? '/' : `/${locale}`;
-
+const getLink = (locale: string) => {
+  let path: string;
+  if (pathname === '/') {
+    path = '/';
+  } else {
+    const a = pathname.split('/');
+    if (i18n.locales[a[1]]) {
+      path = a.slice(2).join('/');
+    } else {
+      path = pathname;
+    }
+  }
+  if (!path.startsWith('/')) {
+    path = '/' + path;
+  }
+  return locale === i18n.defaultLocale ? path : `/${locale}${path}`;
+};
 ---
 <ul>
 {

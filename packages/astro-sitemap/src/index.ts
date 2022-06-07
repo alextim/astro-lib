@@ -3,18 +3,20 @@ import { Readable } from 'node:stream';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
 import merge from 'deepmerge';
-import { EnumChangefreq, SitemapStream, streamToPromise, SitemapStreamOptions } from 'sitemap';
+import { SitemapStream, streamToPromise, SitemapStreamOptions } from 'sitemap';
 
 import { Logger, loadConfig } from '@/at-utils';
 import { withOptions } from './with-options';
 import { validateOpts } from './validate-opts';
 import { generateSitemap } from './generate-sitemap';
+import { changefreqValues } from './constants';
 
 /**
  * `pkg-name.ts` is generated during build from the `name` property of a `package.json`
  */
 import { packageName } from './data/pkg-name';
 
+export type ChangeFreq = typeof changefreqValues[number];
 export type SitemapOptions =
   | {
       // the same with official
@@ -22,11 +24,13 @@ export type SitemapOptions =
       customPages?: string[];
       canonicalURL?: string;
       // added
-      defaultLocale?: string;
-      locales?: Record<string, string>;
+      i18n?: {
+        defaultLocale: string;
+        locales: Record<string, string>;
+      };
       outfile?: string;
       // sitemap specific
-      changefreq?: EnumChangefreq;
+      changefreq?: ChangeFreq;
       lastmod?: Date;
       priority?: number;
     }
@@ -69,7 +73,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
 
           const { filter, customPages, canonicalURL, outfile } = opts;
 
-          const finalSiteUrl = canonicalURL || config.site;
+          const finalSiteUrl = canonicalURL || config.site || '';
 
           let pageUrls = pages.map((p) => new URL(p.pathname, finalSiteUrl).href);
           if (filter) {
@@ -79,7 +83,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             pageUrls = [...pageUrls, ...customPages];
           }
 
-          const urlData = generateSitemap(pageUrls, opts);
+          const urlData = generateSitemap(pageUrls, finalSiteUrl, opts);
 
           const generationOptions: SitemapStreamOptions = {
             hostname: finalSiteUrl,
