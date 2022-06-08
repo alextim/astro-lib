@@ -265,9 +265,9 @@ icons: [
 | Name                          |          Type          | Required | Description                                                                                                                                   |
 | :---------------------------- | :--------------------: | :------: | :-------------------------------------------------------------------------------------------------------------------------------------------- |
 | `icon`                        |        `String`        |    No    | See usage in **Generation modes** section.                                                                                                    |
-| `icons`                       |        `Icon[]`        |    No    | The same. .                                                                                                                                   |
+| `icons`                       |        `Icon[]`        |    No    | See usage in **Generation modes** section.                                                                                                    |
 |                               |                        |          |                                                                                                                                               |
-| `name`                        |        `String`        |   Yes    | You must provide name of your app                                                                                                             |
+| `name`                        |        `String`        |   Yes    | You must provide the name of your app.                                                                                                        |
 | `short_name`                  |        `String`        |    No    |                                                                                                                                               |
 | `description`                 |        `String`        |    No    |                                                                                                                                               |
 | `categories`                  |       `String[]`       |    No    |                                                                                                                                               |
@@ -277,7 +277,7 @@ icons: [
 | `id`                          |        `String`        |    No    |                                                                                                                                               |
 | `start_url`                   |        `String`        |    No    |                                                                                                                                               |
 | `scope`                       |        `String`        |    No    |                                                                                                                                               |
-| `theme_color`                 |        `String`        |    No    | source for `meta` in `<head>`                                                                                                                 |
+| `theme_color`                 |        `String`        |    No    | Source for `meta` in `<head>`                                                                                                                 |
 | `background_color`            |        `String`        |    No    |                                                                                                                                               |
 | `display`                     |       `Display`        |    No    | `fullscreen` \| `standalone` \| `minimal-ui` \| `browser`                                                                                     |
 | `display_override`            |      `Display[]`       |    No    |                                                                                                                                               |
