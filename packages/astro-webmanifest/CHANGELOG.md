@@ -1,5 +1,11 @@
 # astro-webmanifest
 
+## 0.3.1
+
+### Patch Changes
+
+- c631e26: fix: constants.ts is added to package export
+
 ## 0.3.0
 
 ### Minor Changes
