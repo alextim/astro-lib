@@ -203,7 +203,7 @@ or
 
 ```js
 // CommonJS
-exports = {
+module.exports = {
   ...
 };
 ```
