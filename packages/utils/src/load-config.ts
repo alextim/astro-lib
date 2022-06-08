@@ -11,7 +11,7 @@ export async function loadConfig(namespace: string, base: URL) {
     if (await isFileExists(file)) {
       const module = await import(file.pathname);
       if (!module.default) {
-        throw new Error(`'${fileName}' doesn't have default export`);
+        throw new Error(`'${fileName}' doesn't contain a default export`);
       }
       return module.default;
     }

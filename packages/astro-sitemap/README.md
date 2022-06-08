@@ -252,7 +252,7 @@ The sitemap content will be:
 
 You could configure the integration with external file `sitemap.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
-The external config must have a default export statement:
+The external config must contain a default export statement:
 
 ```js
 // ESM
@@ -270,7 +270,7 @@ exports = {
 };
 ```
 
-:exclamation: Current version of integration doesn't support typescript configs.
+:exclamation: The current version of integration doesn't support typescript configs.
 
 ### How does the integration internally resolve a config?
 
@@ -281,7 +281,7 @@ exports = {
 | No                          |           Yes           | External config used                             |
 | Yes                         |           Yes           | External config is merged with options parameter |
 
-The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/advanced).
+The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/advanced).
 
 :exclamation: Important Notes
 

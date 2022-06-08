@@ -304,13 +304,13 @@ Demo with advanced configuration is in this [repo](https://github.com/alextim/as
 
 ## Localization
 
-Localization allows to create unique manifest, icons set and `<head>` html for every separate language.
+Localization allows you to create a unique manifest, icon set and `<head>` html for each individual language.
 
-You need to provide the `locales` property in form of`Record<string, Webmanifest>`.
+You need to provide `locales` property as a `Record<string, Webmanifest>`.
 
 The integration uses keys of `locales` property to make a manifest name unique and to determine a page language by path.
 
-The integration expects pages paths in the following format: /{locale}{path}, where the locale is a key from `locales` property.
+The integration expects page paths in the following format: /{locale}{path}, where the locale is a key from `locales` property.
 
 Sample configuration below:
 
@@ -355,7 +355,7 @@ By this configuration three separate manifests will be generated:
 
 And language specific html will be inserted to `<head>` section of generated pages.
 
-If you need separate icon sets for every language please add `icon` property.
+If you need separate icon sets for every language please add the `icon` property.
 
 ```js
 ...
@@ -376,17 +376,17 @@ If you need separate icon sets for every language please add `icon` property.
 ...
 ```
 
-In this configuration default `en` language and `fr` language will have common icons set, `es` - own icons set.
+In this configuration the default `en` language and the `fr` language will have common icon set, `es` - own icon set.
 
-:bulb: The favicon will be only one for all languages. The source for generation will be taken from default language.
+:bulb: The favicon will be only one for all languages. The source for generation will be taken from the default language.
 
-You could explore a localization usage in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+You could explore a localization usage in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
 
 ## Using Configuration Files
 
 You could configure the integration with external file `webmanifest.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
-The external config must have a default export statement:
+The external config must contain a default export statement:
 
 ```js
 // ESM
@@ -404,7 +404,7 @@ exports = {
 };
 ```
 
-:exclamation: Current version of integration doesn't support typescript configs.
+:exclamation: The current version of integration doesn't support typescript configs.
 
 ### How does the integration internally resolve a config?
 
@@ -415,7 +415,7 @@ exports = {
 | No                          |           Yes           | External config used                             |
 | Yes                         |           Yes           | External config is merged with options parameter |
 
-The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).
+The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).
 
 :exclamation: Only official **@astrojs/\*** integrations are currently supported by Astro.
 

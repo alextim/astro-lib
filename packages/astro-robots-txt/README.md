@@ -19,7 +19,7 @@ It brakes DRY principle.
 Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or add `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
 Again you do it manually in two separate places.
 
-**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
+**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
 
 ---
 
@@ -190,7 +190,7 @@ export default defineConfig({
 
 You could configure the integration with external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
-The external config must have a default export statement:
+The external config must contain a default export statement:
 
 ```js
 // ESM
@@ -208,7 +208,7 @@ exports = {
 };
 ```
 
-:exclamation: Current version of integration doesn't support typescript configs.
+:exclamation: The current version of integration doesn't support typescript configs.
 
 ### How does the integration internally resolve a config?
 

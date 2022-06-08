@@ -16,6 +16,6 @@ describe('test loadConfig', () => {
   });
   it('should throw error', async () => {
     const name = 'found-no-default';
-    await expect(loadConfig(name, base)).rejects.toThrowError(/doesn't have default export/);
+    await expect(loadConfig(name, base)).rejects.toThrowError(/doesn't contain a default export/);
   });
 });
