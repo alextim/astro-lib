@@ -194,7 +194,7 @@ Generated sitemap content for this configuration:
 
 ## Localization
 
-Supply integration config with the `i18n` options. The integration will check generated page paths on presence of locale keys in paths.
+Supply the integration config with the `i18n` options. The integration will check generated page paths on presence of locale keys in paths.
 
 Read more about localization on Google in [Advanced SEO](https://developers.google.com/search/docs/advanced/crawling/localized-versions#all-method-guidelines).
 
@@ -311,4 +311,4 @@ astro build --experimental-integrations
 
 ## Inspiration
 
-The `astro-sitemap` is based on the source code of the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap). Thanks for your well done job!
+The `astro-sitemap` is based on the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap). Many thanks to the [Astro](https://astro.build/) team for their work!
