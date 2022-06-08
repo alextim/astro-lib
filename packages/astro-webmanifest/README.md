@@ -380,13 +380,13 @@ In this configuration default `en` language and `fr` language will have common i
 
 :bulb: The favicon will be only one for all languages. The source for generation will be taken from default language.
 
-You could explore i18n usage in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
+You could explore a localization usage in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
 
 ## Using Configuration Files
 
-You could configure the integration with external file `webmanifest.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in offical [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+You could configure the integration with external file `webmanifest.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
-The external config must have default export statement:
+The external config must have a default export statement:
 
 ```js
 // ESM

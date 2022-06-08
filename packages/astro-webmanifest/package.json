@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.41",
-    "@types/sharp": "^0.30.3",
+    "@types/sharp": "^0.30.4",
     "astro": "^1.0.0-beta.42",
     "at-scripts": "workspace:*",
     "c8": "^7.11.3",
