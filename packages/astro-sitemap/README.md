@@ -135,6 +135,7 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 
 :bulb: See detailed explanation of sitemap specific options on [sitemap.org](https://www.sitemaps.org/protocol.html).
 
+:exclamation: This integration uses 'astro:build:done' hook (official @astrojs/sitemap does the same). The hook exposes only generated page paths. So in present version of Astro the integration has no ability to analyse page source, frontmatter etc. So the integration can add `changefreq`, `lastmod` and `priority` attributes only in a batch or nothing.
 **Sample of _astro.config.mjs_**
 
 ```js
