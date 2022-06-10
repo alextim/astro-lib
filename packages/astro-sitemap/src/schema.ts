@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import isValidFilename from 'valid-filename';
-import { isValidUrl, isObjectEmpty } from '@/at-utils';
+import { isValidUrl } from '@/at-utils';
 import { changefreqValues } from './constants';
 
 const urlSchema = () =>
@@ -39,10 +38,13 @@ export const SitemapOptionsSchema = z.object({
     })
     .optional(),
 
-  outfile: z
-    .string()
-    .min(1)
-    .refine((val) => !val || isValidFilename(val), { message: 'Not valid file name' })
+  createLinkInHead: z.boolean().optional(),
+
+  entryLimit: z.number().nonnegative().optional(),
+
+  serialize: z
+    .any()
+    .refine((val) => !val || isFunction(val), { message: 'Not a function' })
     .optional(),
 
   changefreq: z.enum(changefreqValues).optional(),

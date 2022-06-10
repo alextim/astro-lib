@@ -20,10 +20,12 @@ The official integration has a functionality which is not enough in some cases.
 
 Key benefits of `astro-sitemap` integration:
 
+- Split up your large sitemap into multiple sitemaps by custom limit.
 - Ability to add sitemap specific attributes such as `changefreq`, `lastmod`, `priority`.
-- the most important: localization support. In a build time the integration analyses the pages urls for presence of locale signatures in paths to establish relations between pages.
-- Output file name customization.
-- Flexible configuration: configure the integration in external config, in astro.config or combine both.
+- Final output customization via JS function (sync or async).
+- The most important: localization support. In a build time the integration analyses the pages urls for presence of locale signatures in paths to establish relations between pages.
+- Automatically creates a link to sitemap in `<head>` section of generated pages.
+- Flexible configuration: configure the integration with external config, astro.config or combine both.
 - Reliability: all config options are validated.
 
 ---
@@ -95,13 +97,27 @@ export default defineConfig({
 });
 ```
 
-Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _sitemap.xml_ under `dist/sitemap.xml`!
+Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _sitemap_ under `dist/sitemap-index.xml` and `dist/sitemap-0.xml`!
 
 Generated sitemap content for two pages website:
 
+**sitemap-index.xml**
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://example.com/sitemap-0.xml</loc>
+  </sitemap>
+</sitemapindex>
+```
+
+**sitemap-0.xml**
+<?xml version="1.0" encoding="UTF-8"?>
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://example.com/</loc>
   </url>
@@ -111,35 +127,60 @@ Generated sitemap content for two pages website:
 </urlset>
 ```
 
+All pages generated during build will contain in `<head>` section a link to sitemap:
+
+```html
+<link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
+```
+
+
 You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
 
 ## Configuration
 
 ## Options
 
-|                                                                        Name                                                                        |             Type              | Required | Default       | Description                                                                                                                                                              |
-| :------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------: | :------: | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|                                                                      `filter`                                                                      | `(page: String):<br/>Boolean` |    No    | undefined     | The same as official. Function to filter generated pages to exclude some paths from a sitemap                                                                            |
-|                                                                   `customPages`                                                                    |          `String[]`           |    No    | undefined     | The same as official. Absolute url list. It will be merged with generated pages urls.                                                                                    |
-|                                                                   `canonicalURL`                                                                   |           `String`            |    No    | undefined     | The same as official. Absolute url. The integration needs `site` from astro.config or `canonicalURL`. If both provided only `canonicalURL` will be used.                 |
-|                                                                     `outfile`                                                                      |           `String`            |    No    | `sitemap.xml` | Output file name.                                                                                                                                                        |
-|                                                                    `changefreq`                                                                    |         `ChangeFreq`          |    No    | undefined     | Sitemap specific.                                                                                                                                                        |
-| How frequently the page is likely to change.<br/>Available values: `always` \| `hourly` \| `daily` \| `weekly` \| `monthly` \| `yearly` \| `never` |
-|                                                                     `lastmod`                                                                      |            `Date`             |    No    | undefined     | Sitemap specific. The date of last modification of the page                                                                                                              |
-|                                                                     `priority`                                                                     |           `Number`            |    No    | undefined     | Sitemap specific. The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0                                                       |
-|                                                                      **i18n**                                                                      |           `object`            |    No    | undefined     | Provide this object to start                                                                                                                                             |
-|                                                                  `defaultLocale`                                                                   |           `String`            |   Yes    |               | Its value has to be exists as one of `locales` keys.                                                                                                                     |
-|                                                                     `locales`                                                                      |   `Record<String, String>`    |   Yes    |               | Key/value - pairs.                                                                                                                                                       |
-|                                                                                                                                                    |                               |          |               | The key is used to look for a locale part in a page path                                                                                                                 |
-|                                                                                                                                                    |                               |          |               | The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
+|   Name         |             Type           | Required | Default      | Description                                                                                                                      |
+| :------------: | :------------------------: | :------: | :----------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| `filter`    | `(page: String):<br/>Boolean` |    No    | undefined    | The same as official. Function to filter generated pages to exclude some paths from a  sitemap                                   |
+| `customPages`  |          `String[]`        |    No    | undefined    | The same as official. Absolute url list. It will be merged with generated pages urls.                                            |
+| `canonicalURL` |           `String`         |    No    | undefined    | The same as official. Absolute url. The integration needs `site` from astro.config or `canonicalURL`. If both provided only `canonicalURL` will be used. |
+| `entryLimit`   |           `Number`         |    No    | 45000        | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps)|
+| `createLinkInHead`|       `Boolean`         |    No    | true         | Create a link on the sitemap in `<head>` of generated pages.                                                                     |
+| `serialize` | `(item: SitemapItem):<br />SitemapItem`| No | undefined | Function to process an array of SiteMap items just before writing to disk. Async or sync.                                        |
+| `changefreq`   |         `ChangeFreq`       |    No    | undefined    | Sitemap specific. Ignored by Google.<br/>How frequently the page is likely to change.<br/>Available values: `always` \| `hourly` \| `daily` \| `weekly` \| `monthly` \| `yearly` \| `never` |
+| `lastmod`      |            `Date`          |    No    | undefined    | Sitemap specific. The date of page last modification.                                                                           |
+| `priority`     |           `Number`         |    No    | undefined    | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0                |
+| **i18n**       |           `object`         |    No    | undefined    | Provide this object to start                                                                                                      |
+| `defaultLocale`|           `String`         |   Yes    |              | Its value has to be exists as one of `locales` keys.                                                                              |
+| `locales`      | `Record<String, String>`   |   Yes    |              | Key/value - pairs.<br/>The key is used to look for a locale part in a page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
 
 :bulb: See detailed explanation of sitemap specific options on [sitemap.org](https://www.sitemaps.org/protocol.html).
 
-:exclamation: This integration uses 'astro:build:done' hook (official @astrojs/sitemap does the same). The hook exposes only generated page paths. So in present version of Astro the integration has no ability to analyse page source, frontmatter etc. So the integration can add `changefreq`, `lastmod` and `priority` attributes only in a batch or nothing.
+:exclamation: This integration uses 'astro:build:done' hook (official @astrojs/sitemap does the same). The hook exposes only generated page paths. So with present version of Astro the integration has no abilities to analyze a page source, frontmatter etc. The integration can add `changefreq`, `lastmod` and `priority` attributes only in a batch or nothing.
+
+### SitemapItem
+
+|   Name         |     Type        | Required | Description      |
+| :------------: | :-------------: | :------: | :--------------- |
+| `url`          |    `String`     |    Yes   | Absolute url     |
+| `changefreq`   |  `ChangeFreq`   |    No    |                  |
+| `lastmod`      |     `Date`      |    No    |                  |
+| `priority`     |    `Number`     |    No    |                  |
+| `links`        |  `LinkItem[]`   |    No    | for localization |
+
+### LinkItem
+
+|   Name         |      Type       | Required | Description     |
+| :------------: | :-------------: | :------: | :-------------- |
+| `url`          |    `String`     |    Yes   | Absolute url    |
+| `lang`         |    `String`     |    Yes   | example 'en'    |
+| `hreflang`     |    `String`     |    No    | example 'en-us' |
+
 **Sample of _astro.config.mjs_**
 
 ```js
-// astro.config.mjs
+// astro.config.ts
 import { defineConfig } from 'astro/config';
 import sitemap from 'astro-sitemap';
 
@@ -150,22 +191,46 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      // the same with official integration
-      filter: (page) => !/exclude-this/.test(page), // exclude pages from sitemap
-      customPages: [
+      /**
+       *  These options are the same with the official integration `@astrojs/sitemap`
+       */ 
+      // exclude pages from sitemap
+      filter: (page: string) => !/exclude-this/.test(page),   // default - undefined
+      // Absolute urls of extra pages
+      customPages: [                                          // default - undefined
         // extra pages for sitemap
         'https://sample.com/virtual-one.html',
         'https://sample.com/virtual-two.html',
       ],
-      canonicalURL: 'https://sample.com', // `canonicalURL` option value will be used instead of `site` value
 
-      // astro-sitemap integration options from here
-      outfile: 'custom-sitemap.xml', // default - `sitemap.xml`
+      // if `canonicalURL` is provided it will be used instead of `site` value
+      canonicalURL: 'https://sample.com',                     // default - undefined
 
+      /**
+       *  `astro-sitemap` integration options
+       */
+      // This function is called just before a sitemap writing to disk.
+      // You have more control on resulting output.
+      // async supported.
+      serialize(item: SitemapItem): SitemapItem {    // default - undefined
+        if (/special-page/.test(item.url)) {
+          item.changefreq = 'daily';
+          item.lastmod = new Date();
+          item.priority = 0.9;
+        }
+        return item;
+      },
+
+      // The integration creates a separate `sitemap-${i}.xml` file for each batch of 45000 and adds this file to index - `sitemap-index.xml`.
+      entryLimit: 10000,                          // default - 45000
+
+      // Create or not a link to sitemap in '<head>' section of generated pages
+      createLinkInHead: true,                     // default - true 
+      
       // sitemap specific
-      changefreq: 'monthly',
-      lastmod: new Date(),
-      priority: 0.8,
+      changefreq: 'yearly',                       // default - undefined
+      lastmod: new Date('May 01, 2019 03:24:00'),  // default - undefined
+      priority: 0.2,                               // default - undefined
     }),
   ],
 });
@@ -174,23 +239,28 @@ export default defineConfig({
 Generated sitemap content for this configuration:
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+...
   <url>
     <loc>https://example.com/</loc>
-    <lastmod>2022-06-07T13:34:35.096Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2019-05-01T03:24:00.000Z</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
   ...
   <url>
     <loc>https://example.com/virtual-one.html</loc>
-    <lastmod>2022-06-07T13:34:35.096Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2019-05-01T03:24:00.000Z</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
   ...
-</urlset>
+    <url>
+    <loc>https://example.com/some-special-path.html</loc>
+    <lastmod>2022-06-07T13:34:35.096Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  ...
 ```
 
 ## Localization
@@ -219,8 +289,7 @@ Let's have the following integration config:
 The sitemap content will be:
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+...
   <url>
     <loc>https://example.com/</loc>
     <xhtml:link rel="alternate" hreflang="en-US" href="https://example.com/"/>
@@ -246,7 +315,6 @@ The sitemap content will be:
     <xhtml:link rel="alternate" hreflang="en-US" href="https://example.com/second-page/"/>
   </url>
 ...
-</urlset>
 ```
 
 ## Using Configuration Files

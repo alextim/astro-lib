@@ -6,9 +6,11 @@ import { SitemapOptionsSchema } from './schema';
 export const validateOpts = (site: string | undefined, opts: SitemapOptions) => {
   const schema = SitemapOptionsSchema.extend({
     site: z.string().optional(),
-  }).refine(({ site, canonicalURL }) => site || canonicalURL, {
-    message: 'Required `site` astro.config option or `canonicalURL` integration option',
-  });
+  })
+    .strict()
+    .refine(({ site, canonicalURL }) => site || canonicalURL, {
+      message: 'Required `site` astro.config option or `canonicalURL` integration option',
+    });
 
   schema.parse({ site: site || '', ...(opts || {}) });
 };

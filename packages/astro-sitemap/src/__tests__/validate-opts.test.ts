@@ -34,6 +34,20 @@ describe('test validateOpts', () => {
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
+  // serialize
+  it('serialize = func, should not throw', () => {
+    const opts = {
+      serialize: () => {},
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+  });
+  it('serialize is not func, should throw', () => {
+    const opts = {
+      serialize: {},
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+  });
+
   // customPages
   it('customPages = [], should not throw', () => {
     const opts = {
@@ -278,28 +292,50 @@ describe('test validateOpts', () => {
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
-  // outfile
-  it('`outfile` is `abc`, should not throw', () => {
+  // unknown
+  it('`unknown` is `abc`, should throw', () => {
     const opts = {
-      outfile: 'abc',
+      unknown: 'abc',
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+  });
+
+  // entryLimit
+  it('`entryLimit` is 1, should not throw', () => {
+    const opts = {
+      entryLimit: 1,
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
-  it('`outfile` is `/abc`, should throw', () => {
+  it('`entryLimit` is -1, should throw', () => {
     const opts = {
-      outfile: '/abc',
+      entryLimit: -1,
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
-  it('`outfile` is ``, should throw', () => {
+  it('`entryLimit` is string, should throw', () => {
     const opts = {
-      outfile: '',
+      entryLimit: 'abc',
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });
-  it('`outfile` is 1, should throw', () => {
+
+  // createLinkInHead
+  it('`createLinkInHead` is true, should not throw', () => {
     const opts = {
-      outfile: 1,
+      createLinkInHead: true,
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+  });
+  it('`createLinkInHead` is 1, should throw', () => {
+    const opts = {
+      createLinkInHead: 1,
+    };
+    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+  });
+  it('`createLinkInHead` is string, should throw', () => {
+    const opts = {
+      createLinkInHead: 'abc',
     };
     expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
   });

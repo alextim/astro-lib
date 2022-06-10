@@ -12,3 +12,5 @@ coverage
 
 package.json
 pnpm-lock.yaml
+
+packages/astro-sitemap/README.md

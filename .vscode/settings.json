@@ -26,7 +26,10 @@
     "favicon",
     "favicons",
     "crossorigin",
-    "anonymus"
+    "anonymus",
+    "<br/>",
+    "frontmatter"
+
   ],
   "prettier.documentSelectors": ["**/*.ts"]
 }

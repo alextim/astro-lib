@@ -41,18 +41,18 @@
   },
   "dependencies": {
     "deepmerge": "^4.2.2",
+    "node-html-parser": "^5.3.3",
     "sitemap": "^7.1.1",
-    "valid-filename": "^4.0.0",
     "zod": "^3.17.3"
   },
   "devDependencies": {
     "@types/node": "^17.0.41",
-    "astro": "^1.0.0-beta.42",
+    "astro": "^1.0.0-beta.43",
     "at-scripts": "workspace:*",
     "c8": "^7.11.3",
     "typescript": "^4.7.3",
-    "vite": "^2.9.10",
-    "vitest": "^0.14.1"
+    "vite": "^2.9.12",
+    "vitest": "^0.14.2"
   },
   "publishConfig": {
     "access": "public",

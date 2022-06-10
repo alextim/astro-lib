@@ -1,16 +1,29 @@
 const canonicalURL = 'https://example.com';
+import fs from 'node:fs';
 /** @type {import('astro-sitemap').SitemapOptions} */
 const sitemapConfig = {
   filter: (page) => !/exclude-this/.test(page), // exclude pages from sitemap
   customPages: [`${canonicalURL}/virtual-one.html`, `${canonicalURL}/virtual-two.html`],
   canonicalURL,
 
-  outfile: 'custom-sitemap.xml',
+  createLinkInHead: true,
+
+  serialize(item) {
+    if (/special-page/.test(item.url)) {
+      item.changefreq = 'daily';
+      item.lastmod = new Date();
+      item.priority = 0.9;
+    }
+    return item;
+  },
+
+  // The integration creates a separate `sitemap-${i}.xml` file for each batch of 2, then adds this file to index - `sitemap-index.xml`.
+  entryLimit: 2, // default - 45000
 
   // sitemap specific
-  changefreq: 'monthly',
-  lastmod: new Date(),
-  priority: 0.8,
+  changefreq: 'yearly',
+  lastmod: new Date('2019-12-31'),
+  priority: 0.4,
 };
 
 export default sitemapConfig;

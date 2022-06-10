@@ -2,7 +2,8 @@ import { isObjectEmpty } from '@/at-utils';
 import type { SitemapOptions } from './index';
 
 const defaultOptions: Readonly<SitemapOptions> = {
-  outfile: 'sitemap.xml',
+  createLinkInHead: true,
+  entryLimit: 45000,
 };
 
 // @internal
@@ -12,7 +13,8 @@ export const withOptions = (pluginOptions: SitemapOptions) => {
   }
   const options: SitemapOptions = {
     ...pluginOptions,
-    outfile: pluginOptions?.outfile || defaultOptions.outfile,
+    createLinkInHead: pluginOptions?.createLinkInHead ?? defaultOptions.createLinkInHead,
+    entryLimit: pluginOptions?.entryLimit || defaultOptions.entryLimit,
   };
   return options;
 };
