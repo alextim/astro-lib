@@ -1,5 +1,11 @@
 # astro-sitemap
 
+## 0.2.1
+
+### Patch Changes
+
+- 3e11031: fix: handle base/pathname correctly
+
 ## 0.2.0
 
 ### Minor Changes
