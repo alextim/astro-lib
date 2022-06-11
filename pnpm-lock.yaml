@@ -5,10 +5,10 @@ importers:
   .:
     specifiers:
       '@changesets/cli': ^2.22.0
-      '@types/node': ^17.0.41
+      '@types/node': ^17.0.42
       '@typescript-eslint/eslint-plugin': ^5.27.1
       '@typescript-eslint/parser': ^5.27.1
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       c8: ^7.11.3
       commitlint: ^17.0.2
       esbuild: ^0.14.43
@@ -25,10 +25,10 @@ importers:
       vitest: ^0.14.2
     devDependencies:
       '@changesets/cli': 2.22.0
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
       '@typescript-eslint/eslint-plugin': 5.27.1_aq7uryhocdbvbqum33pitcm3y4
       '@typescript-eslint/parser': 5.27.1_ud6rd4xtew5bv4yhvkvu24pzm4
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       c8: 7.11.3
       commitlint: 17.0.2
       esbuild: 0.14.43
@@ -46,76 +46,76 @@ importers:
 
   examples/robots-txt/advanced:
     specifiers:
-      '@astrojs/sitemap': ^0.1.1
-      astro: ^1.0.0-beta.43
+      '@astrojs/sitemap': ^0.1.2
+      astro: ^1.0.0-beta.44
       astro-robots-txt: latest
     devDependencies:
-      '@astrojs/sitemap': 0.1.1
-      astro: 1.0.0-beta.43
+      '@astrojs/sitemap': 0.1.2
+      astro: 1.0.0-beta.44
       astro-robots-txt: link:../../../packages/astro-robots-txt
 
   examples/robots-txt/basic:
     specifiers:
-      '@astrojs/sitemap': ^0.1.1
-      astro: ^1.0.0-beta.43
+      '@astrojs/sitemap': ^0.1.2
+      astro: ^1.0.0-beta.44
       astro-robots-txt: latest
     devDependencies:
-      '@astrojs/sitemap': 0.1.1
-      astro: 1.0.0-beta.43
+      '@astrojs/sitemap': 0.1.2
+      astro: 1.0.0-beta.44
       astro-robots-txt: link:../../../packages/astro-robots-txt
 
   examples/sitemap/advanced:
     specifiers:
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       astro-sitemap: latest
     devDependencies:
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/basic:
     specifiers:
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       astro-sitemap: latest
     devDependencies:
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/i18n:
     specifiers:
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       astro-sitemap: latest
     devDependencies:
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/webmanifest/advanced:
     specifiers:
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       astro-webmanifest: latest
     devDependencies:
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   examples/webmanifest/basic:
     specifiers:
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       astro-webmanifest: latest
     devDependencies:
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   examples/webmanifest/i18n:
     specifiers:
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       astro-webmanifest: latest
     devDependencies:
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   packages/astro-robots-txt:
     specifiers:
-      '@types/node': ^17.0.41
-      astro: ^1.0.0-beta.43
+      '@types/node': ^17.0.42
+      astro: ^1.0.0-beta.44
       at-scripts: workspace:*
       c8: ^7.11.3
       deepmerge: ^4.2.2
@@ -127,8 +127,8 @@ importers:
       deepmerge: 4.2.2
       zod: 3.17.3
     devDependencies:
-      '@types/node': 17.0.41
-      astro: 1.0.0-beta.43
+      '@types/node': 17.0.42
+      astro: 1.0.0-beta.44
       at-scripts: link:../../scripts
       c8: 7.11.3
       typescript: 4.7.3
@@ -137,8 +137,8 @@ importers:
 
   packages/astro-sitemap:
     specifiers:
-      '@types/node': ^17.0.41
-      astro: ^1.0.0-beta.43
+      '@types/node': ^17.0.42
+      astro: ^1.0.0-beta.44
       at-scripts: workspace:*
       c8: ^7.11.3
       deepmerge: ^4.2.2
@@ -154,8 +154,8 @@ importers:
       sitemap: 7.1.1
       zod: 3.17.3
     devDependencies:
-      '@types/node': 17.0.41
-      astro: 1.0.0-beta.43
+      '@types/node': 17.0.42
+      astro: 1.0.0-beta.44
       at-scripts: link:../../scripts
       c8: 7.11.3
       typescript: 4.7.3
@@ -164,9 +164,9 @@ importers:
 
   packages/astro-webmanifest:
     specifiers:
-      '@types/node': ^17.0.41
+      '@types/node': ^17.0.42
       '@types/sharp': ^0.30.4
-      astro: ^1.0.0-beta.43
+      astro: ^1.0.0-beta.44
       at-scripts: workspace:*
       c8: ^7.11.3
       deepmerge: ^4.2.2
@@ -184,9 +184,9 @@ importers:
       valid-filename: 4.0.0
       zod: 3.17.3
     devDependencies:
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
       '@types/sharp': 0.30.4
-      astro: 1.0.0-beta.43
+      astro: 1.0.0-beta.44
       at-scripts: link:../../scripts
       c8: 7.11.3
       typescript: 4.7.3
@@ -195,13 +195,13 @@ importers:
 
   packages/utils:
     specifiers:
-      '@types/node': ^17.0.41
+      '@types/node': ^17.0.42
       c8: ^7.11.3
       typescript: ^4.7.3
       vite: ^2.9.12
       vitest: ^0.14.2
     devDependencies:
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
       c8: 7.11.3
       typescript: 4.7.3
       vite: 2.9.12
@@ -248,8 +248,8 @@ packages:
       vscode-uri: 3.0.3
     dev: true
 
-  /@astrojs/markdown-remark/0.11.1:
-    resolution: {integrity: sha512-558AmpA6I/ag87UtvMxVKy+2w0KpOYiOUdrGg0fVZ6Vbj9hy63aHSvclM0jVAgv+AJA77+jf8EyzPApz0TkLRw==}
+  /@astrojs/markdown-remark/0.11.2:
+    resolution: {integrity: sha512-C/oW/rGGlHiu1Aa0VZYxyzRViBTxcfu9oT9odldD3OzukZHxjtYZOoS44VvBWYRzhSORDSvQ5Rj9tk6GKFjEWA==}
     dependencies:
       '@astrojs/micromark-extension-mdx-jsx': 1.0.3
       '@astrojs/prism': 0.4.1
@@ -298,10 +298,8 @@ packages:
     engines: {node: ^14.15.0 || >=16.0.0}
     dev: true
 
-  /@astrojs/sitemap/0.1.1:
-    resolution: {integrity: sha512-EhUPTLpSRYchpACkQjUlKLIeeLvxzM1ZLu4ZVDe1zwNa15UqNl+NlMZfLTufEaAN1lDNedhD+8T3NlO9FkKduw==}
-    dependencies:
-      sitemap: 7.1.1
+  /@astrojs/sitemap/0.1.2:
+    resolution: {integrity: sha512-KUDpYCISGE6ntbwFin/foYAgzh0V02VEWVUYIF3z73Mr3jkF8iTsLhx/h/aZCLTiFtYIY6koarch1LRt4V2Gvg==}
     dev: true
 
   /@astrojs/svelte-language-integration/0.1.6_typescript@4.6.4:
@@ -790,10 +788,10 @@ packages:
       '@commitlint/execute-rule': 17.0.0
       '@commitlint/resolve-extends': 17.0.0
       '@commitlint/types': 17.0.0
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
       chalk: 4.1.2
       cosmiconfig: 7.0.1
-      cosmiconfig-typescript-loader: 2.0.1_f5eqjuxkorpjvs4z7mviievvou
+      cosmiconfig-typescript-loader: 2.0.1_wpmar7q2se7jlmxe5wggegnl2m
       lodash: 4.17.21
       resolve-from: 5.0.0
       typescript: 4.7.3
@@ -1142,8 +1140,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node/17.0.41:
-    resolution: {integrity: sha512-xA6drNNeqb5YyV5fO3OAEsnXLfO7uF0whiOfPTz5AeDo8KeZFmODKnvwPymMNO8qE/an8pVY/O50tig2SQCrGw==}
+  /@types/node/17.0.42:
+    resolution: {integrity: sha512-Q5BPGyGKcvQgAMbsr7qEGN/kIPN6zZecYYABeTDBizOsau+2NMdSVTar9UQw21A2+JyA2KRNDYaYrPB0Rpk2oQ==}
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -1164,7 +1162,8 @@ packages:
   /@types/sax/1.2.4:
     resolution: {integrity: sha512-pSAff4IAxJjfAXUG6tFkO7dsSbTmf8CtUpfhhZ5VhkRpC4628tJhh3+V6H1E+/Gs9piSzYKT5yzHO5M4GG9jkw==}
     dependencies:
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
+    dev: false
 
   /@types/semver/6.2.3:
     resolution: {integrity: sha512-KQf+QAMWKMrtBMsB8/24w53tEsxllMj6TuA80TT/5igJalLI/zm0L3oXRbIAl4Ohfc85gyHX/jhMwsVkmhLU4A==}
@@ -1173,7 +1172,7 @@ packages:
   /@types/sharp/0.30.4:
     resolution: {integrity: sha512-6oJEzKt7wZeS7e+6x9QFEOWGs0T/6of00+0onZGN1zSmcSjcTDZKgIGZ6YWJnHowpaKUCFBPH52mYljWqU32Eg==}
     dependencies:
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
     dev: true
 
   /@types/unist/2.0.6:
@@ -1414,6 +1413,7 @@ packages:
 
   /arg/5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
+    dev: false
 
   /argparse/1.0.10:
     resolution: {integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==}
@@ -1489,14 +1489,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /astro/1.0.0-beta.43:
-    resolution: {integrity: sha512-bh7uMjeXJ9r0Ax3nr7HQvbcQUuzJiY6oWFLUvqOftYH0Jb1Fw8xv18lu+1T3PpoJXEwHfMA3FnXVZ8UrmeB0nw==}
+  /astro/1.0.0-beta.44:
+    resolution: {integrity: sha512-+3YtG8j/pPKFbzceKK4IwA7VDkRSYMY1ntN2PTp9s6HtHkSLGQEx0z9TLh7cBfJk6cM1obGoerzbenTZ2qSNtA==}
     engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/compiler': 0.15.2
       '@astrojs/language-server': 0.13.4
-      '@astrojs/markdown-remark': 0.11.1
+      '@astrojs/markdown-remark': 0.11.2
       '@astrojs/prism': 0.4.1
       '@astrojs/telemetry': 0.1.2
       '@astrojs/webapi': 0.12.0
@@ -1961,16 +1961,16 @@ packages:
       safe-buffer: 5.1.2
     dev: true
 
-  /cosmiconfig-typescript-loader/2.0.1_f5eqjuxkorpjvs4z7mviievvou:
+  /cosmiconfig-typescript-loader/2.0.1_wpmar7q2se7jlmxe5wggegnl2m:
     resolution: {integrity: sha512-B9s6sX/omXq7I6gC6+YgLmrBFMJhPWew7ty/X5Tuwtd2zOSgWaUdXjkuVwbe3qqcdETo60+1nSVMekq//LIXVA==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@types/node': '*'
       typescript: '>=3'
     dependencies:
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
       cosmiconfig: 7.0.1
-      ts-node: 10.8.1_f5eqjuxkorpjvs4z7mviievvou
+      ts-node: 10.8.1_wpmar7q2se7jlmxe5wggegnl2m
       typescript: 4.7.3
     transitivePeerDependencies:
       - '@swc/core'
@@ -5362,6 +5362,7 @@ packages:
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
+    dev: false
 
   /section-matter/1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
@@ -5493,10 +5494,11 @@ packages:
     engines: {node: '>=12.0.0', npm: '>=5.6.0'}
     hasBin: true
     dependencies:
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
       '@types/sax': 1.2.4
       arg: 5.0.2
       sax: 1.2.4
+    dev: false
 
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -5865,7 +5867,7 @@ packages:
     resolution: {integrity: sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==}
     dev: true
 
-  /ts-node/10.8.1_f5eqjuxkorpjvs4z7mviievvou:
+  /ts-node/10.8.1_wpmar7q2se7jlmxe5wggegnl2m:
     resolution: {integrity: sha512-Wwsnao4DQoJsN034wePSg5nZiw4YKXf56mPIAeD6wVmiv+RytNSWqc2f3fKvcUoV+Yn2+yocD71VOfQHbmVX4g==}
     hasBin: true
     peerDependencies:
@@ -5884,7 +5886,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 17.0.41
+      '@types/node': 17.0.42
       acorn: 8.7.1
       acorn-walk: 8.2.0
       arg: 4.1.3

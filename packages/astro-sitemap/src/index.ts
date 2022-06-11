@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { fileURLToPath } from 'url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
@@ -81,9 +82,22 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
 
           const { filter, customPages, canonicalURL, serialize, createLinkInHead, entryLimit } = opts;
 
-          const finalSiteUrl = canonicalURL || config.site || '';
+          let finalSiteUrl: URL;
+          if (canonicalURL) {
+            finalSiteUrl = new URL(canonicalURL);
+            if (!finalSiteUrl.pathname.endsWith('/')) {
+              finalSiteUrl.pathname += '/'; // normalizes the final url since it's provided by user
+            }
+          } else {
+            // `validateOpts` forces to provide `canonicalURL` or `config.site` at least.
+            // So step to check on empty values of `canonicalURL` and `config.site` is dropped.
+            finalSiteUrl = new URL(config.base, config.site);
+          }
 
-          let pageUrls = pages.map((p) => new URL(p.pathname, finalSiteUrl).href);
+          let pageUrls = pages.map((p) => {
+            const path = finalSiteUrl.pathname + p.pathname;
+            return new URL(path, finalSiteUrl).href;
+          });
 
           try {
             if (filter) {
@@ -103,7 +117,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             return;
           }
 
-          let urlData = generateSitemap(pageUrls, finalSiteUrl, opts);
+          let urlData = generateSitemap(pageUrls, finalSiteUrl.href, opts);
 
           let serializedUrls: SitemapItemLoose[];
 
@@ -122,7 +136,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
           }
 
           await simpleSitemapAndIndex({
-            hostname: finalSiteUrl,
+            hostname: finalSiteUrl.href,
             destinationDir: fileURLToPath(dir),
             sourceData: urlData,
             limit: entryLimit,
@@ -131,9 +145,10 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
           logger.success(`\`${OUTFILE}\` is created.`);
 
           if (createLinkInHead) {
-            const headHTML = `<link rel="sitemap" type="application/xml" href="/${OUTFILE}">`;
+            const sitemapHref = path.posix.join(config.base, OUTFILE);
+            const headHTML = `<link rel="sitemap" type="application/xml" href="${sitemapHref}">`;
             await processPages(pages, dir, headHTML, config.build.format);
-            logger.success('Links are created in <head> section of generated pages.');
+            logger.success('Sitemap links are created in <head> section of generated pages.');
           }
         } catch (err) {
           if (err instanceof ZodError) {
