@@ -1,4 +1,4 @@
-import { SitemapItemLoose, EnumChangefreq } from 'sitemap';
+import { SitemapItemLoose } from 'sitemap';
 
 import type { SitemapOptions } from './index';
 import { parseUrl } from './helpers/parse-url';

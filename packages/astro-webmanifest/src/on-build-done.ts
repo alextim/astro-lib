@@ -2,8 +2,8 @@ import type { AstroConfig } from 'astro';
 import type { WebmanifestOptions } from './index';
 import { ILogger } from '@/at-utils';
 
-import { withOptions } from './with-options';
-import { validateOpts } from './validate-opts';
+// import { withOptions } from './with-options';
+import { validateOptions } from './validate-options';
 import { processFavicon } from './process-favicon';
 import { createManifest } from './create-manifest';
 import { processPages } from './process-pages';
@@ -19,7 +19,7 @@ const onBuildDone = async (
   }[],
   logger: ILogger,
 ) => {
-  const opts = withOptions(pluginOptions);
+  // const opts = withOptions(pluginOptions);
 
   const checkIconDimension = async (icon: string | undefined) => {
     if (!icon) {
@@ -33,29 +33,30 @@ const onBuildDone = async (
     }
   };
 
-  const { config: { outfile, createFavicon } = {}, icon = '' } = opts;
+  // const { config: { outfile, createFavicon } = {}, icon = '' } = opts;
 
-  validateOpts(opts);
+  const opts = validateOptions(pluginOptions);
+  // const { config: { outfile, createFavicon } = {}, icon = '' } = opts;
 
-  await checkIconDimension(icon);
+  await checkIconDimension(opts.icon);
   if (opts.locales) {
     for (const { icon } of Object.values(opts.locales)) {
       await checkIconDimension(icon);
     }
   }
 
-  if (icon && createFavicon) {
-    await processFavicon(icon, dir);
+  if (opts.icon && opts.config?.createFavicon) {
+    await processFavicon(opts.icon, dir);
   }
 
   const results = [];
 
-  results.push(await createManifest(opts, outfile!, dir, logger));
+  results.push(await createManifest(opts, opts.config?.outfile!, dir, logger));
 
   if (opts.locales) {
     const arr = Object.entries(opts.locales);
     for (const [locale, entry] of arr) {
-      results.push(await createManifest({ ...opts, ...entry }, outfile!, dir, logger, locale));
+      results.push(await createManifest({ ...opts, ...entry }, opts.config?.outfile!, dir, logger, locale));
     }
   }
 

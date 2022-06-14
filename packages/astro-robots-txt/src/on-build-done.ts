@@ -2,16 +2,15 @@ import fs from 'node:fs';
 import type { AstroConfig } from 'astro';
 import type { RobotsTxtOptions } from './index';
 
-import { withOptions } from './with-options';
-import { validateOpts } from './validate-opts';
+import { validateOptions } from './validate-options';
 import { getRobotsTxtContent } from './get-robots-txt-content';
 
 const onBuildDone = (pluginOptions: RobotsTxtOptions, config: AstroConfig, dir: URL) => {
-  const opts = withOptions(pluginOptions);
+  const opts = validateOptions(config.site, pluginOptions);
 
-  validateOpts(config.site, opts);
+  const finalSiteHref = new URL(config.base, config.site).href;
 
-  const robotsTxtContent = getRobotsTxtContent(config.site!, opts);
+  const robotsTxtContent = getRobotsTxtContent(finalSiteHref, opts);
 
   const url = new URL('robots.txt', dir);
   fs.writeFileSync(url, robotsTxtContent);

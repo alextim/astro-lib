@@ -99,9 +99,9 @@ describe('onBuildDone', () => {
       prefer_related_applications: true,
       related_applications: [
         {
+          id: 'com.example.app1',
           platform: 'play',
           url: 'https://play.google.com/store/apps/details?id=com.example.app1',
-          id: 'com.example.app1',
         },
         {
           platform: 'itunes',
@@ -148,8 +148,8 @@ describe('onBuildDone', () => {
       shortcuts: [
         {
           name: "Today's agenda",
-          url: '/today',
           description: 'List of events planned for today',
+          url: '/today',
         },
         {
           name: 'New event',

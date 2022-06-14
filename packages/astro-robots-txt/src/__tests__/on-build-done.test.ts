@@ -6,6 +6,7 @@ import onBuildDone from '../on-build-done';
 
 const config = {
   site: 'https://example.com',
+  base: '/',
 };
 const dir = new URL('file:/');
 
@@ -23,6 +24,7 @@ describe('onBuildDone', () => {
     getRobotsTxt({});
     expect(fn.mock.calls[0][1]).toMatchSnapshot();
   });
+
   it('options = undefined, should return default robots.txt', () => {
     getRobotsTxt(undefined);
     expect(fn.mock.calls[0][1]).toMatchSnapshot();

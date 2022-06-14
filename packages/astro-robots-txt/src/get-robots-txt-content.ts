@@ -1,7 +1,7 @@
 import type { PolicyItem, RobotsTxtOptions } from './index';
 
 const capitaliseFirstLetter = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-const addBackslash = (s: string) => (s.endsWith('/') ? s : `${s}/`);
+const addBackSlash = (s: string) => (s.endsWith('/') ? s : `${s}/`);
 
 const addLine = (name: string, rule: string | string[] | number) => {
   if (rule && Array.isArray(rule) && rule.length > 0) {
@@ -49,7 +49,7 @@ const generatePoliceItem = (item: PolicyItem, index: number) => {
   return contents;
 };
 
-const getSitemapArr = (sitemap: string | string[] | boolean | undefined, site: string) => {
+const getSitemapArr = (sitemap: string | string[] | boolean | undefined, filalSiteHref: string) => {
   if (typeof sitemap !== 'undefined') {
     if (!sitemap) {
       return undefined;
@@ -61,24 +61,26 @@ const getSitemapArr = (sitemap: string | string[] | boolean | undefined, site: s
       return [sitemap];
     }
   }
-  return [`${addBackslash(site)}sitemap.xml`];
+  // return [`${addBackslash(href)}sitemap.xml`];
+  return [`${addBackSlash(filalSiteHref)}sitemap.xml`];
 };
 
 /**
  *
- * @param site
- * @param param1
- * @returns
+ * @param {string} finalSiteHref
+ * @param {RobotsTxtOptions} options
+ * @returns {string} Generated sitemap content
+ *
  * @internal
  */
-export const getRobotsTxtContent = (site: string, { host, sitemap, policy }: RobotsTxtOptions = {}) => {
+export const getRobotsTxtContent = (finalSiteHref: string, { host, sitemap, policy }: RobotsTxtOptions = {}) => {
   let result = '';
 
   policy?.forEach((item, index) => {
     result += generatePoliceItem(item, index);
   });
 
-  getSitemapArr(sitemap, site)?.forEach((item) => {
+  getSitemapArr(sitemap, finalSiteHref)?.forEach((item) => {
     result += addLine('Sitemap', item);
   });
 

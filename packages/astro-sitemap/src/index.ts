@@ -7,7 +7,7 @@ import { LinkItem as LinkItemBase, SitemapItemLoose, simpleSitemapAndIndex } fro
 
 import { Logger, loadConfig } from '@/at-utils';
 import { withOptions } from './with-options';
-import { validateOpts } from './validate-opts';
+import { validateOptions } from './validate-options';
 import { generateSitemap } from './generate-sitemap';
 import { changefreqValues } from './constants';
 import { processPages } from './process-pages';
@@ -78,7 +78,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
         const opts = withOptions(merged);
 
         try {
-          validateOpts(config.site, opts);
+          validateOptions(config.site, opts);
 
           const { filter, customPages, canonicalURL, serialize, createLinkInHead, entryLimit } = opts;
 
@@ -89,7 +89,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
               finalSiteUrl.pathname += '/'; // normalizes the final url since it's provided by user
             }
           } else {
-            // `validateOpts` forces to provide `canonicalURL` or `config.site` at least.
+            // `validateOptions` forces to provide `canonicalURL` or `config.site` at least.
             // So step to check on empty values of `canonicalURL` and `config.site` is dropped.
             finalSiteUrl = new URL(config.base, config.site);
           }

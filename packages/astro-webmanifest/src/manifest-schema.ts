@@ -64,14 +64,16 @@ export const manifestSchema = {
     .array()
     .optional(),
 
+  prefer_related_applications: z.boolean().optional(),
+
   related_applications: z
     .object({
       id: z.string().optional(),
+      platform: z.enum(applicationPlatformValues),
       url: z
         .string()
         .min(1)
         .refine((val) => isValidUrl(val), { message: 'Not valid URL' }),
-      platform: z.enum(applicationPlatformValues),
     })
     .array()
     .optional(),

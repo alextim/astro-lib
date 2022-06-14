@@ -1,23 +1,23 @@
 import type { SitemapOptions } from '../index';
-import { validateOpts } from '../validate-opts';
+import { validateOptions } from '../validate-options';
 
 const site = 'https://example.com';
 
-describe('test validateOpts', () => {
+describe('test validateOptions', () => {
   it('site = undefined, should throw', () => {
-    expect(() => validateOpts(undefined, {})).toThrowError();
+    expect(() => validateOptions(undefined, {})).toThrowError();
   });
 
   it('site = "", should throw', () => {
-    expect(() => validateOpts('', {})).toThrowError();
+    expect(() => validateOptions('', {})).toThrowError();
   });
 
   // opts
   it('opts = {}, should not throw', () => {
-    expect(() => validateOpts(site, {})).not.toThrow();
+    expect(() => validateOptions(site, {})).not.toThrow();
   });
   it('opts = undefined, should not throw', () => {
-    expect(() => validateOpts(site, undefined)).not.toThrow();
+    expect(() => validateOptions(site, undefined)).not.toThrow();
   });
 
   // filter
@@ -25,13 +25,13 @@ describe('test validateOpts', () => {
     const opts = {
       filter: () => {},
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('filter is not func, should throw', () => {
     const opts = {
       filter: {},
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   // serialize
@@ -39,13 +39,13 @@ describe('test validateOpts', () => {
     const opts = {
       serialize: () => {},
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('serialize is not func, should throw', () => {
     const opts = {
       serialize: {},
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   // customPages
@@ -53,31 +53,31 @@ describe('test validateOpts', () => {
     const opts = {
       customPages: [],
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('customPages = [""], should throw', () => {
     const opts = {
       customPages: [''],
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('customPages = [1], should throw', () => {
     const opts = {
       customPages: [1],
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('customPages = ["abc"], should throw', () => {
     const opts = {
       customPages: ['abc'],
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('customPages = ["http://abc"], should not throw', () => {
     const opts = {
       customPages: ['http://abc'],
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   // canonicalURL
@@ -85,43 +85,43 @@ describe('test validateOpts', () => {
     const opts = {
       canonicalURL: undefined,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('canonicalURL = "", should throw', () => {
     const opts = {
       canonicalURL: '',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('canonicalURL = "abc", should throw', () => {
     const opts = {
       canonicalURL: 'abc',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('canonicalURL = 1, should throw', () => {
     const opts = {
       canonicalURL: 1,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('canonicalURL = "http://abc", should not throw', () => {
     const opts = {
       canonicalURL: 'http://abc',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   // site && canonicalURL
   it('site = ``, opts = undefined should throw', () => {
     const opts = undefined;
-    expect(() => validateOpts('', opts as unknown as SitemapOptions)).toThrow(
+    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow(
       'Required `site` astro.config option or `canonicalURL` integration option',
     );
   });
   it('site = ``, opts = {} should throw', () => {
     const opts = {};
-    expect(() => validateOpts('', opts as unknown as SitemapOptions)).toThrow(
+    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow(
       'Required `site` astro.config option or `canonicalURL` integration option',
     );
   });
@@ -129,13 +129,13 @@ describe('test validateOpts', () => {
     const opts = {
       canonicalURL: '',
     };
-    expect(() => validateOpts('', opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow();
   });
   it('site = ``, canonicalURL = `https://abc` should not throw', () => {
     const opts = {
       canonicalURL: 'https://abc',
     };
-    expect(() => validateOpts('', opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions('', opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   // i18n
@@ -143,19 +143,19 @@ describe('test validateOpts', () => {
     const opts = {
       i18n: {},
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('i18n is [], should throw', () => {
     const opts = {
       i18n: [],
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('i18n is "", should throw', () => {
     const opts = {
       i18n: '',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   // defaultLocale
@@ -166,7 +166,7 @@ describe('test validateOpts', () => {
         locales: { en: 'en' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('defaultLocale is number, should throw', () => {
     const opts = {
@@ -175,7 +175,7 @@ describe('test validateOpts', () => {
         locales: { en: 'en' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   it('defaultLocale is Ok, locales is empty, should throw', () => {
@@ -184,7 +184,7 @@ describe('test validateOpts', () => {
         defaultLocale: 'en',
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('defaultLocale do not exist in locales, should throw', () => {
     const opts = {
@@ -193,7 +193,7 @@ describe('test validateOpts', () => {
         locales: { en: 'en' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('`defaultLocale` must exists in `locales` keys');
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow('`defaultLocale` must exists in `locales` keys');
   });
 
   it('defaultLocale & locales are OK, should not throw', () => {
@@ -203,7 +203,7 @@ describe('test validateOpts', () => {
         locales: { en: 'en' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   // locales
@@ -214,7 +214,7 @@ describe('test validateOpts', () => {
         locales: {},
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('locales = value is undefined, should throw', () => {
     const opts = {
@@ -223,7 +223,7 @@ describe('test validateOpts', () => {
         locales: { en: undefined },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('locales = value is empty, should throw', () => {
     const opts = {
@@ -232,7 +232,7 @@ describe('test validateOpts', () => {
         locales: { en: '' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('locales = value < 2, should throw', () => {
     const opts = {
@@ -241,7 +241,7 @@ describe('test validateOpts', () => {
         locales: { en: 1 },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   it('locales = value contain space, should throw', () => {
@@ -251,7 +251,7 @@ describe('test validateOpts', () => {
         locales: { en: 'zh cmn' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
   });
   it('locales = value contain non english, should throw', () => {
     const opts = {
@@ -260,7 +260,7 @@ describe('test validateOpts', () => {
         locales: { en: 'zh-фы' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
   });
   it('locales = value = `zh-cmn-Hans_CN`, should throw', () => {
     const opts = {
@@ -269,7 +269,7 @@ describe('test validateOpts', () => {
         locales: { en: 'zh-cmn-Hans_CN' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow('Only English alphabet symbols and hyphen allowed');
   });
 
   it('locales = value = `zh-cmn-Hans-CN`, should not throw', () => {
@@ -279,7 +279,7 @@ describe('test validateOpts', () => {
         locales: { en: 'zh-cmn-Hans-CN' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   it('locales = key is empty, should throw', () => {
@@ -289,7 +289,7 @@ describe('test validateOpts', () => {
         locales: { '': 'zh-cmn-Hans-CN' },
       },
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   // unknown
@@ -297,7 +297,7 @@ describe('test validateOpts', () => {
     const opts = {
       unknown: 'abc',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   // entryLimit
@@ -305,19 +305,19 @@ describe('test validateOpts', () => {
     const opts = {
       entryLimit: 1,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('`entryLimit` is -1, should throw', () => {
     const opts = {
       entryLimit: -1,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`entryLimit` is string, should throw', () => {
     const opts = {
       entryLimit: 'abc',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   // createLinkInHead
@@ -325,19 +325,19 @@ describe('test validateOpts', () => {
     const opts = {
       createLinkInHead: true,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('`createLinkInHead` is 1, should throw', () => {
     const opts = {
       createLinkInHead: 1,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`createLinkInHead` is string, should throw', () => {
     const opts = {
       createLinkInHead: 'abc',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
 
   // changefreq
@@ -345,25 +345,25 @@ describe('test validateOpts', () => {
     const opts = {
       changefreq: undefined,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('`changefreq` is "", should throw', () => {
     const opts = {
       changefreq: '',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`changefreq` is "abc", should throw', () => {
     const opts = {
       changefreq: 'abc',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`changefreq` is "weekly", should not throw', () => {
     const opts = {
       changefreq: 'weekly',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   // lastmod
@@ -371,25 +371,25 @@ describe('test validateOpts', () => {
     const opts = {
       lastmod: undefined,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('`lastmod` is "", should throw', () => {
     const opts = {
       lastmod: '',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`lastmod` is "2012-01-01", should throw', () => {
     const opts = {
       lastmod: '2012-01-01',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`lastmod` is new Date(), should not throw', () => {
     const opts = {
       lastmod: new Date(),
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 
   // priority
@@ -397,42 +397,42 @@ describe('test validateOpts', () => {
     const opts = {
       priority: undefined,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('`priority` is "", should throw', () => {
     const opts = {
       priority: '',
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`priority` is -1, should throw', () => {
     const opts = {
       priority: -1,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`priority` is 1.1, should throw', () => {
     const opts = {
       priority: 1.1,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
   it('`priority` is 0, should not throw', () => {
     const opts = {
       priority: 0,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('`priority` is 0.5, should not throw', () => {
     const opts = {
       priority: 0.5,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
   it('`priority` is 1, should not throw', () => {
     const opts = {
       priority: 1,
     };
-    expect(() => validateOpts(site, opts as unknown as SitemapOptions)).not.toThrow();
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
 });

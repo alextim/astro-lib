@@ -1,0 +1,61 @@
+import { z } from 'zod';
+import isValidFilename from 'valid-filename';
+import { isObjectEmpty } from '@/at-utils';
+import type { WebmanifestOptions } from './index';
+import { WEBMANIFEST_CONFIG_DEFAULTS } from './config-defaults';
+import { crossOriginValues, iconPurposeValues } from './constants';
+import { manifestSchema } from './manifest-schema';
+
+export const validateOptions = (opts: WebmanifestOptions) => {
+  const getLocalesValidator = () => {
+    const result: Record<string, any> = {};
+    if (opts?.locales && !isObjectEmpty(opts.locales)) {
+      Object.keys(opts.locales).forEach((locale) => {
+        result[locale] = z.object({
+          ...manifestSchema,
+        });
+      });
+    }
+    return result;
+  };
+
+  const schema = z
+    .object({
+      ...manifestSchema,
+
+      config: z
+        .object({
+          iconPurpose: z.enum(iconPurposeValues).array().optional(),
+
+          createFavicon: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.createFavicon),
+
+          insertFaviconLinks: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertFaviconLinks),
+
+          insertManifestLink: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertManifestLink),
+
+          crossOrigin: z.enum(crossOriginValues).default(WEBMANIFEST_CONFIG_DEFAULTS.config.crossOrigin),
+
+          insertThemeColorMeta: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertThemeColorMeta),
+
+          insertAppleTouchLinks: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertAppleTouchLinks),
+
+          indent: z.string().default(WEBMANIFEST_CONFIG_DEFAULTS.config.indent),
+
+          eol: z.string().default(WEBMANIFEST_CONFIG_DEFAULTS.config.eol),
+
+          outfile: z
+            .string()
+            .min(1)
+            .refine((val) => !val || isValidFilename(val), { message: 'Not valid file name' })
+            .default(WEBMANIFEST_CONFIG_DEFAULTS.config.outfile),
+        })
+        .default(WEBMANIFEST_CONFIG_DEFAULTS.config),
+
+      locales: z.object(getLocalesValidator()).optional(),
+    })
+    .default(WEBMANIFEST_CONFIG_DEFAULTS);
+
+  const result = schema.parse(opts);
+
+  return result;
+};

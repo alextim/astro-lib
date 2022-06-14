@@ -133,7 +133,6 @@ All pages generated during build will contain in `<head>` section a link to site
 <link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
 ```
 
-
 You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
 
 ## Configuration
@@ -174,7 +173,6 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 |   Name         |      Type       | Required | Description     |
 | :------------: | :-------------: | :------: | :-------------- |
 | `url`          |    `String`     |    Yes   | Absolute url    |
-| `lang`         |    `String`     |    Yes   | example 'en'    |
 | `hreflang`     |    `String`     |    No    | example 'en-us' |
 
 **Sample of _astro.config.mjs_**

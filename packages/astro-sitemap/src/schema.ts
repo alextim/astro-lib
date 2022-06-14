@@ -12,11 +12,14 @@ const localeKeySchema = () => z.string().min(1);
 
 const isFunction = (fn: any) => fn instanceof Function;
 
-export const SitemapOptionsSchema = z.object({
-  filter: z
+const fnSchema = () =>
+  z
     .any()
     .refine((val) => !val || isFunction(val), { message: 'Not a function' })
-    .optional(),
+    .optional();
+
+export const SitemapOptionsSchema = z.object({
+  filter: fnSchema(),
 
   customPages: urlSchema().array().optional(),
 
@@ -42,10 +45,7 @@ export const SitemapOptionsSchema = z.object({
 
   entryLimit: z.number().nonnegative().optional(),
 
-  serialize: z
-    .any()
-    .refine((val) => !val || isFunction(val), { message: 'Not a function' })
-    .optional(),
+  serialize: fnSchema(),
 
   changefreq: z.enum(changefreqValues).optional(),
   lastmod: z.date().optional(),

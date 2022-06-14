@@ -3,7 +3,7 @@ import type { SitemapOptions } from './index';
 import { SitemapOptionsSchema } from './schema';
 
 // @internal
-export const validateOpts = (site: string | undefined, opts: SitemapOptions) => {
+export const validateOptions = (site: string | undefined, opts: SitemapOptions) => {
   const schema = SitemapOptionsSchema.extend({
     site: z.string().optional(),
   })
