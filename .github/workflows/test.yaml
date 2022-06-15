@@ -4,9 +4,18 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/**'
+      - '.vscode/**'
+      - '**.md'
+      - 'examples/**'
+
   pull_request:
     paths-ignore:
+      - '.github/**'
       - '.vscode/**'
+      - '**.md'
+      - 'examples/**'
 
 # Automatically cancel in-progress actions on the same branch
 concurrency:
