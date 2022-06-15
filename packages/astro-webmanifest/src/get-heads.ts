@@ -1,17 +1,14 @@
 import type { WebmanifestOptions, Webmanifest } from './index';
 import { favicons } from './default-icons';
 
-const addBasePath = (s: string) => {
-  if (s.startsWith('/')) {
-    return s;
-  }
-  return `/${s}`;
-};
-
-export const getHeads = (opts: WebmanifestOptions, results: { locale: string; outfile: string; manifest: Webmanifest }[]) => {
-  const { icon: srcIcon, config: cfg = {} } = opts || {};
-
+export const getHeads = (opts: WebmanifestOptions, base: string, results: { locale: string; outfile: string; manifest: Webmanifest }[]) => {
+  const { icon: srcIcon, config: cfg } = opts!;
   const heads: Record<string, string> = {};
+
+  const addBasePath = (path: string) => {
+    const s = path.startsWith('/') ? path : `/${path}`;
+    return base === '/' ? s : `${base}${s}`;
+  };
 
   for (const {
     locale,
@@ -20,7 +17,7 @@ export const getHeads = (opts: WebmanifestOptions, results: { locale: string; ou
   } of results) {
     const headComponents = [];
 
-    if (srcIcon && cfg.createFavicon && cfg.insertFaviconLinks) {
+    if (srcIcon && cfg?.createFavicon && cfg.insertFaviconLinks) {
       favicons.forEach((favicon) => {
         headComponents.push(`<link rel="icon" href="${addBasePath(favicon.src)}" type="image/png">`);
       });
@@ -29,22 +26,22 @@ export const getHeads = (opts: WebmanifestOptions, results: { locale: string; ou
       }
     }
 
-    if (theme_color && cfg.insertThemeColorMeta) {
+    if (theme_color && cfg?.insertThemeColorMeta) {
       headComponents.push(`<meta name="theme-color" content="${theme_color}">`);
     }
 
-    if (cfg.insertManifestLink) {
+    if (cfg?.insertManifestLink) {
       headComponents.push(`<link rel="manifest" href="${addBasePath(manifestFileName)}" crossorigin="${cfg.crossOrigin}">`);
     }
 
-    if (cfg.insertAppleTouchLinks) {
-      icons?.forEach((icon) => {
-        headComponents.push(`<link rel="apple-touch-icon" sizes="${icon.sizes}" href="${addBasePath(icon.src)}">`);
+    if (cfg?.insertAppleTouchLinks) {
+      icons?.forEach(({ sizes, src }) => {
+        headComponents.push(`<link rel="apple-touch-icon" sizes="${sizes}" href="${addBasePath(src)}">`);
       });
     }
 
     if (headComponents.length > 0) {
-      const data = headComponents.map((item) => cfg.indent + item + cfg.eol).join('');
+      const data = headComponents.map((item) => cfg?.indent + item + cfg?.eol).join('');
       heads[locale] = data;
     }
   }

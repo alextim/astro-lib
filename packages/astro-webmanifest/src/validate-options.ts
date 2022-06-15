@@ -26,26 +26,19 @@ export const validateOptions = (opts: WebmanifestOptions) => {
       config: z
         .object({
           iconPurpose: z.enum(iconPurposeValues).array().optional(),
-
-          createFavicon: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.createFavicon),
-
-          insertFaviconLinks: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertFaviconLinks),
-
-          insertManifestLink: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertManifestLink),
-
-          crossOrigin: z.enum(crossOriginValues).default(WEBMANIFEST_CONFIG_DEFAULTS.config.crossOrigin),
-
-          insertThemeColorMeta: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertThemeColorMeta),
-
-          insertAppleTouchLinks: z.boolean().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertAppleTouchLinks),
-
-          indent: z.string().default(WEBMANIFEST_CONFIG_DEFAULTS.config.indent),
-
-          eol: z.string().default(WEBMANIFEST_CONFIG_DEFAULTS.config.eol),
+          createFavicon: z.boolean().optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.createFavicon),
+          insertFaviconLinks: z.boolean().optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertFaviconLinks),
+          insertManifestLink: z.boolean().optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertManifestLink),
+          crossOrigin: z.enum(crossOriginValues).optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.crossOrigin),
+          insertThemeColorMeta: z.boolean().optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertThemeColorMeta),
+          insertAppleTouchLinks: z.boolean().optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.insertAppleTouchLinks),
+          indent: z.string().optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.indent),
+          eol: z.string().optional().default(WEBMANIFEST_CONFIG_DEFAULTS.config.eol),
 
           outfile: z
             .string()
             .min(1)
+            .optional()
             .refine((val) => !val || isValidFilename(val), { message: 'Not valid file name' })
             .default(WEBMANIFEST_CONFIG_DEFAULTS.config.outfile),
         })

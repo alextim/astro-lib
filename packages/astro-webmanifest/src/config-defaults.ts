@@ -1,4 +1,4 @@
-import type { WebmanifestOptions } from './index';
+import type { WebmanifestOptions, CrossOrigin } from './index';
 
 export const WEBMANIFEST_CONFIG_DEFAULTS: WebmanifestOptions & any = {
   config: {
@@ -6,7 +6,7 @@ export const WEBMANIFEST_CONFIG_DEFAULTS: WebmanifestOptions & any = {
     createFavicon: true,
     insertFaviconLinks: true,
     insertManifestLink: true,
-    crossOrigin: 'anonymus',
+    crossOrigin: 'anonymous' as CrossOrigin,
     insertThemeColorMeta: true,
     insertAppleTouchLinks: false,
     indent: '    ',

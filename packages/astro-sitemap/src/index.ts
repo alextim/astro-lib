@@ -6,7 +6,6 @@ import merge from 'deepmerge';
 import { LinkItem as LinkItemBase, SitemapItemLoose, simpleSitemapAndIndex } from 'sitemap';
 
 import { Logger, loadConfig } from '@/at-utils';
-import { withOptions } from './with-options';
 import { validateOptions } from './validate-options';
 import { generateSitemap } from './generate-sitemap';
 import { changefreqValues } from './constants';
@@ -75,10 +74,9 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
         const namespace = packageName.replace('astro-', '');
         const external = await loadConfig(namespace, config.root);
         const merged: SitemapOptions = merge(external || {}, options || {});
-        const opts = withOptions(merged);
 
         try {
-          validateOptions(config.site, opts);
+          const opts = validateOptions(config.site, merged);
 
           const { filter, customPages, canonicalURL, serialize, createLinkInHead, entryLimit } = opts;
 
@@ -101,7 +99,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
 
           try {
             if (filter) {
-              pageUrls = pageUrls.filter((url) => filter(url));
+              pageUrls = pageUrls.filter(filter);
             }
           } catch (err) {
             logger.error(`Error filtering pages\n${(err as any).toString()}`);
@@ -119,11 +117,9 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
 
           let urlData = generateSitemap(pageUrls, finalSiteUrl.href, opts);
 
-          let serializedUrls: SitemapItemLoose[];
-
           if (serialize) {
-            serializedUrls = [];
             try {
+              const serializedUrls: SitemapItemLoose[] = [];
               for (const item of urlData) {
                 const serialized = await Promise.resolve(serialize(item));
                 serializedUrls.push(serialized);

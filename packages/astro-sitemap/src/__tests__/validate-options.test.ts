@@ -1,23 +1,20 @@
 import type { SitemapOptions } from '../index';
 import { validateOptions } from '../validate-options';
+import { SITEMAP_CONFIG_DEFAULTS } from '../config-defaults';
 
 const site = 'https://example.com';
 
 describe('test validateOptions', () => {
-  it('site = undefined, should throw', () => {
-    expect(() => validateOptions(undefined, {})).toThrowError();
-  });
-
-  it('site = "", should throw', () => {
-    expect(() => validateOptions('', {})).toThrowError();
-  });
-
   // opts
   it('opts = {}, should not throw', () => {
-    expect(() => validateOptions(site, {})).not.toThrow();
+    const fn = () => validateOptions(site, {});
+    expect(fn).not.toThrow();
+    expect(fn()).toEqual(SITEMAP_CONFIG_DEFAULTS);
   });
   it('opts = undefined, should not throw', () => {
-    expect(() => validateOptions(site, undefined)).not.toThrow();
+    const fn = () => validateOptions(site, undefined);
+    expect(fn).not.toThrow();
+    expect(fn()).toEqual(SITEMAP_CONFIG_DEFAULTS);
   });
 
   // filter
@@ -113,29 +110,42 @@ describe('test validateOptions', () => {
   });
 
   // site && canonicalURL
+  const MSG_SITE_OR_CANONICALURL_REQUIRED = 'Required `site` astro.config option or `canonicalURL` integration option';
+  it('site = undefined, opts = undefined should throw', () => {
+    const opts = undefined;
+    expect(() => validateOptions(undefined, opts as unknown as SitemapOptions)).toThrow(MSG_SITE_OR_CANONICALURL_REQUIRED);
+  });
+  it('site = undefined, opts = {} should throw', () => {
+    const opts = {};
+    expect(() => validateOptions(undefined, opts as unknown as SitemapOptions)).toThrow(MSG_SITE_OR_CANONICALURL_REQUIRED);
+  });
+  it('site = undefined, opts = {canonicalURL: undefined} should throw', () => {
+    const opts = { canonicalURL: undefined };
+    expect(() => validateOptions(undefined, opts as unknown as SitemapOptions)).toThrow(MSG_SITE_OR_CANONICALURL_REQUIRED);
+  });
   it('site = ``, opts = undefined should throw', () => {
     const opts = undefined;
-    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow(
-      'Required `site` astro.config option or `canonicalURL` integration option',
-    );
+    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow(MSG_SITE_OR_CANONICALURL_REQUIRED);
   });
   it('site = ``, opts = {} should throw', () => {
     const opts = {};
-    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow(
-      'Required `site` astro.config option or `canonicalURL` integration option',
-    );
+    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow(MSG_SITE_OR_CANONICALURL_REQUIRED);
   });
-  it('site = ``, canonicalURL = `` should throw', () => {
-    const opts = {
-      canonicalURL: '',
-    };
-    expect(() => validateOptions('', opts as unknown as SitemapOptions)).toThrow();
-  });
-  it('site = ``, canonicalURL = `https://abc` should not throw', () => {
+  it('site = undefined, canonicalURL = `https://abc` should not throw', () => {
     const opts = {
       canonicalURL: 'https://abc',
     };
-    expect(() => validateOptions('', opts as unknown as SitemapOptions)).not.toThrow();
+    const fn = () => validateOptions(undefined, opts as unknown as SitemapOptions);
+    expect(fn).not.toThrow();
+    expect(fn()).toEqual({ ...SITEMAP_CONFIG_DEFAULTS, ...opts });
+  });
+  it('site = "", canonicalURL = `https://abc` should not throw', () => {
+    const opts = {
+      canonicalURL: 'https://abc',
+    };
+    const fn = () => validateOptions('', opts as unknown as SitemapOptions);
+    expect(fn).not.toThrow();
+    expect(fn()).toEqual({ ...SITEMAP_CONFIG_DEFAULTS, ...opts });
   });
 
   // i18n

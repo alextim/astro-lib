@@ -1,5 +1,5 @@
 const canonicalURL = 'https://example.com';
-import fs from 'node:fs';
+
 /** @type {import('astro-sitemap').SitemapOptions} */
 const sitemapConfig = {
   filter: (page) => !/exclude-this/.test(page), // exclude pages from sitemap

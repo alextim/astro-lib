@@ -1,6 +1,6 @@
 import type { RobotsTxtOptions } from './index';
 
-export const SITEMAP_CONFIG_DEFAULTS: RobotsTxtOptions & any = {
+export const ROBOTS_TXT_CONFIG_DEFAULTS: RobotsTxtOptions & any = {
   sitemap: true,
   policy: [
     {

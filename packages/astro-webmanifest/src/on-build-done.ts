@@ -1,14 +1,13 @@
 import type { AstroConfig } from 'astro';
-import type { WebmanifestOptions } from './index';
 import { ILogger } from '@/at-utils';
 
-// import { withOptions } from './with-options';
+import type { WebmanifestOptions } from './index';
+import { isIconSquare } from './helpers/is-icon-square';
 import { validateOptions } from './validate-options';
 import { processFavicon } from './process-favicon';
 import { createManifest } from './create-manifest';
 import { processPages } from './process-pages';
 import { getHeads } from './get-heads';
-import { isIconSquare } from './helpers/is-icon-square';
 
 const onBuildDone = async (
   pluginOptions: WebmanifestOptions,
@@ -19,13 +18,8 @@ const onBuildDone = async (
   }[],
   logger: ILogger,
 ) => {
-  // const opts = withOptions(pluginOptions);
-
   const checkIconDimension = async (icon: string | undefined) => {
-    if (!icon) {
-      return;
-    }
-    if (!(await isIconSquare(icon))) {
+    if (icon && !(await isIconSquare(icon))) {
       logger.info(`
         The icon(${icon}) provided is not square.
         The generated icons will be square and for the best results it's recommend to provide a square icon.
@@ -33,10 +27,7 @@ const onBuildDone = async (
     }
   };
 
-  // const { config: { outfile, createFavicon } = {}, icon = '' } = opts;
-
   const opts = validateOptions(pluginOptions);
-  // const { config: { outfile, createFavicon } = {}, icon = '' } = opts;
 
   await checkIconDimension(opts.icon);
   if (opts.locales) {
@@ -60,7 +51,7 @@ const onBuildDone = async (
     }
   }
 
-  const heads = getHeads(opts, results);
+  const heads = getHeads(opts, config.base, results);
 
   await processPages(pages, dir, heads, config.build.format);
 };

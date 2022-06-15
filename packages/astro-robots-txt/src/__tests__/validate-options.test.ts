@@ -1,6 +1,6 @@
 import type { RobotsTxtOptions } from '../index';
 import { validateOptions } from '../validate-options';
-import { SITEMAP_CONFIG_DEFAULTS } from '../config-defaults';
+import { ROBOTS_TXT_CONFIG_DEFAULTS } from '../config-defaults';
 
 const site = 'https://example.com';
 
@@ -16,20 +16,20 @@ describe('test validateOptions', () => {
   it('opts = {}, should not throw', () => {
     const fn = () => validateOptions(site, {});
     expect(fn).not.toThrow();
-    expect(fn()).toEqual(SITEMAP_CONFIG_DEFAULTS);
+    expect(fn()).toEqual(ROBOTS_TXT_CONFIG_DEFAULTS);
   });
 
   it('opts = undefined, should not throw ', () => {
     const fn = () => validateOptions(site, undefined);
     expect(fn).not.toThrow();
-    expect(fn()).toEqual(SITEMAP_CONFIG_DEFAULTS);
+    expect(fn()).toEqual(ROBOTS_TXT_CONFIG_DEFAULTS);
   });
 
   // sitemap
   it('sitemap = true, should not throw', () => {
     const fn = () => validateOptions(site, { sitemap: true });
     expect(fn).not.toThrow();
-    expect(fn()).toEqual(SITEMAP_CONFIG_DEFAULTS);
+    expect(fn()).toEqual(ROBOTS_TXT_CONFIG_DEFAULTS);
   });
   it('sitemap = false, should not throw', () => {
     const fn = () => validateOptions(site, { sitemap: false });

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { isValidHostname, isValidHttpUrl } from '@/at-utils';
-import { SITEMAP_CONFIG_DEFAULTS } from './config-defaults';
+import { ROBOTS_TXT_CONFIG_DEFAULTS } from './config-defaults';
 
 const validateSitemapItem = () =>
   z
@@ -9,19 +9,18 @@ const validateSitemapItem = () =>
     .refine((val) => !val || isValidHttpUrl(val), {
       message: 'Only valid URLs with `http` or `https` protocol allowed',
     });
-
 const validateCleanParam = () => z.string().max(500);
 
 export const RobotsTxtOptionsSchema = z
   .object({
     host: z
       .string()
+      .optional()
       .refine((val) => !val || isValidHostname(val), {
         message: 'Not valid host',
-      })
-      .optional(),
+      }),
 
-    sitemap: validateSitemapItem().or(validateSitemapItem().array()).or(z.boolean()).default(SITEMAP_CONFIG_DEFAULTS.sitemap),
+    sitemap: validateSitemapItem().or(validateSitemapItem().array()).or(z.boolean()).optional().default(ROBOTS_TXT_CONFIG_DEFAULTS.sitemap),
 
     policy: z
       .object({
@@ -32,11 +31,12 @@ export const RobotsTxtOptionsSchema = z
         crawlDelay: z
           .number()
           .nonnegative()
-          .refine((val) => typeof val === 'undefined' || Number.isFinite(val), { message: 'Must be finite number' })
-          .optional(),
+          .optional()
+          .refine((val) => typeof val === 'undefined' || Number.isFinite(val), { message: 'Must be finite number' }),
       })
       .array()
       .nonempty()
-      .default(SITEMAP_CONFIG_DEFAULTS.policy),
+      .optional()
+      .default(ROBOTS_TXT_CONFIG_DEFAULTS.policy),
   })
-  .default(SITEMAP_CONFIG_DEFAULTS);
+  .default(ROBOTS_TXT_CONFIG_DEFAULTS);

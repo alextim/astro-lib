@@ -1,13 +1,9 @@
 import { string, z } from 'zod';
-import { isFileExistsSync, isValidUrl, isValidUrlEx } from '@/at-utils';
+import { isFileExistsSync, isValidUrlEx } from '@/at-utils';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 import isValidSize from './helpers/is-valid-size';
 
-const validateRelativeUrl = () =>
-  z
-    .string()
-    .refine((val) => !val || isValidUrlEx(val), { message: 'Not valid URL' })
-    .optional();
+const validateRelativeUrl = () => z.string().refine((val) => !val || isValidUrlEx(val), { message: 'Not valid URL' });
 const validateRelativeUrlRequired = () =>
   z
     .string()
@@ -46,8 +42,8 @@ export const manifestSchema = {
   dir: z.enum(dirValues).optional(),
   iarc_rating_id: z.string().optional(),
   id: z.string().optional(),
-  start_url: validateRelativeUrl(),
-  scope: validateRelativeUrl(),
+  start_url: validateRelativeUrl().optional(),
+  scope: validateRelativeUrl().optional(),
   theme_color: z.string().optional(),
   background_color: z.string().optional(),
 
@@ -70,10 +66,7 @@ export const manifestSchema = {
     .object({
       id: z.string().optional(),
       platform: z.enum(applicationPlatformValues),
-      url: z
-        .string()
-        .min(1)
-        .refine((val) => isValidUrl(val), { message: 'Not valid URL' }),
+      url: z.string().url(),
     })
     .array()
     .optional(),

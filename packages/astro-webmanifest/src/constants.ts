@@ -1,4 +1,4 @@
-export const crossOriginValues = ['anonymus', 'use-credentials'] as const;
+export const crossOriginValues = ['anonymous', 'use-credentials'] as const;
 
 export const iconPurposeValues = ['badge', 'maskable', 'any', 'monochrome'] as const;
 

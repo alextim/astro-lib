@@ -1,12 +1,6 @@
 import { z } from 'zod';
-import { isValidUrl } from '@/at-utils';
 import { changefreqValues } from './constants';
-
-const urlSchema = () =>
-  z
-    .string()
-    .min(1)
-    .refine((val) => !val || isValidUrl(val), 'Not valid url');
+import { SITEMAP_CONFIG_DEFAULTS } from './config-defaults';
 
 const localeKeySchema = () => z.string().min(1);
 
@@ -18,36 +12,35 @@ const fnSchema = () =>
     .refine((val) => !val || isFunction(val), { message: 'Not a function' })
     .optional();
 
-export const SitemapOptionsSchema = z.object({
-  filter: fnSchema(),
+export const SitemapOptionsSchema = z
+  .object({
+    filter: fnSchema(),
+    customPages: z.string().url().array().optional(),
+    canonicalURL: z.string().url().optional(),
 
-  customPages: urlSchema().array().optional(),
+    i18n: z
+      .object({
+        defaultLocale: localeKeySchema(),
+        locales: z.record(
+          localeKeySchema(),
+          z
+            .string()
+            .min(2)
+            .regex(/^[a-zA-Z\-]+$/gm, { message: 'Only English alphabet symbols and hyphen allowed' }),
+        ),
+      })
+      .refine((val) => !val || val.locales[val.defaultLocale], {
+        message: '`defaultLocale` must exists in `locales` keys',
+      })
+      .optional(),
 
-  canonicalURL: urlSchema().optional(),
+    createLinkInHead: z.boolean().default(SITEMAP_CONFIG_DEFAULTS.createLinkInHead),
+    entryLimit: z.number().nonnegative().default(SITEMAP_CONFIG_DEFAULTS.entryLimit),
+    serialize: fnSchema(),
 
-  i18n: z
-    .object({
-      defaultLocale: localeKeySchema(),
-      locales: z.record(
-        localeKeySchema(),
-        z
-          .string()
-          .min(2)
-          .regex(/^[a-zA-Z\-]+$/gm, { message: 'Only English alphabet symbols and hyphen allowed' }),
-      ),
-    })
-    .refine(({ locales, defaultLocale }) => locales[defaultLocale], {
-      message: '`defaultLocale` must exists in `locales` keys',
-    })
-    .optional(),
-
-  createLinkInHead: z.boolean().optional(),
-
-  entryLimit: z.number().nonnegative().optional(),
-
-  serialize: fnSchema(),
-
-  changefreq: z.enum(changefreqValues).optional(),
-  lastmod: z.date().optional(),
-  priority: z.number().min(0).max(1).optional(),
-});
+    changefreq: z.enum(changefreqValues).optional(),
+    lastmod: z.date().optional(),
+    priority: z.number().min(0).max(1).optional(),
+  })
+  .strict()
+  .default(SITEMAP_CONFIG_DEFAULTS);

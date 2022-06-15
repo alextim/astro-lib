@@ -260,6 +260,10 @@ icons: [
 |                           |                                 |          |                        |                                                                                                                                                                                                                                                                                                                                                                                                            |
 | **`locales`**             |            `Locales`            |    No    |                        | `Record<string, Webmanifest>` - key/object pairs for i18n                                                                                                                                                                                                                                                                                                                                                  |
 
+                                                                                                          |
+
+:exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It could impact on a build time for large sites.
+
 ### Webmanifest
 
 | Name                          |          Type          | Required | Description                                                                                                                                   |
