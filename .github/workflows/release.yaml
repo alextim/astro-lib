@@ -10,7 +10,7 @@ on:
       - '!examples/**'
       - '!.github/**'
       - '!.vscode/**'
-      - '!**.md'
+      - '!**/*.md'
       - '!packages/**/__tests__/**'
 
 # Automatically cancel in-progress actions on the same branch

@@ -5,16 +5,18 @@ on:
     branches:
       - main
     paths-ignore:
+      - '.changeset/**'
       - '.github/**'
       - '.vscode/**'
-      - '**.md'
+      - '**/*.md'
       - 'examples/**'
 
   pull_request:
     paths-ignore:
+      - '.changeset/**'
       - '.github/**'
       - '.vscode/**'
-      - '**.md'
+      - '**/*.md'
       - 'examples/**'
 
 # Automatically cancel in-progress actions on the same branch
