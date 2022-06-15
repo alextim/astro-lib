@@ -67,7 +67,7 @@ importers:
   examples/sitemap/advanced:
     specifiers:
       astro: ^1.0.0-beta.46
-      astro-sitemap: workspace:*
+      astro-sitemap: latest
     devDependencies:
       astro: 1.0.0-beta.46
       astro-sitemap: link:../../../packages/astro-sitemap
