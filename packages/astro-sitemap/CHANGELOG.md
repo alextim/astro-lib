@@ -1,5 +1,13 @@
 # astro-sitemap
 
+## 0.2.2
+
+### Patch Changes
+
+- 0ffe03f: fix: astro.config `base` path handling.
+
+  refactor: default options and validation are handled by 'zod' only.
+
 ## 0.2.1
 
 ### Patch Changes
