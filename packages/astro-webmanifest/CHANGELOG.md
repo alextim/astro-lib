@@ -1,5 +1,16 @@
 # astro-webmanifest
 
+## 0.3.2
+
+### Patch Changes
+
+- 0ffe03f: fixes:
+
+  - astro.config `base` path handling;
+  - typo in `crossorigin` option.
+
+  refactor: default options and validation are handled by 'zod' only.
+
 ## 0.3.1
 
 ### Patch Changes

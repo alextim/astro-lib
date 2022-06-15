@@ -1,5 +1,13 @@
 # astro-robots-txt
 
+## 0.3.3
+
+### Patch Changes
+
+- 0ffe03f: fix: astro.config `base` path handling.
+
+  refactor: default options and validation are handled by 'zod' only.
+
 ## 0.3.2
 
 ### Patch Changes
