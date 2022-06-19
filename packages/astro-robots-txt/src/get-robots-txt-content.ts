@@ -49,7 +49,7 @@ const generatePoliceItem = (item: PolicyItem, index: number) => {
   return contents;
 };
 
-const getSitemapArr = (sitemap: string | string[] | boolean | undefined, filalSiteHref: string) => {
+const getSitemapArr = (sitemap: string | string[] | boolean | undefined, finalSiteHref: string, sitemapBaseFileName: string) => {
   if (typeof sitemap !== 'undefined') {
     if (!sitemap) {
       return undefined;
@@ -61,8 +61,7 @@ const getSitemapArr = (sitemap: string | string[] | boolean | undefined, filalSi
       return [sitemap];
     }
   }
-  // return [`${addBackslash(href)}sitemap.xml`];
-  return [`${addBackSlash(filalSiteHref)}sitemap.xml`];
+  return [`${addBackSlash(finalSiteHref)}${sitemapBaseFileName}.xml`];
 };
 
 /**
@@ -73,14 +72,16 @@ const getSitemapArr = (sitemap: string | string[] | boolean | undefined, filalSi
  *
  * @internal
  */
-export const getRobotsTxtContent = (finalSiteHref: string, { host, sitemap, policy }: RobotsTxtOptions = {}) => {
+export const getRobotsTxtContent = (finalSiteHref: string, opts: RobotsTxtOptions) => {
+  const { host, sitemap, policy, sitemapBaseFileName } = opts!;
+
   let result = '';
 
   policy?.forEach((item, index) => {
     result += generatePoliceItem(item, index);
   });
 
-  getSitemapArr(sitemap, finalSiteHref)?.forEach((item) => {
+  getSitemapArr(sitemap, finalSiteHref, sitemapBaseFileName!)?.forEach((item) => {
     result += addLine('Sitemap', item);
   });
 

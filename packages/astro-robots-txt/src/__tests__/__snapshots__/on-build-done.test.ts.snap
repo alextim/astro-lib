@@ -117,3 +117,26 @@ Sitemap: https://test1
 Sitemap: https://test2
 "
 `;
+
+exports[`onBuildDone > sitemapBaseFileName = \`abc\`, should return robots.txt with sitemap=abc.xml 1`] = `
+"User-agent: *
+Allow: /
+Sitemap: https://example.com/abc.xml
+"
+`;
+
+exports[`onBuildDone > transform  = async func, should return robots.txt with \`# extra text\` 1`] = `
+"User-agent: *
+Allow: /
+Sitemap: https://example.com/sitemap.xml
+# extra text
+"
+`;
+
+exports[`onBuildDone > transform  = sync func, should return robots.txt with \`# extra text\` 1`] = `
+"User-agent: *
+Allow: /
+Sitemap: https://example.com/sitemap.xml
+# extra text
+"
+`;

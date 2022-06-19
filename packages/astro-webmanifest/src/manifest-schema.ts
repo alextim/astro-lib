@@ -3,12 +3,11 @@ import { isFileExistsSync, isValidUrlEx } from '@/at-utils';
 import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 import isValidSize from './helpers/is-valid-size';
 
-const validateRelativeUrl = () => z.string().refine((val) => !val || isValidUrlEx(val), { message: 'Not valid URL' });
-const validateRelativeUrlRequired = () =>
-  z
-    .string()
-    .min(1)
-    .refine((val) => isValidUrlEx(val), { message: 'Not valid URL' });
+const schemaRelativeUrl = z.string().refine((val) => !val || isValidUrlEx(val), { message: 'Not valid URL' });
+const schemaRelativeUrlRequired = z
+  .string()
+  .min(1)
+  .refine((val) => isValidUrlEx(val), { message: 'Not valid URL' });
 
 const isValidIconPurpose = (purpose: any) => {
   const arr = purpose.split(' ');
@@ -20,7 +19,7 @@ const isValidIconPurpose = (purpose: any) => {
   return true;
 };
 
-const iconValidator = {
+const schemaIcon = {
   src: z.string().min(1),
   sizes: z
     .string()
@@ -42,8 +41,8 @@ export const manifestSchema = {
   dir: z.enum(dirValues).optional(),
   iarc_rating_id: z.string().optional(),
   id: z.string().optional(),
-  start_url: validateRelativeUrl().optional(),
-  scope: validateRelativeUrl().optional(),
+  start_url: schemaRelativeUrl.optional(),
+  scope: schemaRelativeUrl.optional(),
   theme_color: z.string().optional(),
   background_color: z.string().optional(),
 
@@ -55,7 +54,7 @@ export const manifestSchema = {
   protocol_handlers: z
     .object({
       protocol: z.string().min(1),
-      url: validateRelativeUrlRequired(),
+      url: schemaRelativeUrlRequired,
     })
     .array()
     .optional(),
@@ -73,26 +72,21 @@ export const manifestSchema = {
 
   screenshots: z
     .object({
-      ...iconValidator,
+      ...schemaIcon,
       platform: z.enum(applicationPlatformValues).optional(),
       label: z.string().optional(),
     })
     .array()
     .optional(),
 
-  icons: z
-    .object({
-      ...iconValidator,
-    })
-    .array()
-    .optional(),
+  icons: z.object(schemaIcon).array().optional(),
 
   shortcuts: z
     .object({
       name: z.string().min(1),
       short_name: z.string().optional(),
       description: z.string().optional(),
-      url: validateRelativeUrlRequired(),
+      url: schemaRelativeUrlRequired,
       min_version: z.string().optional(),
       fingerprints: z
         .object({
@@ -101,17 +95,12 @@ export const manifestSchema = {
         })
         .array()
         .optional(),
-      icons: z
-        .object({
-          ...iconValidator,
-        })
-        .array()
-        .optional(),
+      icons: z.object(schemaIcon).array().optional(),
     })
     .array()
     .optional(),
 
   icon: string()
-    .refine((val) => !val || isFileExistsSync(val), { message: 'file does not exist' })
+    .refine((val) => !val || isFileExistsSync(val), { message: "File doesn't exist" })
     .optional(),
 };

@@ -3,12 +3,11 @@ import { fileURLToPath } from 'url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
 import merge from 'deepmerge';
-import { LinkItem as LinkItemBase, SitemapItemLoose, simpleSitemapAndIndex } from 'sitemap';
+import { LinkItem as LinkItemBase, SitemapItemLoose, simpleSitemapAndIndex, EnumChangefreq } from 'sitemap';
 
 import { Logger, loadConfig } from '@/at-utils';
 import { validateOptions } from './validate-options';
 import { generateSitemap } from './generate-sitemap';
-import { changefreqValues } from './constants';
 import { processPages } from './process-pages';
 
 /**
@@ -16,7 +15,7 @@ import { processPages } from './process-pages';
  */
 import { packageName } from './data/pkg-name';
 
-export type ChangeFreq = typeof changefreqValues[number];
+export type ChangeFreq = EnumChangefreq;
 export type SitemapItem = Pick<SitemapItemLoose, 'url' | 'lastmod' | 'changefreq' | 'priority' | 'links'>;
 export type LinkItem = LinkItemBase;
 
@@ -26,24 +25,28 @@ export type SitemapOptions =
       filter?(page: string): boolean;
       customPages?: string[];
       canonicalURL?: string;
-      // added
       i18n?: {
         defaultLocale: string;
         locales: Record<string, string>;
       };
+      // number of entries per sitemap file
       entryLimit?: number;
 
-      createLinkInHead?: boolean;
-      serialize?(item: SitemapItemLoose): SitemapItemLoose;
       // sitemap specific
       changefreq?: ChangeFreq;
       lastmod?: Date;
       priority?: number;
+
+      // called for each sitemap item just before to save them on disk, sync or async
+      serialize?(item: SitemapItem): SitemapItem | Promise<SitemapItem>;
+
+      // added
+      createLinkInHead?: boolean;
     }
   | undefined;
 
 function formatConfigErrorMessage(err: ZodError) {
-  const errorList = err.issues.map((issue) => ` ${issue.path.join('.')}  ${issue.message + '.'}`);
+  const errorList = err.issues.map((issue) => `${issue.path.join('.')}  ${issue.message + '.'}`);
   return errorList.join('\n');
 }
 
@@ -119,7 +122,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
 
           if (serialize) {
             try {
-              const serializedUrls: SitemapItemLoose[] = [];
+              const serializedUrls: SitemapItem[] = [];
               for (const item of urlData) {
                 const serialized = await Promise.resolve(serialize(item));
                 serializedUrls.push(serialized);
@@ -127,6 +130,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
               urlData = serializedUrls;
             } catch (err) {
               logger.error(`Error serializing pages\n${(err as any).toString()}`);
+
               return;
             }
           }

@@ -1,12 +1,15 @@
+import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
 import { Logger, loadConfig } from '@/at-utils';
 import merge from 'deepmerge';
+
+import { validateOptions } from './validate-options';
+import { getRobotsTxtContent } from './get-robots-txt-content';
 /**
  * `pkg-name.ts` is generated during build from the `name` property of a `package.json`
  */
 import { packageName } from './data/pkg-name';
-import onBuildDone from './on-build-done';
 
 export type PolicyItem = {
   userAgent: string;
@@ -21,6 +24,8 @@ export type RobotsTxtOptions =
       host?: string;
       sitemap?: string | string[] | boolean;
       policy?: PolicyItem[];
+      sitemapBaseFileName?: string;
+      transform?(content: string): string | Promise<string>;
     }
   | undefined;
 
@@ -54,7 +59,26 @@ const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
         const merged: RobotsTxtOptions = merge(external || {}, options || {});
         const logger = new Logger(packageName);
         try {
-          onBuildDone(merged, config, dir);
+          const opts = validateOptions(config.site, merged);
+
+          const finalSiteHref = new URL(config.base, config.site).href;
+          let robotsTxtContent = getRobotsTxtContent(finalSiteHref, opts);
+
+          if (opts.transform) {
+            try {
+              robotsTxtContent = await Promise.resolve(opts.transform(robotsTxtContent));
+              if (!robotsTxtContent) {
+                logger.warn('No content after transform.');
+                return;
+              }
+            } catch (err) {
+              logger.error(`Error transforming content\n${(err as any).toString()}`);
+              return;
+            }
+          }
+
+          fs.writeFileSync(new URL('robots.txt', dir), robotsTxtContent);
+
           logger.success('`robots.txt` is created.');
         } catch (err) {
           if (err instanceof ZodError) {

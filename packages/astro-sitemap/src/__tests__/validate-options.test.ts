@@ -1,4 +1,4 @@
-import type { SitemapOptions } from '../index';
+import type { SitemapItem, SitemapOptions } from '../index';
 import { validateOptions } from '../validate-options';
 import { SITEMAP_CONFIG_DEFAULTS } from '../config-defaults';
 
@@ -18,15 +18,53 @@ describe('test validateOptions', () => {
   });
 
   // filter
-  it('filter = func, should not throw', () => {
+  it('filter = valid func, should not throw', () => {
     const opts = {
-      filter: () => {},
+      filter(s: string) {
+        return s ? true : false;
+      },
     };
     expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
-  it('filter is not func, should throw', () => {
+  it('filter = func(void):void, should not throw', () => {
+    const opts = {
+      filter(): void {},
+    };
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
+  });
+  it('filter = func(n):bool, should throw', () => {
+    const opts = {
+      filter(s: number) {
+        return s ? true : false;
+      },
+    };
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
+  });
+  it('filter = func(s,s):bool, should throw', () => {
+    const opts = {
+      filter(s: string, s2: string) {
+        return s || s2 ? true : false;
+      },
+    };
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
+  });
+  it('filter = func(s):s, should throw', () => {
+    const opts = {
+      filter(s: string) {
+        return s;
+      },
+    };
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
+  });
+  it('filter is {}, should throw', () => {
     const opts = {
       filter: {},
+    };
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
+  });
+  it('filter is string, should throw', () => {
+    const opts = {
+      filter: 'abc',
     };
     expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow();
   });
@@ -35,6 +73,22 @@ describe('test validateOptions', () => {
   it('serialize = func, should not throw', () => {
     const opts = {
       serialize: () => {},
+    };
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
+  });
+  it('serialize = async func, should not throw', () => {
+    const opts: SitemapOptions = {
+      serialize: async () => {
+        return {} as SitemapItem;
+      },
+    };
+    expect(() => validateOptions(site, opts)).not.toThrow();
+  });
+  it('serialize = async func, should not throw', () => {
+    const opts = {
+      serialize: async () => {
+        return 1;
+      },
     };
     expect(() => validateOptions(site, opts as unknown as SitemapOptions)).not.toThrow();
   });
@@ -203,7 +257,7 @@ describe('test validateOptions', () => {
         locales: { en: 'en' },
       },
     };
-    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow('`defaultLocale` must exists in `locales` keys');
+    expect(() => validateOptions(site, opts as unknown as SitemapOptions)).toThrow('`defaultLocale` must exist in `locales` keys');
   });
 
   it('defaultLocale & locales are OK, should not throw', () => {

@@ -1,15 +1,15 @@
 import { z } from 'zod';
+import isValidFilename from 'valid-filename';
 import { isValidHostname, isValidHttpUrl } from '@/at-utils';
 import { ROBOTS_TXT_CONFIG_DEFAULTS } from './config-defaults';
 
-const validateSitemapItem = () =>
-  z
-    .string()
-    .min(1)
-    .refine((val) => !val || isValidHttpUrl(val), {
-      message: 'Only valid URLs with `http` or `https` protocol allowed',
-    });
-const validateCleanParam = () => z.string().max(500);
+const schemaSitemapItem = z
+  .string()
+  .min(1)
+  .refine((val) => !val || isValidHttpUrl(val), {
+    message: 'Only valid URLs with `http` or `https` protocol allowed',
+  });
+const schemaCleanParam = z.string().max(500);
 
 export const RobotsTxtOptionsSchema = z
   .object({
@@ -20,14 +20,14 @@ export const RobotsTxtOptionsSchema = z
         message: 'Not valid host',
       }),
 
-    sitemap: validateSitemapItem().or(validateSitemapItem().array()).or(z.boolean()).optional().default(ROBOTS_TXT_CONFIG_DEFAULTS.sitemap),
+    sitemap: schemaSitemapItem.or(schemaSitemapItem.array()).or(z.boolean()).optional().default(ROBOTS_TXT_CONFIG_DEFAULTS.sitemap),
 
     policy: z
       .object({
         userAgent: z.string().min(1),
         allow: z.string().or(z.string().array()).optional(),
         disallow: z.string().or(z.string().array()).optional(),
-        cleanParam: validateCleanParam().or(validateCleanParam().array()).optional(),
+        cleanParam: schemaCleanParam.or(schemaCleanParam.array()).optional(),
         crawlDelay: z
           .number()
           .nonnegative()
@@ -38,5 +38,14 @@ export const RobotsTxtOptionsSchema = z
       .nonempty()
       .optional()
       .default(ROBOTS_TXT_CONFIG_DEFAULTS.policy),
+
+    sitemapBaseFileName: z
+      .string()
+      .min(1)
+      .optional()
+      .refine((val) => !val || isValidFilename(val), { message: 'Not valid file name' })
+      .default(ROBOTS_TXT_CONFIG_DEFAULTS.sitemapBaseFileName),
+
+    transform: z.function().args(z.string()).returns(z.any()).optional(),
   })
   .default(ROBOTS_TXT_CONFIG_DEFAULTS);

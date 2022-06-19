@@ -2,11 +2,17 @@ import { isDirExists } from '../is-dir-exists';
 
 import path from 'node:path';
 
-describe('test isFileExists', () => {
-  it('dir is not exists, should return false', async () => {
+describe('test isDirExists', () => {
+  it("dir doesn't exist, should return false", async () => {
     expect(await isDirExists(path.join(process.cwd(), 'src1'))).toBeFalsy();
   });
-  it('existing dir, should return true', async () => {
+  it('dir exists, should return true', async () => {
     expect(await isDirExists(path.join(process.cwd(), 'src'))).toBeTruthy();
+  });
+  it("file doesn't exist, should return false", async () => {
+    expect(await isDirExists(path.join(process.cwd(), 'src', 'index1.ts'))).toBeFalsy();
+  });
+  it('file exists, should return false', async () => {
+    expect(await isDirExists(path.join(process.cwd(), 'src', 'index.ts'))).toBeFalsy();
   });
 });

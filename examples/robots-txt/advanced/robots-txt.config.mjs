@@ -9,6 +9,12 @@ const robotsConfig = {
       disallow: siteConfig.disableIndexing ? '/' : '',
     },
   ],
+  sitemapBaseFileName: 'your-sitemap', // default 'sitemap'
+  transform(content) {
+    const commentsList = ['Some text before main content', 'Second line', 'Third line'];
+    const comments = commentsList.map((item) => `# ${item}.`).join('\n');
+    return `${comments}\n\n${content}`;
+  },
 };
 
 export default robotsConfig;

@@ -160,20 +160,20 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 
 ### SitemapItem
 
-|   Name         |     Type        | Required | Description      |
-| :------------: | :-------------: | :------: | :--------------- |
-| `url`          |    `String`     |    Yes   | Absolute url     |
-| `changefreq`   |  `ChangeFreq`   |    No    |                  |
-| `lastmod`      |     `Date`      |    No    |                  |
-| `priority`     |    `Number`     |    No    |                  |
-| `links`        |  `LinkItem[]`   |    No    | for localization |
+|   Name         |     Type        | Required | Description        |
+| :------------: | :-------------: | :------: | :----------------- |
+| `url`          |    `String`     |    Yes   | Absolute url       |
+| `changefreq`   |  `ChangeFreq`   |    No    |                    |
+| `lastmod`      |     `String`    |    No    | ISO formatted date |
+| `priority`     |    `Number`     |    No    |                    |
+| `links`        |  `LinkItem[]`   |    No    | for localization   |
 
 ### LinkItem
 
-|   Name         |      Type       | Required | Description     |
-| :------------: | :-------------: | :------: | :-------------- |
-| `url`          |    `String`     |    Yes   | Absolute url    |
-| `hreflang`     |    `String`     |    No    | example 'en-us' |
+|   Name         |      Type       | Required | Description               |
+| :------------: | :-------------: | :------: | :------------------------ |
+| `url`          |    `String`     |   Yes    | Absolute url              |
+| `lang`         |    `String`     |   Yes    | hreflag, example: 'en-US' |
 
 **Sample of _astro.config.mjs_**
 
@@ -193,24 +193,23 @@ export default defineConfig({
        *  These options are the same with the official integration `@astrojs/sitemap`
        */ 
       // exclude pages from sitemap
-      filter: (page: string) => !/exclude-this/.test(page),   // default - undefined
+      filter: (page: string) => !/exclude-this/.test(page), // default - undefined
       // Absolute urls of extra pages
-      customPages: [                                          // default - undefined
+      customPages: [                                        // default - undefined
         // extra pages for sitemap
         'https://sample.com/virtual-one.html',
         'https://sample.com/virtual-two.html',
       ],
 
       // if `canonicalURL` is provided it will be used instead of `site` value
-      canonicalURL: 'https://sample.com',                     // default - undefined
-
+      canonicalURL: 'https://sample.com',                   // default - undefined
       /**
-       *  `astro-sitemap` integration options
-       */
+       *  `astro-sitemap` integration extra options
+       */ 
       // This function is called just before a sitemap writing to disk.
       // You have more control on resulting output.
-      // async supported.
-      serialize(item: SitemapItem): SitemapItem {    // default - undefined
+      // sync or async
+      serialize(item: SitemapItem): SitemapItem { 
         if (/special-page/.test(item.url)) {
           item.changefreq = 'daily';
           item.lastmod = new Date();
@@ -222,13 +221,13 @@ export default defineConfig({
       // The integration creates a separate `sitemap-${i}.xml` file for each batch of 45000 and adds this file to index - `sitemap-index.xml`.
       entryLimit: 10000,                          // default - 45000
 
-      // Create or not a link to sitemap in '<head>' section of generated pages
-      createLinkInHead: true,                     // default - true 
-      
       // sitemap specific
       changefreq: 'yearly',                       // default - undefined
-      lastmod: new Date('May 01, 2019 03:24:00'),  // default - undefined
-      priority: 0.2,                               // default - undefined
+      lastmod: new Date('May 01, 2019 03:24:00'), // default - undefined
+      priority: 0.2,                              // default - undefined
+     
+      // Create or not a link to sitemap in '<head>' section of generated pages
+      createLinkInHead: true,                     // default - true 
     }),
   ],
 });

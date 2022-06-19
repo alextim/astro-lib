@@ -151,4 +151,45 @@ describe('test validateOptions', () => {
     const result = fn();
     expect(result?.policy).toEqual(options.policy);
   });
+
+  // sitemapBaseFileName
+  it('`sitemapBaseFileName` is `abc`, should not throw', () => {
+    expect(() => validateOptions(site, { sitemapBaseFileName: 'abc' })).not.toThrow();
+  });
+  it('`sitemapBaseFileName` is `/abc`, should throw', () => {
+    expect(() => validateOptions(site, { sitemapBaseFileName: '/abc' })).toThrow();
+  });
+  it('`sitemapBaseFileName` is ``, should throw', () => {
+    expect(() => validateOptions(site, { sitemapBaseFileName: '' })).toThrow();
+  });
+
+  // transform
+  it('transform = func, should not throw', () => {
+    const opts = {
+      transform: () => {},
+    };
+    expect(() => validateOptions(site, opts as unknown as RobotsTxtOptions)).not.toThrow();
+  });
+  it('transform = async func, should not throw', () => {
+    const opts: RobotsTxtOptions = {
+      transform: async () => {
+        return 'test';
+      },
+    };
+    expect(() => validateOptions(site, opts)).not.toThrow();
+  });
+  it('transform = async func, should not throw', () => {
+    const opts = {
+      transform: async () => {
+        return 1;
+      },
+    };
+    expect(() => validateOptions(site, opts as unknown as RobotsTxtOptions)).not.toThrow();
+  });
+  it('transform is not func, should throw', () => {
+    const opts = {
+      transform: {},
+    };
+    expect(() => validateOptions(site, opts as unknown as RobotsTxtOptions)).toThrow();
+  });
 });

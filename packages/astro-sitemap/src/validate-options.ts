@@ -7,7 +7,7 @@ export const validateOptions = (site: string | undefined, opts: SitemapOptions) 
   const result = SitemapOptionsSchema.parse(opts);
 
   z.object({
-    site: z.string().optional(), // Astro takes care of `site`: how to validate, transform and refine
+    site: z.string().optional(), // Astro takes care of `site`: how to validate, transform and refine it
     canonicalURL: z.string().optional(), // `canonicalURL` is already validated in prev step
   })
     .refine(({ site, canonicalURL }) => site || canonicalURL, {
