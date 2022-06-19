@@ -1,5 +1,16 @@
 # astro-robots-txt
 
+## 0.3.4
+
+### Patch Changes
+
+- 260187a: Additional config options:
+
+  - `sitemapBaseFileName`;
+  - `transform`.
+
+  Refactoring.
+
 ## 0.3.3
 
 ### Patch Changes

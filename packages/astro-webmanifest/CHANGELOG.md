@@ -1,5 +1,11 @@
 # astro-webmanifest
 
+## 0.3.3
+
+### Patch Changes
+
+- c854c46: refactor schema
+
 ## 0.3.2
 
 ### Patch Changes
