@@ -48,7 +48,7 @@ importers:
     specifiers:
       '@astrojs/sitemap': ^0.1.2
       astro: ^1.0.0-beta.47
-      astro-robots-txt: workspace:*
+      astro-robots-txt: latest
     devDependencies:
       '@astrojs/sitemap': 0.1.2
       astro: 1.0.0-beta.47
@@ -58,7 +58,7 @@ importers:
     specifiers:
       '@astrojs/sitemap': ^0.1.2
       astro: ^1.0.0-beta.47
-      astro-robots-txt: workspace:*
+      astro-robots-txt: latest
     devDependencies:
       '@astrojs/sitemap': 0.1.2
       astro: 1.0.0-beta.47
