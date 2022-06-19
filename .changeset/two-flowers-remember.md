@@ -7,4 +7,4 @@ Additional config options:
 - `sitemapBaseFileName`;
 - `transform`.
 
-Refactoring
+Refactoring.
