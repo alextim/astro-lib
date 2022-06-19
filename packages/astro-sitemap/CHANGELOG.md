@@ -1,5 +1,11 @@
 # astro-sitemap
 
+## 0.2.3
+
+### Patch Changes
+
+- ead9160: better typings
+
 ## 0.2.2
 
 ### Patch Changes
