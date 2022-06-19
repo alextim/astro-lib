@@ -139,20 +139,20 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 
 ## Options
 
-|   Name         |             Type           | Required | Default      | Description                                                                                                                      |
-| :------------: | :------------------------: | :------: | :----------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| `filter`    | `(page: String):<br/>Boolean` |    No    | undefined    | The same as official. Function to filter generated pages to exclude some paths from a  sitemap                                   |
-| `customPages`  |          `String[]`        |    No    | undefined    | The same as official. Absolute url list. It will be merged with generated pages urls.                                            |
-| `canonicalURL` |           `String`         |    No    | undefined    | The same as official. Absolute url. The integration needs `site` from astro.config or `canonicalURL`. If both values are provided then only `canonicalURL` will be used by the integration. |
-| `entryLimit`   |           `Number`         |    No    | 45000        | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps)|
-| `createLinkInHead`|       `Boolean`         |    No    | true         | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites.|
-| `serialize` | `(item: SitemapItem):<br />SitemapItem`| No | undefined | Function to process an array of SiteMap items just before writing to disk. Async or sync.                                        |
-| `changefreq`   |         `ChangeFreq`       |    No    | undefined    | Sitemap specific. Ignored by Google.<br/>How frequently the page is likely to change.<br/>Available values: `always` \| `hourly` \| `daily` \| `weekly` \| `monthly` \| `yearly` \| `never` |
-| `lastmod`      |            `Date`          |    No    | undefined    | Sitemap specific. The date of page last modification.                                                                           |
-| `priority`     |           `Number`         |    No    | undefined    | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0                |
-| **i18n**       |           `object`         |    No    | undefined    | Provide this object to start                                                                                                      |
-| `defaultLocale`|           `String`         |   Yes    |              | Its value has to be exists as one of `locales` keys.                                                                              |
-| `locales`      | `Record<String, String>`   |   Yes    |              | Key/value - pairs.<br/>The key is used to look for a locale part in a page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
+|   Name         |             Type           | Required | Default | Description                                                                                                                      |
+| :------------: | :------------------------: | :------: | :------ | :------------------------------------------------------------------------------------------------------------------------------- |
+| `filter`    | `(page: String):`<br/>`Boolean`|    No   |         | The same as official. Function to filter generated pages to exclude some paths from a  sitemap                                   |
+| `customPages`  |          `String[]`        |    No    |         | The same as official. Absolute url list. It will be merged with generated pages urls.                                            |
+| `canonicalURL` |           `String`         |    No    |         | The same as official. Absolute url. The integration needs `site` from astro.config or `canonicalURL`. If both values are provided then only `canonicalURL` will be used by the integration. |
+| `entryLimit`   |           `Number`         |    No    | 45000   | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps)|
+| `createLinkInHead`|       `Boolean`         |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites.|
+| `serialize` | `(item: SitemapItem):`<br>`SitemapItem`\|`Promise<SitemapItem>`| No |    | Function to process an array of SiteMap items just before writing to disk. Async or sync.                                        |
+| `changefreq`   |         `ChangeFreq`       |    No    |         | Sitemap specific. Ignored by Google.<br/>How frequently the page is likely to change.<br/>Available values: `always`\|`hourly`\|`daily`\|`weekly`\|`monthly`\| `yearly`\|`never` |
+| `lastmod`      |            `Date`          |    No    |         | Sitemap specific. The date of page last modification.                                                                           |
+| `priority`     |           `Number`         |    No    |         | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0                |
+| **i18n**       |           `object`         |    No    |         | Provide this object to start                                                                                                      |
+| `defaultLocale`|           `String`         |   Yes    |         | Its value has to be exists as one of `locales` keys.                                                                              |
+| `locales`      | `Record<String, String>`   |   Yes    |         | Key/value - pairs.<br/>The key is used to look for a locale part in a page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
 
 :bulb: See detailed explanation of sitemap specific options on [sitemap.org](https://www.sitemaps.org/protocol.html).
 

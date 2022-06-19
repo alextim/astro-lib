@@ -247,48 +247,48 @@ icons: [
 | :--------------- | :----------------------------: | :----: | :-------------: | :---------------------------------------------------------------------------------------------- |
 | `icon`           |            `String`            |   No  |                  | This is a source for automatically generated favicon and icons. It's a part of `Webmanifest` type.<br/>Format: JPEG, PNG, WebP, TIFF, GIF or SVG<br/>Size: at least as big as the largest icon being generated (512x512 by default).<br/>Form: preferably square, otherwise the results will be padded with transparent bars to be square.<br/><br/>If the `icon` is empty - no automatic icon generation. |
 | **`config`**     |                                |   No  |                  |                                                                                                 |
-| - `iconPurpose`  |         `IconPurpose[]`        |   No  | `undefined`      | Array of `badge` \| `maskable` \| `any` \| `monochrome`.<br/>If provided it will be appended to the `purpose` property of generated icons. |
+| - `iconPurpose`  |         `IconPurpose[]`        |   No  |                  | Array of `badge`\|`maskable`\|`any`\|`monochrome`.<br/>If provided it will be appended to the `purpose` property of generated icons. |
 | - `createFavicon`|            `Boolean`           |   No  |    `true`        | Enable (if `icon` is not empty) or disable a favicon generation                                 |
 | - `insertFaviconLinks` |      `Boolean`           |   No  |    `true`        | Enable (if `icon` is not empty) or disable a favicon links in `<head>`                          |
 | - `insertThemeColorMeta`|      `Boolean`          |   No  |   `true`         | Enable (if `theme_color` is not empty) or disable `meta` in `<head>`                            |
 | - `insertManifestLink`  |      `Boolean`          |   No  |   `true`         | Enable or disable a manifest link in `<head>`                                                   |
-| - `crossOrigin`   | `anonymous` \| `use-credentials`|  No | `anonymus`      | `crossorigin` attribute for the manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)|
-| - `insertAppleTouchLinks`|      `Boolean`          |  No  | `false`         | Enable or disable `apple-touch-icon` links in `<head>`.<br/>iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed.  |
-| - `indent`              |       `String`           |  No  | 4 spaces        | Leading characters for every line in `<head>` to make output more readable.                      |
-| - `eol`                 |       `String`           |  No  |   `\n`          | Trailing characters for every line in `<head>` to make output more readable.<br/>Set it to `""` to save few bytes on html output.                                                                                                                                                                                                                                                                          |
-| - `outfile`             |       `String`           |  No  | `manifest.webmanifest` | Template name for generated manifest file.                                                |
-|                         |                          |      |                        |                                                                                           |
-| **`locales`**           |       `Locales`          |  No  |                        | `Record<string, Webmanifest>` - key/object pairs. See usage in **Localization** section.  |
+| - `crossOrigin`   | `anonymous`\|`use-credentials`|  No   | `anonymus`       | `crossorigin` attribute for the manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)|
+| - `insertAppleTouchLinks`|      `Boolean`         |  No   | `false`          | Enable or disable `apple-touch-icon` links in `<head>`.<br/>iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed.  |
+| - `indent`              |       `String`          |  No   | 4 spaces         | Leading characters for every line in `<head>` to make output more readable.                      |
+| - `eol`                 |       `String`          |  No   |   `\n`           | Trailing characters for every line in `<head>` to make output more readable.<br/>Set it to `""` to save few bytes on html output.                                                                                                                                                                                                                                                                          |
+| - `outfile`             |       `String`          |  No   | `manifest.webmanifest` | Template name for generated manifest file.                                                |
+|                         |                         |       |                        |                                                                                           |
+| **`locales`**           |       `Locales`         |  No   |                        | `Record<string, Webmanifest>` - key/object pairs. See usage in **Localization** section.  |
 
 :exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It could impact on a build time for large sites.
 
 ### Webmanifest
 
-| Name                          |          Type          | Required | Description                                                                                                                                   |
-| :---------------------------- | :--------------------: | :------: | :-------------------------------------------------------------------------------------------------------------------------------------------- |
-| `icon`                        |        `String`        |    No    | See usage in **Generation modes** section.                                                                                                    |
-| `icons`                       |        `Icon[]`        |    No    | See usage in **Generation modes** section.                                                                                                    |
-|                               |                        |          |                                                                                                                                               |
-| `name`                        |        `String`        |   Yes    | You must provide the name of your app.                                                                                                        |
-| `short_name`                  |        `String`        |    No    |                                                                                                                                               |
-| `description`                 |        `String`        |    No    |                                                                                                                                               |
-| `categories`                  |       `String[]`       |    No    |                                                                                                                                               |
-| `lang`                        |        `String`        |    No    |                                                                                                                                               |
-| `dir`                         |         `Dir`          |    No    | `auto` \| `ltr` \| `rtl`                                                                                                                      |
-| `iarc_rating_id`              |        `String`        |    No    |                                                                                                                                               |
-| `id`                          |        `String`        |    No    |                                                                                                                                               |
-| `start_url`                   |        `String`        |    No    |                                                                                                                                               |
-| `scope`                       |        `String`        |    No    |                                                                                                                                               |
-| `theme_color`                 |        `String`        |    No    | Source for `meta` in `<head>`                                                                                                                 |
-| `background_color`            |        `String`        |    No    |                                                                                                                                               |
-| `display`                     |       `Display`        |    No    | `fullscreen` \| `standalone` \| `minimal-ui` \| `browser`                                                                                     |
-| `display_override`            |      `Display[]`       |    No    |                                                                                                                                               |
-| `orientation`                 |     `Orientation`      |    No    | `any` \| `natural` \| `landscape` \| `landscape-primary` \| `landscape-secondary` \| `portrait` \| `portrait-primary` \| `portrait-secondary` |
-| `protocol_handlers`           |  `ProtocolHandler[]`   |    No    |                                                                                                                                               |
-| `prefer_related_applications` |       `Boolean`        |    No    |                                                                                                                                               |
-| `related_applications`        | `RelatedApplication[]` |    No    |                                                                                                                                               |
-| `screenshots`                 |       `Image[]`        |    No    |                                                                                                                                               |
-| `shortcuts`                   |      `Shortcut[]`      |    No    |                                                                                                                                               |
+| Name                          |          Type          | Required | Description                                                                                                                     |
+| :---------------------------- | :--------------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------ |
+| `icon`                        |        `String`        |    No    | See usage in **Generation modes** section.                                                                                      |
+| `icons`                       |        `Icon[]`        |    No    | See usage in **Generation modes** section.                                                                                      |
+|                               |                        |          |                                                                                                                                 |
+| `name`                        |        `String`        |   Yes    | You must provide the name of your app.                                                                                          |
+| `short_name`                  |        `String`        |    No    |                                                                                                                                 |
+| `description`                 |        `String`        |    No    |                                                                                                                                 |
+| `categories`                  |       `String[]`       |    No    |                                                                                                                                 |
+| `lang`                        |        `String`        |    No    |                                                                                                                                 |
+| `dir`                         |         `Dir`          |    No    | `auto`\|`ltr`\|`rtl`                                                                                                            |
+| `iarc_rating_id`              |        `String`        |    No    |                                                                                                                                 |
+| `id`                          |        `String`        |    No    |                                                                                                                                 |
+| `start_url`                   |        `String`        |    No    |                                                                                                                                 |
+| `scope`                       |        `String`        |    No    |                                                                                                                                 |
+| `theme_color`                 |        `String`        |    No    | Source for `meta` in `<head>`                                                                                                   |
+| `background_color`            |        `String`        |    No    |                                                                                                                                 |
+| `display`                     |       `Display`        |    No    | `fullscreen`\|`standalone`\|`minimal-ui`\|`browser`                                                                             |
+| `display_override`            |      `Display[]`       |    No    |                                                                                                                                 |
+| `orientation`                 |     `Orientation`      |    No    | `any`\|`natural`\|`landscape`\|`landscape-primary`\|`landscape-secondary`\|`portrait`\|`portrait-primary`\|`portrait-secondary` |
+| `protocol_handlers`           |  `ProtocolHandler[]`   |    No    |                                                                                                                                 |
+| `prefer_related_applications` |       `Boolean`        |    No    |                                                                                                                                 |
+| `related_applications`        | `RelatedApplication[]` |    No    |                                                                                                                                 |
+| `screenshots`                 |       `Image[]`        |    No    |                                                                                                                                 |
+| `shortcuts`                   |      `Shortcut[]`      |    No    |                                                                                                                                 |
 
 ### Icon
 
