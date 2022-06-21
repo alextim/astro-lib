@@ -1,5 +1,13 @@
 # astro-robots-txt
 
+## 0.3.5
+
+### Patch Changes
+
+- 4871ac4: fix: `sitemap.xml` -> `sitemap-index.xml`,
+
+  because the output file name of **@astrojs/sitemap** >=0.2.0 is `sitemap-index.xml`.
+
 ## 0.3.4
 
 ### Patch Changes
