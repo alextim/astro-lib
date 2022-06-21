@@ -1,5 +1,17 @@
 # astro-sitemap
 
+## 0.2.4
+
+### Patch Changes
+
+- 5102dba: More control on sitemap output:
+
+  - manage xml namespaces;
+  - `lastmod` format option;
+  - possibility to add a link to custom xsl.
+
+  `serialize` func update.
+
 ## 0.2.3
 
 ### Patch Changes
