@@ -12,21 +12,27 @@ The _sitemap.xml_ file provides information about structure of your website, abo
 
 ## Why astro-sitemap?
 
-There is already the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) which works excellent.
+Some of functionality from **astro-sitemap v0.2.2** became an update for the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) from v0.1.2 to v0.2.0.   
 
-For what another one?
+From now you can use the official integration in most cases.  
 
-The official integration has a functionality which is not enough in some cases.
 
-Key benefits of `astro-sitemap` integration:
+Shared functionality with the official **@astrojs/sitemap**:
 
 - Split up your large sitemap into multiple sitemaps by custom limit.
 - Ability to add sitemap specific attributes such as `changefreq`, `lastmod`, `priority`.
 - Final output customization via JS function (sync or async).
 - The most important: localization support. In a build time the integration analyses the pages urls for presence of locale signatures in paths to establish relations between pages.
+- Reliability: all config options are validated.
+
+**astro-sitemap** key extras:
+
+- More control on sitemap output:
+  - manage xml namespaces;
+  - `lastmod` format option;
+  - possibility to add a link to custom xsl.
 - Automatically creates a link to sitemap in `<head>` section of generated pages.
 - Flexible configuration: configure the integration with external config, astro.config or combine both.
-- Reliability: all config options are validated.
 
 ---
 
@@ -139,34 +145,56 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 
 ## Options
 
-|   Name         |             Type           | Required | Default | Description                                                                                                                      |
-| :------------: | :------------------------: | :------: | :------ | :------------------------------------------------------------------------------------------------------------------------------- |
-| `filter`    | `(page: String):`<br/>`Boolean`|    No   |         | The same as official. Function to filter generated pages to exclude some paths from a  sitemap                                   |
-| `customPages`  |          `String[]`        |    No    |         | The same as official. Absolute url list. It will be merged with generated pages urls.                                            |
+|   Name         |             Type           | Required | Default | Description                                                                                     |
+| :------------: | :------------------------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
+| `filter`    | `(page: String):`<br/>`Boolean`|    No   |         | The same as official. Function to filter generated pages to exclude some paths from a  sitemap. |
+| `customPages`  |          `String[]`        |    No    |         | The same as official. Absolute url list. It will be merged with generated pages urls.           |
 | `canonicalURL` |           `String`         |    No    |         | The same as official. Absolute url. The integration needs `site` from astro.config or `canonicalURL`. If both values are provided then only `canonicalURL` will be used by the integration. |
-| `entryLimit`   |           `Number`         |    No    | 45000   | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps)|
-| `createLinkInHead`|       `Boolean`         |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites.|
-| `serialize` | `(item: SitemapItem):`<br>`SitemapItem`\|`Promise<SitemapItem>`| No |    | Function to process an array of SiteMap items just before writing to disk. Async or sync.                                        |
+| `entryLimit`   |           `Number`         |    No    | 45000   | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google]((<https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps/>) |
+| `xslUrl`       |           `String`         |    No    |         | Absolute URL of XSL file to transform XML to other format. Ignored by search engines.           |
+| `xmlns`        |           `NSArgs`         |    No    |         | Manage xml namespaces in the `<urlset>`                                                         |
+| `lastmodDateOnly` |      `Boolean`          |    No    |         | If it's `true` the XML output will contain a date part only.                                    |
+search/docs/advanced/sitemaps/large-sitemaps) |
 | `changefreq`   |         `ChangeFreq`       |    No    |         | Sitemap specific. Ignored by Google.<br/>How frequently the page is likely to change.<br/>Available values: `always`\|`hourly`\|`daily`\|`weekly`\|`monthly`\| `yearly`\|`never` |
-| `lastmod`      |            `Date`          |    No    |         | Sitemap specific. The date of page last modification.                                                                           |
-| `priority`     |           `Number`         |    No    |         | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0                |
-| **i18n**       |           `object`         |    No    |         | Provide this object to start                                                                                                      |
-| `defaultLocale`|           `String`         |   Yes    |         | Its value has to be exists as one of `locales` keys.                                                                              |
+| `lastmod`      |            `Date`          |    No    |         | Sitemap specific. The date of page last modification.                                           |
+| `priority`     |           `Number`         |    No    |         | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0 |
+| `serialize` | `(item: SitemapItem):`<br>`SitemapItemLoose`\|`undefined`\|<br/>Promise<`SitemapItemLoose`\|`undefined`>| No |    | Function to process an array of sitemap entries just before writing them to disk. Async or sync.<br/>The `undefined` return value excludes the passed entry from sitemap. |
+| `createLinkInHead`|       `Boolean`         |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites. |
+| **i18n**       |           `object`         |    No    |         | Provide this object to start                                                                    |
+| `defaultLocale`|           `String`         |   Yes    |         | Its value has to be exists as one of `locales` keys.                                            |
 | `locales`      | `Record<String, String>`   |   Yes    |         | Key/value - pairs.<br/>The key is used to look for a locale part in a page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
 
 :bulb: See detailed explanation of sitemap specific options on [sitemap.org](https://www.sitemaps.org/protocol.html).
 
 :exclamation: This integration uses 'astro:build:done' hook (official @astrojs/sitemap does the same). The hook exposes only generated page paths. So with present version of Astro the integration has no abilities to analyze a page source, frontmatter etc. The integration can add `changefreq`, `lastmod` and `priority` attributes only in a batch or nothing.
 
+### NSArgs
+
+|   Name   |  Type     | Required | Default | Description                                                              |
+| :------: | :-------: | :------: | :-----: | :----------------------------------------------------------------------- |
+| `xhtml`  | `Boolean` |    No    | true    | `xmlns:xhtml="http://www.w3.org/1999/xhtml"`                             |
+| `news`   | `Boolean` |    No    |         | `xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"`            |
+| `video`  | `Boolean` |    No    |         | `xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"`          |
+| `image`  | `Boolean` |    No    |         | `xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"`          |
+| `custom` | `String[]`|    No    |         | Any custom namespace. Elements of array are used `as is`, no validation. |
+
 ### SitemapItem
 
-|   Name         |     Type        | Required | Description        |
-| :------------: | :-------------: | :------: | :----------------- |
-| `url`          |    `String`     |    Yes   | Absolute url       |
-| `changefreq`   |  `ChangeFreq`   |    No    |                    |
-| `lastmod`      |     `String`    |    No    | ISO formatted date |
-| `priority`     |    `Number`     |    No    |                    |
-| `links`        |  `LinkItem[]`   |    No    | for localization   |
+|   Name         |     Type     | Required | Description        |
+| :------------: | :----------: | :------: | :----------------- |
+| `url`          |   `String`   |    Yes   | Absolute url       |
+| `changefreq`   | `ChangeFreq` |    No    |                    |
+| `lastmod`      |   `String`   |    No    | ISO formatted date |
+| `priority`     |   `Number`   |    No    |                    |
+| `links`        | `LinkItem[]` |    No    | for localization   |
+
+### SitemapItemLoose
+
+The `SitemapItemLoose` interface is a base for the `SitemapItem`.  
+
+It has properties `video`, `img` and many others.  
+
+More details about `SitemapItemLoose` interface see in the **sitemap.js** repo [readme](https://github.com/ekalinin/sitemap.js/blob/master/README.md) and types source [code](https://github.com/ekalinin/sitemap.js/blob/master/lib/types.ts).  
 
 ### LinkItem
 
@@ -183,7 +211,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from 'astro-sitemap';
 
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://your-awesome-site.com',
   experimental: {
     integrations: true,
   },
@@ -193,19 +221,39 @@ export default defineConfig({
        *  These options are the same with the official integration `@astrojs/sitemap`
        */ 
       // exclude pages from sitemap
-      filter: (page: string) => !/exclude-this/.test(page), // default - undefined
+      filter: (page: string) => !/exclude-this/.test(page), 
       // Absolute urls of extra pages
-      customPages: [                                        // default - undefined
+      customPages: [
         // extra pages for sitemap
-        'https://sample.com/virtual-one.html',
-        'https://sample.com/virtual-two.html',
+        'https://example.com/virtual-one.html',
+        'https://example.com/virtual-two.html',
       ],
 
-      // if `canonicalURL` is provided it will be used instead of `site` value
-      canonicalURL: 'https://sample.com',                   // default - undefined
+      // Here the `canonicalURL` is provided. 
+      // It will be used during sitemap generation instead of `site` value. 
+      canonicalURL: 'https://example.com',
+
       /**
        *  `astro-sitemap` integration extra options
        */ 
+      // print date not time
+      lastmodDateOnly: false, 
+      
+      // style to transform to another format, ignored by search engines
+      xslUrl: 'https://example.com/style.xsl',
+
+      // set the xml namespace
+      xmlns: { 
+        xhtml: true,
+        news: true, 
+        image: true,
+        video: true,
+        custom: [
+          'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"',
+          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+        ],
+      },
+
       // This function is called just before a sitemap writing to disk.
       // You have more control on resulting output.
       // sync or async
@@ -219,12 +267,12 @@ export default defineConfig({
       },
 
       // The integration creates a separate `sitemap-${i}.xml` file for each batch of 45000 and adds this file to index - `sitemap-index.xml`.
-      entryLimit: 10000,                          // default - 45000
+      entryLimit: 1000,                           // default - 45000
 
       // sitemap specific
-      changefreq: 'yearly',                       // default - undefined
-      lastmod: new Date('May 01, 2019 03:24:00'), // default - undefined
-      priority: 0.2,                              // default - undefined
+      changefreq: 'yearly',
+      lastmod: new Date('May 01, 2019 03:24:00'),
+      priority: 0.2,
      
       // Create or not a link to sitemap in '<head>' section of generated pages
       createLinkInHead: true,                     // default - true 
@@ -236,24 +284,27 @@ export default defineConfig({
 Generated sitemap content for this configuration:
 
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://example/style.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 ...
   <url>
     <loc>https://example.com/</loc>
-    <lastmod>2019-05-01T03:24:00.000Z</lastmod>
+    <lastmod>2019-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   ...
   <url>
     <loc>https://example.com/virtual-one.html</loc>
-    <lastmod>2019-05-01T03:24:00.000Z</lastmod>
+    <lastmod>2019-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   ...
     <url>
     <loc>https://example.com/some-special-path.html</loc>
-    <lastmod>2022-06-07T13:34:35.096Z</lastmod>
+    <lastmod>2022-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>

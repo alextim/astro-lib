@@ -3,21 +3,29 @@ import { fileURLToPath } from 'url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
 import merge from 'deepmerge';
-import { LinkItem as LinkItemBase, SitemapItemLoose, simpleSitemapAndIndex, EnumChangefreq } from 'sitemap';
+import { SitemapItemLoose, EnumChangefreq as ChangeFreq } from 'sitemap';
 
 import { Logger, loadConfig } from '@/at-utils';
 import { validateOptions } from './validate-options';
 import { generateSitemap } from './generate-sitemap';
+import { simpleSitemapAndIndexExtended } from './sitemap/sitemap-simple-extended';
 import { processPages } from './process-pages';
-
+import { SITEMAP_INDEX_FILE_NAME } from './output-files';
 /**
  * `pkg-name.ts` is generated during build from the `name` property of a `package.json`
  */
 import { packageName } from './data/pkg-name';
 
-export type ChangeFreq = EnumChangefreq;
+export { SitemapItemLoose, LinkItem, EnumChangefreq as ChangeFreq } from 'sitemap';
 export type SitemapItem = Pick<SitemapItemLoose, 'url' | 'lastmod' | 'changefreq' | 'priority' | 'links'>;
-export type LinkItem = LinkItemBase;
+
+export interface NSArgs {
+  news: boolean;
+  video: boolean;
+  xhtml: boolean;
+  image: boolean;
+  custom?: string[];
+}
 
 export type SitemapOptions =
   | {
@@ -32,13 +40,17 @@ export type SitemapOptions =
       // number of entries per sitemap file
       entryLimit?: number;
 
+      lastmodDateOnly?: boolean;
+      xslUrl?: string;
+      xmlns?: NSArgs;
+
       // sitemap specific
       changefreq?: ChangeFreq;
       lastmod?: Date;
       priority?: number;
 
       // called for each sitemap item just before to save them on disk, sync or async
-      serialize?(item: SitemapItem): SitemapItem | Promise<SitemapItem>;
+      serialize?(item: SitemapItem): SitemapItemLoose | undefined | Promise<SitemapItemLoose | undefined>;
 
       // added
       createLinkInHead?: boolean;
@@ -50,7 +62,15 @@ function formatConfigErrorMessage(err: ZodError) {
   return errorList.join('\n');
 }
 
-const OUTFILE = 'sitemap-index.xml';
+const logger = new Logger(packageName);
+
+const isEmptyData = (n: number) => {
+  if (n === 0) {
+    logger.warn(`No data for sitemap.\n\`${SITEMAP_INDEX_FILE_NAME}\` is not created.`);
+    return true;
+  }
+  return false;
+};
 
 const createPlugin = (options?: SitemapOptions): AstroIntegration => {
   let config: AstroConfig;
@@ -72,8 +92,6 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
       },
 
       'astro:build:done': async ({ dir, pages }) => {
-        const logger = new Logger(packageName);
-
         const namespace = packageName.replace('astro-', '');
         const external = await loadConfig(namespace, config.root);
         const merged: SitemapOptions = merge(external || {}, options || {});
@@ -81,7 +99,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
         try {
           const opts = validateOptions(config.site, merged);
 
-          const { filter, customPages, canonicalURL, serialize, createLinkInHead, entryLimit } = opts;
+          const { filter, customPages, canonicalURL, serialize, createLinkInHead, entryLimit, lastmodDateOnly, xslUrl, xmlns } = opts;
 
           let finalSiteUrl: URL;
           if (canonicalURL) {
@@ -113,39 +131,44 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             pageUrls = [...pageUrls, ...customPages];
           }
 
-          if (pageUrls.length === 0) {
-            logger.warn(`No data for sitemap.\n\`${OUTFILE}\` is not created.`);
+          if (isEmptyData(pageUrls.length)) {
             return;
           }
 
-          let urlData = generateSitemap(pageUrls, finalSiteUrl.href, opts);
+          let urlData: SitemapItemLoose[] = generateSitemap(pageUrls, finalSiteUrl.href, opts);
 
           if (serialize) {
             try {
-              const serializedUrls: SitemapItem[] = [];
+              const serializedUrls: SitemapItemLoose[] = [];
               for (const item of urlData) {
                 const serialized = await Promise.resolve(serialize(item));
-                serializedUrls.push(serialized);
+                if (serialized) {
+                  serializedUrls.push(serialized);
+                }
+              }
+              if (isEmptyData(serializedUrls.length)) {
+                return;
               }
               urlData = serializedUrls;
             } catch (err) {
               logger.error(`Error serializing pages\n${(err as any).toString()}`);
-
               return;
             }
           }
 
-          await simpleSitemapAndIndex({
+          await simpleSitemapAndIndexExtended({
             hostname: finalSiteUrl.href,
             destinationDir: fileURLToPath(dir),
             sourceData: urlData,
             limit: entryLimit,
-            gzip: false,
+            lastmodDateOnly,
+            xslUrl,
+            xmlns,
           });
-          logger.success(`\`${OUTFILE}\` is created.`);
+          logger.success(`\`${SITEMAP_INDEX_FILE_NAME}\` is created.`);
 
           if (createLinkInHead) {
-            const sitemapHref = path.posix.join(config.base, OUTFILE);
+            const sitemapHref = path.posix.join(config.base, SITEMAP_INDEX_FILE_NAME);
             const headHTML = `<link rel="sitemap" type="application/xml" href="${sitemapHref}">`;
             await processPages(pages, dir, headHTML, config.build.format);
             logger.success('Sitemap links are created in <head> section of generated pages.');

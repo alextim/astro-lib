@@ -8,5 +8,5 @@ export const ROBOTS_TXT_CONFIG_DEFAULTS: RobotsTxtOptions & any = {
       userAgent: '*',
     },
   ],
-  sitemapBaseFileName: 'sitemap',
+  sitemapBaseFileName: 'sitemap-index',
 };

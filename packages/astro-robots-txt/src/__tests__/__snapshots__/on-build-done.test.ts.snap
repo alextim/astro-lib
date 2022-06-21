@@ -3,7 +3,7 @@
 exports[`onBuildDone > Disallow is empty 1`] = `
 "User-agent: test3
 Disallow:
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
@@ -13,14 +13,14 @@ Disallow: /1
 Disallow: /2
 Allow: /3
 Allow: /4
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
 exports[`onBuildDone > cleanParam is empty 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
@@ -28,7 +28,7 @@ exports[`onBuildDone > cleanParam: "s" 1`] = `
 "User-agent: test4
 Disallow: /
 Clean-param: s
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
@@ -36,21 +36,21 @@ exports[`onBuildDone > crawlDelay: 34, should return \`Crawl-delay: 34\` 1`] = `
 "User-agent: test
 Allow: /
 Crawl-delay: 34
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
 exports[`onBuildDone > host = "", should return robots.txt without \`Host:\` 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
 exports[`onBuildDone > host is valid, should return robots.txt with \`Host: abc.com\` 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 Host: abc.com
 "
 `;
@@ -58,7 +58,7 @@ Host: abc.com
 exports[`onBuildDone > host is valid, should return robots.txt with \`Host: abc\` 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 Host: abc
 "
 `;
@@ -66,21 +66,21 @@ Host: abc
 exports[`onBuildDone > options = {}, should return default robots.txt 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
 exports[`onBuildDone > options = undefined, should return default robots.txt 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
 exports[`onBuildDone > policy is undefined, should return default robots.txt 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
@@ -99,7 +99,7 @@ Allow: /
 exports[`onBuildDone > sitemap = true, should return default robots.txt 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
@@ -128,7 +128,7 @@ Sitemap: https://example.com/abc.xml
 exports[`onBuildDone > transform  = async func, should return robots.txt with \`# extra text\` 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 # extra text
 "
 `;
@@ -136,7 +136,7 @@ Sitemap: https://example.com/sitemap.xml
 exports[`onBuildDone > transform  = sync func, should return robots.txt with \`# extra text\` 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 # extra text
 "
 `;

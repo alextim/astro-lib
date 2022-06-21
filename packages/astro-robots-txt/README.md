@@ -111,7 +111,7 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 |  `host`     |            `String`             |   No     |                 | Host of your site                                                    |
 | `sitemap`   |`Boolean` / `String` / `String[]`|   No     |     `true`      | Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap.xml`.<br/>If `sitemap: false` - no `Sitemap` line in the output.<br/>When the `sitemap` is `String` or `String[]` its values have to be a valid **http** url. Empty strings or other protocols are not allowed. |
 | `policy`    |            `Policy[]`           |   No     | [{ allow: `/`, userAgent: `*` }] | List of `Policy` rules                              |
-| `sitemapBaseFileName`  |  `String`            |   No     | `sitemap`| The name of a sitemap file before the file extension (`.xml`). It's used if the `sitemap` option is `true`.  |
+| `sitemapBaseFileName`  |  `String`            |   No     | `sitemap-index`| The name of a sitemap file before the file extension (`.xml`). It's used if the `sitemap` option is `true`.  |
 | `transform` |`(content: String):`<br/> `String`\|`Promise<String>` |  No |    | Called just before writing the text output to disk. Sync or async.   |
 
 ### Policy

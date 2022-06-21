@@ -7,7 +7,9 @@ const localeKeySchema = z.string().min(1);
 export const SitemapOptionsSchema = z
   .object({
     filter: z.function().args(z.string()).returns(z.boolean()).optional(),
+
     customPages: z.string().url().array().optional(),
+
     canonicalURL: z.string().url().optional(),
 
     i18n: z
@@ -29,10 +31,28 @@ export const SitemapOptionsSchema = z
       .optional(),
 
     entryLimit: z.number().nonnegative().optional().default(SITEMAP_CONFIG_DEFAULTS.entryLimit),
+
+    lastmodDateOnly: z.boolean().optional().default(SITEMAP_CONFIG_DEFAULTS.xmlns.lastmodDateOnly),
+
+    xslUrl: z.string().url().optional(),
+
+    xmlns: z
+      .object({
+        xhtml: z.boolean().optional().default(SITEMAP_CONFIG_DEFAULTS.xmlns.xhtml),
+        news: z.boolean().optional().default(SITEMAP_CONFIG_DEFAULTS.xmlns.news),
+        image: z.boolean().optional().default(SITEMAP_CONFIG_DEFAULTS.xmlns.image),
+        video: z.boolean().optional().default(SITEMAP_CONFIG_DEFAULTS.xmlns.video),
+        custom: z.string().min(1).array().nonempty().optional(),
+      })
+      .optional()
+      .default(SITEMAP_CONFIG_DEFAULTS.xmlns),
+
     serialize: z.function().args(z.any()).returns(z.any()).optional(),
 
     changefreq: z.nativeEnum(ChangeFreq).optional(),
+
     lastmod: z.date().optional(),
+
     priority: z.number().min(0).max(1).optional(),
 
     createLinkInHead: z.boolean().optional().default(SITEMAP_CONFIG_DEFAULTS.createLinkInHead),
