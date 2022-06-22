@@ -12,10 +12,9 @@ The _sitemap.xml_ file provides information about structure of your website, abo
 
 ## Why astro-sitemap?
 
-Some of functionality from **astro-sitemap v0.2.2** became an update for the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) from v0.1.2 to v0.2.0.   
+Some of functionality from **astro-sitemap v0.2.2** became an update for the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) from v0.1.2 to v0.2.0.
 
 From now you can use the official integration in most cases.  
-
 
 Shared functionality with the official **@astrojs/sitemap**:
 
@@ -120,7 +119,6 @@ Generated sitemap content for two pages website:
 
 **sitemap-0.xml**
 
-
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -143,42 +141,29 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 
 ## Configuration
 
-## Options
+### Options shared with the official integration
 
 |   Name         |             Type           | Required | Default | Description                                                                                     |
 | :------------: | :------------------------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
-| `filter`    | `(page: String):`<br/>`Boolean`|    No   |         | The same as official. Function to filter generated pages to exclude some paths from a  sitemap. |
-| `customPages`  |          `String[]`        |    No    |         | The same as official. Absolute url list. It will be merged with generated pages urls.           |
-| `canonicalURL` |           `String`         |    No    |         | The same as official. Absolute url. The integration needs `site` from astro.config or `canonicalURL`. If both values are provided then only `canonicalURL` will be used by the integration. |
-| `entryLimit`   |           `Number`         |    No    | 45000   | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google]((<https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps/>) |
-| `xslUrl`       |           `String`         |    No    |         | Absolute URL of XSL file to transform XML to other format. Ignored by search engines.           |
-| `xmlns`        |           `NSArgs`         |    No    |         | Manage xml namespaces in the `<urlset>`                                                         |
-| `lastmodDateOnly` |      `Boolean`          |    No    |         | If it's `true` the XML output will contain a date part only.                                    |
-search/docs/advanced/sitemaps/large-sitemaps) |
+| `filter`    | `(page: String):`<br/>`Boolean`|   No    |         | Function to filter generated pages to exclude some paths from a  sitemap.                       |
+| `customPages`  |          `String[]`        |    No    |         | Absolute URL list. It will be merged with generated pages urls.                                 |
+| `canonicalURL` |           `String`         |    No    |         | Absolute URL. The integration needs `site` from astro.config or `canonicalURL`. If both values are provided then only `canonicalURL` will be used by the integration. |
+| `entryLimit`   |           `Number`         |    No    | 45000   | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps/) |
+
 | `changefreq`   |         `ChangeFreq`       |    No    |         | Sitemap specific. Ignored by Google.<br/>How frequently the page is likely to change.<br/>Available values: `always`\|`hourly`\|`daily`\|`weekly`\|`monthly`\| `yearly`\|`never` |
 | `lastmod`      |            `Date`          |    No    |         | Sitemap specific. The date of page last modification.                                           |
 | `priority`     |           `Number`         |    No    |         | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0 |
-| `serialize` | `(item: SitemapItem):`<br>`SitemapItemLoose`\|`undefined`\|<br/>Promise<`SitemapItemLoose`\|`undefined`>| No |    | Function to process an array of sitemap entries just before writing them to disk. Async or sync.<br/>The `undefined` return value excludes the passed entry from sitemap. |
-| `createLinkInHead`|       `Boolean`         |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites. |
-| **i18n**       |           `object`         |    No    |         | Provide this object to start                                                                    |
-| `defaultLocale`|           `String`         |   Yes    |         | Its value has to be exists as one of `locales` keys.                                            |
+| `serialize` | `(item: SitemapItem):`<br>`SitemapItemLoose`\|`undefined`\|<br/>Promise<`SitemapItemLoose`\|`undefined`>| No |    | Function to process an array of sitemap entries just before writing them to disk. Async or sync.<br/>**Modified behavior** compared to the official integration: `undefined` return value excludes the passed entry from sitemap. |
+
+| **i18n**       |           `object`         |    No    |         |                                                                                                 |
+| `defaultLocale`|           `String`         |   Yes    |         | Its value has to be exist as one the `locales` keys.                                             |
 | `locales`      | `Record<String, String>`   |   Yes    |         | Key/value - pairs.<br/>The key is used to look for a locale part in a page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
 
 :bulb: See detailed explanation of sitemap specific options on [sitemap.org](https://www.sitemaps.org/protocol.html).
 
 :exclamation: This integration uses 'astro:build:done' hook (official @astrojs/sitemap does the same). The hook exposes only generated page paths. So with present version of Astro the integration has no abilities to analyze a page source, frontmatter etc. The integration can add `changefreq`, `lastmod` and `priority` attributes only in a batch or nothing.
 
-### NSArgs
-
-|   Name   |  Type     | Required | Default | Description                                                              |
-| :------: | :-------: | :------: | :-----: | :----------------------------------------------------------------------- |
-| `xhtml`  | `Boolean` |    No    | true    | `xmlns:xhtml="http://www.w3.org/1999/xhtml"`                             |
-| `news`   | `Boolean` |    No    |         | `xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"`            |
-| `video`  | `Boolean` |    No    |         | `xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"`          |
-| `image`  | `Boolean` |    No    |         | `xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"`          |
-| `custom` | `String[]`|    No    |         | Any custom namespace. Elements of array are used `as is`, no validation. |
-
-### SitemapItem
+#### SitemapItem
 
 |   Name         |     Type     | Required | Description        |
 | :------------: | :----------: | :------: | :----------------- |
@@ -188,20 +173,39 @@ search/docs/advanced/sitemaps/large-sitemaps) |
 | `priority`     |   `Number`   |    No    |                    |
 | `links`        | `LinkItem[]` |    No    | for localization   |
 
-### SitemapItemLoose
+#### LinkItem
+
+|   Name         |      Type       | Required | Description               |
+| :------------: | :-------------: | :------: | :------------------------ |
+| `url`          |    `String`     |   Yes    | Absolute url              |
+| `lang`         |    `String`     |   Yes    | hreflag, example: 'en-US' |
+
+### Extra options
+
+|   Name         |      Type    | Required | Default | Description                                                                                     |
+| :------------: | :----------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
+| `xslUrl`       |     `String` |    No    |         | Absolute URL of XSL file to style XML or transform it to other format. Ignored by search engines. |
+| `xmlns`        |     `NSArgs` |    No    |         | Set the XML namespaces by xmlns attributes in `<urlset>` element.  |
+| `lastmodDateOnly` | `Boolean` |    No    |         | If it's `true` the XML output will contain a date part only.                                    |
+| `createLinkInHead`| `Boolean` |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites. |
+
+#### NSArgs
+
+|   Name   |  Type     | Required | Default | Description                                                              |
+| :------: | :-------: | :------: | :-----: | :----------------------------------------------------------------------- |
+| `xhtml`  | `Boolean` |    No    | true    | `xmlns:xhtml="http://www.w3.org/1999/xhtml"`                             |
+| `news`   | `Boolean` |    No    |         | `xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"`            |
+| `video`  | `Boolean` |    No    |         | `xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"`          |
+| `image`  | `Boolean` |    No    |         | `xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"`          |
+| `custom` | `String[]`|    No    |         | Any custom namespace. Elements of array'll be used `as is` without any validation. |
+
+#### SitemapItemLoose
 
 The `SitemapItemLoose` interface is a base for the `SitemapItem`.  
 
 It has properties `video`, `img` and many others.  
 
 More details about `SitemapItemLoose` interface see in the **sitemap.js** repo [readme](https://github.com/ekalinin/sitemap.js/blob/master/README.md) and types source [code](https://github.com/ekalinin/sitemap.js/blob/master/lib/types.ts).  
-
-### LinkItem
-
-|   Name         |      Type       | Required | Description               |
-| :------------: | :-------------: | :------: | :------------------------ |
-| `url`          |    `String`     |   Yes    | Absolute url              |
-| `lang`         |    `String`     |   Yes    | hreflag, example: 'en-US' |
 
 **Sample of _astro.config.mjs_**
 
