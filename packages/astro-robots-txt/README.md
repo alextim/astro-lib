@@ -97,7 +97,7 @@ The _robots.txt_'s content will be
 ```text
 User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-index.xml
 ```
 
 You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
@@ -109,9 +109,9 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 |   Name      |              Type               | Required |     Default     |                                                                      |
 | :---------: | :-----------------------------: | :------: | :-------------: | :------------------------------------------------------------------- |
 |  `host`     |            `String`             |   No     |                 | Host of your site                                                    |
-| `sitemap`   |`Boolean` / `String` / `String[]`|   No     |     `true`      | Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap.xml`.<br/>If `sitemap: false` - no `Sitemap` line in the output.<br/>When the `sitemap` is `String` or `String[]` its values have to be a valid **http** url. Empty strings or other protocols are not allowed. |
+| `sitemap`   |`Boolean` / `String` / `String[]`|   No     |     `true`      | Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap-index.xml`.<br/>If `sitemap: false` - no `Sitemap` line in the output.<br/>When the `sitemap` is `String` or `String[]` its values have to be a valid **http** url. Empty strings or other protocols are not allowed. |
 | `policy`    |            `Policy[]`           |   No     | [{ allow: `/`, userAgent: `*` }] | List of `Policy` rules                              |
-| `sitemapBaseFileName`  |  `String`            |   No     | `sitemap-index`| The name of a sitemap file before the file extension (`.xml`). It's used if the `sitemap` option is `true`.  |
+| `sitemapBaseFileName`  |  `String`            |   No     | `sitemap-index`| The name of a sitemap file before the file extension (`.xml`). It will be used if the `sitemap` option is `true`.<br/>[@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) and [astro-sitemap](https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap) have `sitemap-index.xml` as their primary output. |
 | `transform` |`(content: String):`<br/> `String`\|`Promise<String>` |  No |    | Called just before writing the text output to disk. Sync or async.   |
 
 ### Policy
@@ -162,7 +162,7 @@ export default defineConfig({
         },
       ],
       transform(content) {
-        return `# some comments before main content\n#second line\n${content}`;
+        return `# Some comments before main content.\n# Second line.\n\n${content}`;
       },
     }),
   ],
