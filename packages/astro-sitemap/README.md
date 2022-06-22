@@ -432,4 +432,4 @@ astro build --experimental-integrations
 
 ## Inspiration
 
-The `astro-sitemap` is based on the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap). Many thanks to the [Astro](https://astro.build/) team for their work!
+Module based on the awesome [sitemap.js](https://github.com/ekalinin/sitemap.js) package ❤️.
