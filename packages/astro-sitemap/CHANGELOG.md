@@ -1,5 +1,13 @@
 # astro-sitemap
 
+## 0.2.5
+
+### Patch Changes
+
+- 4eded9e: new config option: `exclude`.
+
+  refactor: logger.
+
 ## 0.2.4
 
 ### Patch Changes
