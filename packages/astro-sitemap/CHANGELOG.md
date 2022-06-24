@@ -1,5 +1,11 @@
 # astro-sitemap
 
+## 0.2.7
+
+### Patch Changes
+
+- 739af08: fix named export for minimatch
+
 ## 0.2.6
 
 ### Patch Changes
