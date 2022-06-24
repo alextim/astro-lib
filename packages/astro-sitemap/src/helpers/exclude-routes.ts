@@ -1,4 +1,4 @@
-import { Minimatch } from 'minimatch';
+import mmpkg from 'minimatch';
 
 /**
  * Exclude routes by matching glob patterns on url
@@ -9,7 +9,7 @@ import { Minimatch } from 'minimatch';
  */
 export function excludeRoutes(patterns: string[], routes: string[]) {
   patterns.forEach((pattern) => {
-    const minimatch = new Minimatch(pattern);
+    const minimatch = new mmpkg.Minimatch(pattern);
     minimatch.negate = true;
     routes = routes.filter((path) => minimatch.match(path));
   });

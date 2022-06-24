@@ -8,7 +8,7 @@ importers:
       '@types/node': ^18.0.0
       '@typescript-eslint/eslint-plugin': ^5.29.0
       '@typescript-eslint/parser': ^5.29.0
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       c8: ^7.11.3
       commitlint: ^17.0.2
       esbuild: ^0.14.47
@@ -28,7 +28,7 @@ importers:
       '@types/node': 18.0.0
       '@typescript-eslint/eslint-plugin': 5.29.0_qqmbkyiaixvppdwswpytuf2hgm
       '@typescript-eslint/parser': 5.29.0_b5e7v2qnwxfo6hmiq56u52mz3e
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       c8: 7.11.3
       commitlint: 17.0.2
       esbuild: 0.14.47
@@ -46,76 +46,76 @@ importers:
 
   examples/robots-txt/advanced:
     specifiers:
-      '@astrojs/sitemap': ^0.2.1
-      astro: ^1.0.0-beta.53
+      '@astrojs/sitemap': ^0.2.2
+      astro: ^1.0.0-beta.54
       astro-robots-txt: latest
     devDependencies:
-      '@astrojs/sitemap': 0.2.1
-      astro: 1.0.0-beta.53
+      '@astrojs/sitemap': 0.2.2
+      astro: 1.0.0-beta.54
       astro-robots-txt: link:../../../packages/astro-robots-txt
 
   examples/robots-txt/basic:
     specifiers:
-      '@astrojs/sitemap': ^0.2.1
-      astro: ^1.0.0-beta.53
+      '@astrojs/sitemap': ^0.2.2
+      astro: ^1.0.0-beta.54
       astro-robots-txt: latest
     devDependencies:
-      '@astrojs/sitemap': 0.2.1
-      astro: 1.0.0-beta.53
+      '@astrojs/sitemap': 0.2.2
+      astro: 1.0.0-beta.54
       astro-robots-txt: link:../../../packages/astro-robots-txt
 
   examples/sitemap/advanced:
     specifiers:
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       astro-sitemap: latest
     devDependencies:
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/basic:
     specifiers:
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       astro-sitemap: latest
     devDependencies:
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/i18n:
     specifiers:
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       astro-sitemap: latest
     devDependencies:
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/webmanifest/advanced:
     specifiers:
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       astro-webmanifest: latest
     devDependencies:
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   examples/webmanifest/basic:
     specifiers:
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       astro-webmanifest: latest
     devDependencies:
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   examples/webmanifest/i18n:
     specifiers:
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       astro-webmanifest: latest
     devDependencies:
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   packages/astro-robots-txt:
     specifiers:
       '@types/node': ^18.0.0
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       at-scripts: workspace:*
       c8: ^7.11.3
       deepmerge: ^4.2.2
@@ -130,7 +130,7 @@ importers:
       zod: 3.17.3
     devDependencies:
       '@types/node': 18.0.0
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       at-scripts: link:../../scripts
       c8: 7.11.3
       typescript: 4.7.4
@@ -139,9 +139,9 @@ importers:
 
   packages/astro-sitemap:
     specifiers:
-      '@types/minimatch': latest
+      '@types/minimatch': ^3.0.5
       '@types/node': ^18.0.0
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       at-scripts: workspace:*
       c8: ^7.11.3
       deepmerge: ^4.2.2
@@ -161,7 +161,7 @@ importers:
     devDependencies:
       '@types/minimatch': 3.0.5
       '@types/node': 18.0.0
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       at-scripts: link:../../scripts
       c8: 7.11.3
       typescript: 4.7.4
@@ -172,7 +172,7 @@ importers:
     specifiers:
       '@types/node': ^18.0.0
       '@types/sharp': ^0.30.4
-      astro: ^1.0.0-beta.53
+      astro: ^1.0.0-beta.54
       at-scripts: workspace:*
       c8: ^7.11.3
       deepmerge: ^4.2.2
@@ -192,7 +192,7 @@ importers:
     devDependencies:
       '@types/node': 18.0.0
       '@types/sharp': 0.30.4
-      astro: 1.0.0-beta.53
+      astro: 1.0.0-beta.54
       at-scripts: link:../../scripts
       c8: 7.11.3
       typescript: 4.7.4
@@ -229,8 +229,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.13
     dev: true
 
-  /@astrojs/compiler/0.16.1:
-    resolution: {integrity: sha512-6l5j9b/sEdyqRUvwJpp+SmlAkNO5WeISuNEXnyH9aGwzIAdqgLB2boAJef9lWadlOjG8rSPO29WHRa3qS2Okew==}
+  /@astrojs/compiler/0.17.0:
+    resolution: {integrity: sha512-3q6Yw6CGDfUwheDS29cHjQxn57ql0X98DskU6ym3bw/FdD8RMbGi0Es1Evlh+WHig948LUcYq19EHAMZO3bP3w==}
     dev: true
 
   /@astrojs/language-server/0.13.4:
@@ -301,8 +301,8 @@ packages:
     engines: {node: ^14.15.0 || >=16.0.0}
     dev: true
 
-  /@astrojs/sitemap/0.2.1:
-    resolution: {integrity: sha512-ZdUDqTtBOtkY9srN0dBL1BNB5/luv8I7LyEtv9l6jco5JF6fyY9/4OpWgiA2n6zGWzkuEw0WynWKK08uEvAxHQ==}
+  /@astrojs/sitemap/0.2.2:
+    resolution: {integrity: sha512-0yhPnN6PPt56zzZbIuOV7sLDjzQNcatHXv4qrFyUISoefIvWm2fGZLcbMxsKiTA7UqYXp7s7lFzJo9IW+3IbFA==}
     dependencies:
       sitemap: 7.1.1
       zod: 3.17.3
@@ -1502,12 +1502,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /astro/1.0.0-beta.53:
-    resolution: {integrity: sha512-K+sgcQ3EGWi7ewZTScXgBRMvOMatVrQH400WqkUVPV48wJK0X2fN3r9nW+oZtVCE9RRfNdr/oaWeLi55LkJRBA==}
+  /astro/1.0.0-beta.54:
+    resolution: {integrity: sha512-GpGnyuybGa3k7i+XRR+v6cjiVqKlyvVrpxjAEcigHNsHGgkirUMa/RTIiDEyS4BwqYtufhgruSKTFQLoPWnaQA==}
     engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 0.16.1
+      '@astrojs/compiler': 0.17.0
       '@astrojs/language-server': 0.13.4
       '@astrojs/markdown-remark': 0.11.3
       '@astrojs/prism': 0.4.1
