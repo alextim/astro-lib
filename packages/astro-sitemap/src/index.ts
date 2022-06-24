@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
 import merge from 'deepmerge';
-import { SitemapItemLoose, EnumChangefreq as ChangeFreq } from 'sitemap';
+import { SitemapItemLoose as SitemapItemLooseBase, EnumChangefreq, LinkItem as LinkItemBase } from 'sitemap';
 
 import { Logger, loadConfig, getErrorMessage } from '@/at-utils';
 import { validateOptions } from './validate-options';
@@ -16,7 +16,9 @@ import { excludeRoutes } from './helpers/exclude-routes';
  */
 import { packageName } from './data/pkg-name';
 
-export { SitemapItemLoose, LinkItem, EnumChangefreq as ChangeFreq } from 'sitemap';
+export type LinkItem = LinkItemBase;
+export type ChangeFreq = EnumChangefreq;
+export type SitemapItemLoose = SitemapItemLooseBase;
 export type SitemapItem = Pick<SitemapItemLoose, 'url' | 'lastmod' | 'changefreq' | 'priority' | 'links'>;
 
 export interface NSArgs {
