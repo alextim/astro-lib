@@ -1,5 +1,11 @@
 # astro-webmanifest
 
+## 0.3.4
+
+### Patch Changes
+
+- 39a0548: refactor logger
+
 ## 0.3.3
 
 ### Patch Changes
