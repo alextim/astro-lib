@@ -26,12 +26,15 @@ Shared functionality with the official **@astrojs/sitemap**:
 
 **astro-sitemap** key extras:
 
+- Exclude pages from sitemap by glob patterns.
 - More control on sitemap output:
   - manage xml namespaces;
   - `lastmod` format option;
   - possibility to add a link to custom xsl.
 - Automatically creates a link to sitemap in `<head>` section of generated pages.
 - Flexible configuration: configure the integration with external config, astro.config or combine both.
+
+:exclamation: Both integrations, the official and **astro-sitemap** don't support SSR.
 
 ---
 
@@ -146,10 +149,9 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 |   Name         |             Type           | Required | Default | Description                                                                                     |
 | :------------: | :------------------------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
 | `filter`    | `(page: String):`<br/>`Boolean`|   No    |         | Function to filter generated pages to exclude some paths from a  sitemap.                       |
-| `customPages`  |          `String[]`        |    No    |         | Absolute URL list. It will be merged with generated pages urls.                                 |
+| `customPages`  |          `String[]`        |    No    |         | Absolute URL list. It will be merged with generated pages urls.<br/>You should also use `customPages` to manually list sitemap pages when using an SSR adapter. Currently, integration cannot detect your site's pages unless you are building statically. To avoid an empty sitemap, list all pages (including the base origin) with this configuration option!  |
 | `canonicalURL` |           `String`         |    No    |         | Absolute URL. The integration needs `site` from astro.config or `canonicalURL`. If both values are provided then only `canonicalURL` will be used by the integration. |
 | `entryLimit`   |           `Number`         |    No    | 45000   | Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries. See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps/) |
-
 | `changefreq`   |         `ChangeFreq`       |    No    |         | Sitemap specific. Ignored by Google.<br/>How frequently the page is likely to change.<br/>Available values: `always`\|`hourly`\|`daily`\|`weekly`\|`monthly`\| `yearly`\|`never` |
 | `lastmod`      |            `Date`          |    No    |         | Sitemap specific. The date of page last modification.                                           |
 | `priority`     |           `Number`         |    No    |         | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0 |
@@ -184,8 +186,9 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 
 |   Name         |      Type    | Required | Default | Description                                                                                     |
 | :------------: | :----------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
-| `xslUrl`       |     `String` |    No    |         | Absolute URL of XSL file to style XML or transform it to other format. Ignored by search engines. |
-| `xmlns`        |     `NSArgs` |    No    |         | Set the XML namespaces by xmlns attributes in `<urlset>` element.  |
+| `exclude`      |   `String[]` |    No    |         | The `exclude` option is an array of [glob patterns](https://github.com/isaacs/minimatch#features) to exclude static routes from the generated sitemap. |
+| `xslUrl`       |   `String`   |    No    |         | Absolute URL of XSL file to style XML or transform it to other format. Ignored by search engines. |
+| `xmlns`        |   `NSArgs`   |    No    |         | Set the XML namespaces by xmlns attributes in `<urlset>` element.  |
 | `lastmodDateOnly` | `Boolean` |    No    |         | If it's `true` the XML output will contain a date part only.                                    |
 | `createLinkInHead`| `Boolean` |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites. |
 
@@ -237,27 +240,6 @@ export default defineConfig({
       // It will be used during sitemap generation instead of `site` value. 
       canonicalURL: 'https://example.com',
 
-      /**
-       *  `astro-sitemap` integration extra options
-       */ 
-      // print date not time
-      lastmodDateOnly: false, 
-      
-      // style to transform to another format, ignored by search engines
-      xslUrl: 'https://example.com/style.xsl',
-
-      // set the xml namespace
-      xmlns: { 
-        xhtml: true,
-        news: true, 
-        image: true,
-        video: true,
-        custom: [
-          'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"',
-          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
-        ],
-      },
-
       // This function is called just before a sitemap writing to disk.
       // You have more control on resulting output.
       // sync or async
@@ -277,7 +259,29 @@ export default defineConfig({
       changefreq: 'yearly',
       lastmod: new Date('May 01, 2019 03:24:00'),
       priority: 0.2,
-     
+
+      /**
+       *  `astro-sitemap` integration extra options
+       */ 
+      exclude: ['404', 'blog-*/']
+      // print date not time
+      lastmodDateOnly: false, 
+      
+      // style to transform to another format, ignored by search engines
+      xslUrl: 'https://example.com/style.xsl',
+
+      // set the xml namespace
+      xmlns: { 
+        xhtml: true,
+        news: true, 
+        image: true,
+        video: true,
+        custom: [
+          'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"',
+          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+        ],
+      },
+
       // Create or not a link to sitemap in '<head>' section of generated pages
       createLinkInHead: true,                     // default - true 
     }),

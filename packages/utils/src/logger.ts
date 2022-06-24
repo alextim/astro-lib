@@ -23,24 +23,29 @@ export class Logger implements ILogger {
     this.packageName = packageName;
   }
 
-  private log(msg: string, prefix: string = '') {
-    // eslint-disable-next-line no-console
-    console.log(`%s${this.packageName}:%s ${msg}\n`, prefix, prefix ? this.colors.reset : '');
+  private toArray(msg: string | string[]) {
+    return Array.isArray(msg) ? msg : [msg];
   }
 
-  info(msg: string) {
+  private log(msg: string | string[], prefix: string = '') {
+    const s = Array.isArray(msg) ? msg.join('\n') : msg;
+    // eslint-disable-next-line no-console
+    console.log(`%s${this.packageName}:%s ${s}\n`, prefix, prefix ? this.colors.reset : '');
+  }
+
+  info(msg: string | string[]) {
     this.log(msg);
   }
 
-  success(msg: string) {
+  success(msg: string | string[]) {
     this.log(msg, this.colors.fg.green);
   }
 
-  warn(msg: string) {
-    this.log(`Skipped!\n${msg}`, this.colors.fg.yellow);
+  warn(msg: string | string[]) {
+    this.log(['Skipped!', ...this.toArray(msg)], this.colors.fg.yellow);
   }
 
-  error(msg: string) {
-    this.log(`Failed!\n${msg}`, this.colors.fg.red);
+  error(msg: string | string[]) {
+    this.log(['Failed!', ...this.toArray(msg)], this.colors.fg.red);
   }
 }

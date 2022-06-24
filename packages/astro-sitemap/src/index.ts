@@ -10,7 +10,7 @@ import { validateOptions } from './validate-options';
 import { generateSitemap } from './generate-sitemap';
 import { simpleSitemapAndIndexExtended } from './sitemap/sitemap-simple-extended';
 import { processPages } from './process-pages';
-import { SITEMAP_INDEX_FILE_NAME } from './output-files';
+import { excludeRoutes } from './helpers/exclude-routes';
 /**
  * `pkg-name.ts` is generated during build from the `name` property of a `package.json`
  */
@@ -29,10 +29,14 @@ export interface NSArgs {
 
 export type SitemapOptions =
   | {
-      // the same with official
-      filter?(page: string): boolean;
-      customPages?: string[];
       canonicalURL?: string;
+      customPages?: string[];
+
+      customItems?: SitemapItemLoose[];
+
+      filter?(page: string): boolean;
+      exclude?: string[];
+
       i18n?: {
         defaultLocale: string;
         locales: Record<string, string>;
@@ -52,7 +56,6 @@ export type SitemapOptions =
       // called for each sitemap item just before to save them on disk, sync or async
       serialize?(item: SitemapItem): SitemapItemLoose | undefined | Promise<SitemapItemLoose | undefined>;
 
-      // added
       createLinkInHead?: boolean;
     }
   | undefined;
@@ -66,7 +69,7 @@ const logger = new Logger(packageName);
 
 const isEmptyData = (n: number) => {
   if (n === 0) {
-    logger.warn(`No data for sitemap.\n\`${SITEMAP_INDEX_FILE_NAME}\` is not created.`);
+    logger.warn('No pages found!');
     return true;
   }
   return false;
@@ -91,7 +94,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
         config = cfg;
       },
 
-      'astro:build:done': async ({ dir, pages }) => {
+      'astro:build:done': async ({ dir, pages: srcPages }) => {
         const namespace = packageName.replace('astro-', '');
         const external = await loadConfig(namespace, config.root);
         const merged: SitemapOptions = merge(external || {}, options || {});
@@ -99,7 +102,19 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
         try {
           const opts = validateOptions(config.site, merged);
 
-          const { filter, customPages, canonicalURL, serialize, createLinkInHead, entryLimit, lastmodDateOnly, xslUrl, xmlns } = opts;
+          const {
+            filter,
+            exclude,
+            customPages,
+            customItems,
+            canonicalURL,
+            entryLimit,
+            lastmodDateOnly,
+            xslUrl,
+            xmlns,
+            serialize,
+            createLinkInHead,
+          } = opts;
 
           let finalSiteUrl: URL;
           if (canonicalURL) {
@@ -113,29 +128,55 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             finalSiteUrl = new URL(config.base, config.site);
           }
 
-          let pageUrls = pages.map((p) => {
-            const path = finalSiteUrl.pathname + p.pathname;
+          let pages = srcPages.map(({ pathname }) => pathname);
+
+          if (exclude && exclude.length > 0) {
+            try {
+              pages = excludeRoutes(exclude, pages);
+            } catch (err) {
+              logger.error(`Error exclude pages\n${(err as any).toString()}`);
+              return;
+            }
+          }
+
+          if (filter) {
+            try {
+              pages = pages.filter(filter);
+            } catch (err) {
+              logger.error(`Error filtering pages\n${(err as any).toString()}`);
+              return;
+            }
+          }
+
+          let pageUrls = pages.map((pathname) => {
+            const path = finalSiteUrl.pathname + pathname;
             return new URL(path, finalSiteUrl).href;
           });
-
-          try {
-            if (filter) {
-              pageUrls = pageUrls.filter(filter);
-            }
-          } catch (err) {
-            logger.error(`Error filtering pages\n${(err as any).toString()}`);
-            return;
-          }
 
           if (customPages) {
             pageUrls = [...pageUrls, ...customPages];
           }
 
-          if (isEmptyData(pageUrls.length)) {
+          if (pageUrls.length + (customItems?.length ?? 0) === 0) {
+            if (typeof config.adapter !== 'undefined') {
+              logger.warn([
+                'No pages found!',
+                '`We can only detect sitemap routes for "static" projects. Since you are using an SSR adapter, we recommend manually listing your sitemap routes using the "customPages" integration option.',
+                '',
+                "Example: `sitemap({ customPages: ['https://example.com/route'] })`",
+              ]);
+            } else {
+              logger.warn('No pages found!');
+            }
             return;
           }
 
-          let urlData: SitemapItemLoose[] = generateSitemap(pageUrls, finalSiteUrl.href, opts);
+          let urlData: SitemapItemLoose[] = generateSitemap(pageUrls, finalSiteUrl.href, opts as SitemapOptions); // TODO: typings
+
+          if (customItems?.length) {
+            urlData.push(...(customItems as SitemapItemLoose[]));
+          }
+          // offer suggestion for SSR users
 
           if (serialize) {
             try {
@@ -146,7 +187,8 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
                   serializedUrls.push(serialized);
                 }
               }
-              if (isEmptyData(serializedUrls.length)) {
+              if (serializedUrls.length === 0) {
+                logger.warn('No pages found!');
                 return;
               }
               urlData = serializedUrls;
@@ -156,7 +198,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             }
           }
 
-          await simpleSitemapAndIndexExtended({
+          const fileNames = await simpleSitemapAndIndexExtended({
             hostname: finalSiteUrl.href,
             destinationDir: fileURLToPath(dir),
             sourceData: urlData,
@@ -165,13 +207,13 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             xslUrl,
             xmlns,
           });
-          logger.success(`\`${SITEMAP_INDEX_FILE_NAME}\` is created.`);
+          logger.success([`${fileNames.map((name) => `\`${name}\``).join(', ')} are created.`, `Total entries: ${urlData.length}.`]);
 
           if (createLinkInHead) {
-            const sitemapHref = path.posix.join(config.base, SITEMAP_INDEX_FILE_NAME);
+            const sitemapHref = path.posix.join(config.base, fileNames[0]);
             const headHTML = `<link rel="sitemap" type="application/xml" href="${sitemapHref}">`;
-            await processPages(pages, dir, headHTML, config.build.format);
-            logger.success('Sitemap links are created in <head> section of generated pages.');
+            await processPages(srcPages, dir, headHTML, config.build.format);
+            logger.success('Sitemap links are inserted into <head> section of generated pages.');
           }
         } catch (err) {
           if (err instanceof ZodError) {

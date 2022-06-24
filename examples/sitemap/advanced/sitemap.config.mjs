@@ -2,11 +2,37 @@ const canonicalURL = 'http://localhost:3000';
 
 /** @type {import('astro-sitemap').SitemapOptions} */
 const sitemapConfig = {
-  filter: (page) => !/exclude-this/.test(page), // exclude pages from sitemap
-  customPages: [`${canonicalURL}/virtual-one.html`, `${canonicalURL}/virtual-two.html`],
   canonicalURL,
+  customPages: [`${canonicalURL}/virtual-one.html`, `${canonicalURL}/virtual-two.html`, `${canonicalURL}/virtual-3`],
 
-  createLinkInHead: true,
+  filter: (page) => !/filter-this/.test(page), // exclude pages from sitemap
+  exclude: ['404', 'exclude-*'],
+
+  // The integration creates a separate `sitemap-${i}.xml` file for each batch of 2, then adds this file to index - `sitemap-index.xml`.
+  entryLimit: 2, // default - 45000
+
+  // print date not time
+  lastmodDateOnly: true,
+
+  // style to transform to another format, ignored by search engines
+  xslUrl: `${canonicalURL}/sitemap.xsl`,
+
+  // set the xml namespace
+  xmlns: {
+    xhtml: true,
+    news: true,
+    image: true,
+    video: true,
+    custom: [
+      'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"',
+      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+    ],
+  },
+
+  // sitemap specific
+  changefreq: 'yearly',
+  lastmod: new Date('2019-12-31'),
+  priority: 0.4,
 
   serialize(item) {
     if (/virtual-one/.test(item.url)) {
@@ -52,31 +78,7 @@ const sitemapConfig = {
     return item;
   },
 
-  // The integration creates a separate `sitemap-${i}.xml` file for each batch of 2, then adds this file to index - `sitemap-index.xml`.
-  entryLimit: 2, // default - 45000
-
-  // print date not time
-  lastmodDateOnly: true,
-
-  // style to transform to another format, ignored by search engines
-  xslUrl: `${canonicalURL}/sitemap.xsl`,
-
-  // set the xml namespace
-  xmlns: {
-    xhtml: true,
-    news: true,
-    image: true,
-    video: true,
-    custom: [
-      'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"',
-      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
-    ],
-  },
-
-  // sitemap specific
-  changefreq: 'yearly',
-  lastmod: new Date('2019-12-31'),
-  priority: 0.4,
+  createLinkInHead: true,
 };
 
 export default sitemapConfig;

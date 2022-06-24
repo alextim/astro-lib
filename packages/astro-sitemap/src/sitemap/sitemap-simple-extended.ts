@@ -2,7 +2,7 @@ import { SitemapAndIndexStream, SitemapStream, SitemapItemLoose } from 'sitemap'
 
 import { createWriteStream, WriteStream, promises } from 'node:fs';
 import { normalize, resolve } from 'node:path';
-import { Readable, pipeline as pline } from 'node:stream';
+import { Readable, pipeline } from 'node:stream';
 import { createGzip } from 'node:zlib';
 import { promisify } from 'node:util';
 import { URL } from 'node:url';
@@ -10,7 +10,7 @@ import { URL } from 'node:url';
 import { NSArgs } from '../index';
 import { SITEMAP_INDEX_FILE_NAME, SITEMAP_CHUNK_TEMPLATE } from '../output-files';
 
-const pipeline = promisify(pline);
+const pipelineAsync = promisify(pipeline);
 /**
  *
  * @param {object} options -
@@ -38,11 +38,12 @@ export const simpleSitemapAndIndexExtended = async ({
   destinationDir,
   limit = 45000,
   publicBasePath = './',
-  gzip = false,
 
   lastmodDateOnly = false,
   xslUrl = undefined,
   xmlns,
+
+  gzip = false,
 }: {
   hostname: string;
   sitemapHostname?: string;
@@ -50,30 +51,39 @@ export const simpleSitemapAndIndexExtended = async ({
   destinationDir: string;
   publicBasePath?: string;
   limit?: number;
-  gzip?: boolean;
 
   lastmodDateOnly?: boolean;
   xslUrl?: string;
   xmlns: NSArgs;
-}): Promise<void> => {
+
+  gzip?: boolean;
+}): Promise<string[]> => {
+  const result: string[] = [];
+  const suffix = gzip ? '.gz' : '';
+
   await promises.mkdir(destinationDir, { recursive: true });
+
   const sitemapAndIndexStream = new SitemapAndIndexStream({
     limit,
     lastmodDateOnly,
     xslUrl,
-    getSitemapStream: (i) => {
+
+    getSitemapStream(i) {
       const sitemapStream = new SitemapStream({
         hostname,
         lastmodDateOnly,
         xslUrl,
         xmlns,
       });
-      const path = SITEMAP_CHUNK_TEMPLATE.replace('%d', i.toString(10));
-      const writePath = resolve(destinationDir, path + (gzip ? '.gz' : ''));
+
+      const chunkName = SITEMAP_CHUNK_TEMPLATE.replace('%d', i.toString(10)) + suffix;
+      result.push(chunkName);
+
+      const writePath = resolve(destinationDir, chunkName);
       if (!publicBasePath.endsWith('/')) {
         publicBasePath += '/';
       }
-      const publicPath = normalize(publicBasePath + path);
+      const publicPath = normalize(publicBasePath + chunkName);
 
       let pipeline: WriteStream;
       if (gzip) {
@@ -84,15 +94,19 @@ export const simpleSitemapAndIndexExtended = async ({
         pipeline = sitemapStream.pipe(createWriteStream(writePath)); // write it to sitemap-NUMBER.xml
       }
 
-      return [new URL(`${publicPath}${gzip ? '.gz' : ''}`, sitemapHostname).toString(), sitemapStream, pipeline];
+      return [new URL(publicPath, sitemapHostname).toString(), sitemapStream, pipeline];
     },
   });
-  const src = Readable.from(sourceData);
 
-  const writePath = resolve(destinationDir, `./${SITEMAP_INDEX_FILE_NAME}${gzip ? '.gz' : ''}`);
+  const src = Readable.from(sourceData);
+  const indexName = SITEMAP_INDEX_FILE_NAME + suffix;
+  const writePath = resolve(destinationDir, `./${indexName}`);
+
   if (gzip) {
-    return pipeline(src, sitemapAndIndexStream, createGzip(), createWriteStream(writePath));
+    await pipelineAsync(src, sitemapAndIndexStream, createGzip(), createWriteStream(writePath));
   } else {
-    return pipeline(src, sitemapAndIndexStream, createWriteStream(writePath));
+    await pipelineAsync(src, sitemapAndIndexStream, createWriteStream(writePath));
   }
+  result.unshift(indexName);
+  return result;
 };
