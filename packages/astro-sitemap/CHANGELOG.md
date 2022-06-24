@@ -1,5 +1,11 @@
 # astro-sitemap
 
+## 0.2.6
+
+### Patch Changes
+
+- e6642a1: fix: typings error
+
 ## 0.2.5
 
 ### Patch Changes
