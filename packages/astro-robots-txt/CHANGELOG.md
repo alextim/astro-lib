@@ -1,5 +1,11 @@
 # astro-robots-txt
 
+## 0.3.6
+
+### Patch Changes
+
+- 2bb660f: refactor logger
+
 ## 0.3.5
 
 ### Patch Changes
