@@ -1,5 +1,5 @@
 import type { AstroConfig } from 'astro';
-import { ILogger } from '@/at-utils';
+import { ILogger, isObjectEmpty } from '@/at-utils';
 
 import type { WebmanifestOptions } from './index';
 import { isIconSquare } from './helpers/is-icon-square';
@@ -51,9 +51,13 @@ const onBuildDone = async (
     }
   }
 
-  const heads = getHeads(opts, config.base, results);
-
-  await processPages(pages, dir, heads, config.build.format);
+  if (pages.length > 0) {
+    const heads = getHeads(opts, config.base, results);
+    if (!isObjectEmpty(heads)) {
+      await processPages(pages, dir, heads, config.build.format);
+      logger.success('Webmanifest links are inserted into <head> section of generated pages.');
+    }
+  }
 };
 
 export default onBuildDone;

@@ -11,6 +11,7 @@ export {
   ILogger,
   cloneDeep,
   loadConfig,
+  getErrorMessage,
 } from '../index';
 
 export const Logger = vi.fn().mockImplementation(() => ({

@@ -3,7 +3,7 @@ const canonicalURL = 'http://localhost:3000';
 /** @type {import('astro-sitemap').SitemapOptions} */
 const sitemapConfig = {
   canonicalURL,
-  customPages: [`${canonicalURL}/virtual-one.html`, `${canonicalURL}/virtual-two.html`, `${canonicalURL}/virtual-3`],
+  customPages: [`${canonicalURL}/virtual-one.html`, `${canonicalURL}/virtual-two.html`, `${canonicalURL}/virtual-3/`],
 
   filter: (page) => !/filter-this/.test(page), // exclude pages from sitemap
   exclude: ['404', 'exclude-*'],

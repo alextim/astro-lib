@@ -5,7 +5,7 @@ import { ZodError } from 'zod';
 import merge from 'deepmerge';
 import { SitemapItemLoose, EnumChangefreq as ChangeFreq } from 'sitemap';
 
-import { Logger, loadConfig } from '@/at-utils';
+import { Logger, loadConfig, getErrorMessage } from '@/at-utils';
 import { validateOptions } from './validate-options';
 import { generateSitemap } from './generate-sitemap';
 import { simpleSitemapAndIndexExtended } from './sitemap/sitemap-simple-extended';
@@ -31,8 +31,6 @@ export type SitemapOptions =
   | {
       canonicalURL?: string;
       customPages?: string[];
-
-      customItems?: SitemapItemLoose[];
 
       filter?(page: string): boolean;
       exclude?: string[];
@@ -60,20 +58,12 @@ export type SitemapOptions =
     }
   | undefined;
 
+const logger = new Logger(packageName);
+
 function formatConfigErrorMessage(err: ZodError) {
   const errorList = err.issues.map((issue) => `${issue.path.join('.')}  ${issue.message + '.'}`);
   return errorList.join('\n');
 }
-
-const logger = new Logger(packageName);
-
-const isEmptyData = (n: number) => {
-  if (n === 0) {
-    logger.warn('No pages found!');
-    return true;
-  }
-  return false;
-};
 
 const createPlugin = (options?: SitemapOptions): AstroIntegration => {
   let config: AstroConfig;
@@ -102,19 +92,8 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
         try {
           const opts = validateOptions(config.site, merged);
 
-          const {
-            filter,
-            exclude,
-            customPages,
-            customItems,
-            canonicalURL,
-            entryLimit,
-            lastmodDateOnly,
-            xslUrl,
-            xmlns,
-            serialize,
-            createLinkInHead,
-          } = opts;
+          const { filter, exclude, customPages, canonicalURL, entryLimit, lastmodDateOnly, xslUrl, xmlns, serialize, createLinkInHead } =
+            opts;
 
           let finalSiteUrl: URL;
           if (canonicalURL) {
@@ -134,7 +113,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             try {
               pages = excludeRoutes(exclude, pages);
             } catch (err) {
-              logger.error(`Error exclude pages\n${(err as any).toString()}`);
+              logger.error(['Error exclude pages', getErrorMessage(err)]);
               return;
             }
           }
@@ -143,7 +122,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             try {
               pages = pages.filter(filter);
             } catch (err) {
-              logger.error(`Error filtering pages\n${(err as any).toString()}`);
+              logger.error(['Error filtering pages', getErrorMessage(err)]);
               return;
             }
           }
@@ -157,8 +136,9 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             pageUrls = [...pageUrls, ...customPages];
           }
 
-          if (pageUrls.length + (customItems?.length ?? 0) === 0) {
+          if (pageUrls.length === 0) {
             if (typeof config.adapter !== 'undefined') {
+              // offer suggestion for SSR users
               logger.warn([
                 'No pages found!',
                 '`We can only detect sitemap routes for "static" projects. Since you are using an SSR adapter, we recommend manually listing your sitemap routes using the "customPages" integration option.',
@@ -171,12 +151,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             return;
           }
 
-          let urlData: SitemapItemLoose[] = generateSitemap(pageUrls, finalSiteUrl.href, opts as SitemapOptions); // TODO: typings
-
-          if (customItems?.length) {
-            urlData.push(...(customItems as SitemapItemLoose[]));
-          }
-          // offer suggestion for SSR users
+          let urlData: SitemapItemLoose[] = generateSitemap(pageUrls, finalSiteUrl.href, opts);
 
           if (serialize) {
             try {
@@ -193,7 +168,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
               }
               urlData = serializedUrls;
             } catch (err) {
-              logger.error(`Error serializing pages\n${(err as any).toString()}`);
+              logger.error(['Error serializing pages', getErrorMessage(err)]);
               return;
             }
           }

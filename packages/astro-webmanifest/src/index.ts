@@ -1,7 +1,8 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
-import { Logger, loadConfig } from '@/at-utils';
 import merge from 'deepmerge';
+
+import { Logger, loadConfig, getErrorMessage } from '@/at-utils';
 /**
  * `pkg-name.ts` is generated during build from `name` property of `package.json`
  */
@@ -114,7 +115,7 @@ export type WebmanifestOptions =
   | undefined;
 
 function formatConfigErrorMessage(err: ZodError) {
-  const errorList = err.issues.map((issue) => ` ${issue.path.join('.')}  ${issue.message + '.'}`);
+  const errorList = err.issues.map((issue) => `${issue.path.join('.')}  ${issue.message + '.'}`);
   return errorList.join('\n');
 }
 

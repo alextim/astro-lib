@@ -18,3 +18,5 @@ export { isDirExists } from './is-dir-exists';
 export { cloneDeep } from './clone-deep';
 // @internal
 export { loadConfig } from './load-config';
+// @internal
+export { getErrorMessage } from './error-helpers';

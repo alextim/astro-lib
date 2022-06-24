@@ -1,6 +1,5 @@
 import { promises as fs } from 'node:fs';
 import { parse, HTMLElement } from 'node-html-parser';
-import { isObjectEmpty } from '@/at-utils';
 
 const addTailSlash = (s: string) => (s.endsWith('/') ? s : s + '/');
 const removeHeadSlash = (s: string) => s.replace(/^\/+/, '');
@@ -30,12 +29,6 @@ const getFileFile = (pathname: string) => {
 };
 
 export async function processPages(pages: { pathname: string }[], dir: URL, heads: Record<string, string>, buildFormat: string) {
-  if (pages.length === 0) {
-    return;
-  }
-  if (isObjectEmpty(heads)) {
-    return;
-  }
   if (buildFormat !== 'directory' && buildFormat !== 'file') {
     throw new Error(`Unsupported build.format: '${buildFormat}' in your astro.config`);
   }
@@ -59,7 +52,7 @@ export async function processPages(pages: { pathname: string }[], dir: URL, head
     if (!head) {
       head = new HTMLElement('head', {}, '', root);
       root.appendChild(head);
-      console.warn(`No <head> found in \`${fileUrl.pathname}\`. <head> will be created.`);
+      console.warn(`<head> section will be created in \`${fileUrl.pathname}\`.`);
     }
     head.innerHTML = head.innerHTML + getData(locale);
     const inlined = root.toString();

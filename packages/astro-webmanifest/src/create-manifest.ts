@@ -13,9 +13,7 @@ export async function createManifest(opts: WebmanifestOptions, outfile: string, 
     await processIconsSet(manifest.icons, opts.icon, dir);
   }
   const localized = localize(outfile, locale);
-  const url = new URL(localized, dir);
-  const data = JSON.stringify(manifest, null, 2);
-  fs.writeFileSync(url, data);
+  fs.writeFileSync(new URL(localized, dir), JSON.stringify(manifest, null, 2));
   logger.success(`\`${localized}\` is created.`);
 
   return {

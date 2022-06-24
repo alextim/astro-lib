@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
-import { Logger, loadConfig } from '@/at-utils';
 import merge from 'deepmerge';
 
+import { Logger, loadConfig, getErrorMessage } from '@/at-utils';
 import { validateOptions } from './validate-options';
 import { getRobotsTxtContent } from './get-robots-txt-content';
 /**
@@ -30,7 +30,7 @@ export type RobotsTxtOptions =
   | undefined;
 
 function formatConfigErrorMessage(err: ZodError) {
-  const errorList = err.issues.map((issue) => ` ${issue.path.join('.')}  ${issue.message + '.'}`);
+  const errorList = err.issues.map((issue) => `${issue.path.join('.')}  ${issue.message + '.'}`);
   return errorList.join('\n');
 }
 
@@ -72,7 +72,7 @@ const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
                 return;
               }
             } catch (err) {
-              logger.error(`Error transforming content\n${(err as any).toString()}`);
+              logger.error(['Error transforming content', getErrorMessage(err)]);
               return;
             }
           }
