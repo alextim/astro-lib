@@ -365,7 +365,7 @@ The sitemap content will be:
 
 ## Using Configuration Files
 
-You could configure the integration with the external file `sitemap.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+You could configure the integration with an external file `sitemap.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
 The external config must contain the default export statement:
 

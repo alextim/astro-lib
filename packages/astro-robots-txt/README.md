@@ -193,9 +193,9 @@ export default defineConfig({
 
 ## Using Configuration Files
 
-You could configure the integration with external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+You could configure the integration with an external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
-The external config must contain a default export statement:
+The external config must contain the default export statement:
 
 ```js
 // ESM
