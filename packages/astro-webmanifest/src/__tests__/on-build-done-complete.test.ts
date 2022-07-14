@@ -6,7 +6,6 @@ import { Logger } from '@/at-utils';
 import type { WebmanifestOptions } from '../index';
 import onBuildDone from '../on-build-done';
 
-vi.mock('@/at-utils');
 vi.mock('sharp', () => {
   return {
     default: vi.fn(
@@ -156,6 +155,8 @@ describe('onBuildDone complete', () => {
 
   const fn = vi.fn();
   fs.writeFileSync = fn;
+
+  logger.success = vi.fn();
 
   it('options is complete, should match snapshot', async () => {
     await onBuildDone(opts, config as AstroConfig, dir, [], logger);
