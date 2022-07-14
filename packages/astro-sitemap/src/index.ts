@@ -111,7 +111,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
 
           let pages = srcPages.map(({ pathname }) => pathname);
 
-          if (exclude && exclude.length > 0) {
+          if (exclude?.length) {
             try {
               pages = excludeRoutes(exclude, pages);
             } catch (err) {
