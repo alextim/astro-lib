@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import isValidSize from '../../helpers/is-valid-size';
 
 describe('test isValidSize', () => {

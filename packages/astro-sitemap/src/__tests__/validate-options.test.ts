@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import type { SitemapItem, SitemapOptions } from '../index';
 import { validateOptions } from '../validate-options';
 import { SITEMAP_CONFIG_DEFAULTS } from '../config-defaults';

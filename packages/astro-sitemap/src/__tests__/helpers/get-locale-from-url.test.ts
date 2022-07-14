@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { getLocaleFromUrl } from '../../helpers/get-locale-from-url';
 
 const localeCodes = ['en', 'fr', 'es'];

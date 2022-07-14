@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { isFileExists } from '../is-file-exists';
 
 import path from 'node:path';

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import localizeOutfile from '../../helpers/localize-outfile';
 
 const outfile = 'site.webmanifest';

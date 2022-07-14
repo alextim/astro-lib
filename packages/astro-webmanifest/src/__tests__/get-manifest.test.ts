@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { getManifest } from '../get-manifest';
 import type { WebmanifestOptions } from '../index';
 

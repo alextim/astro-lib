@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { isValidHttpUrl } from '../is-valid-http-url';
 
 describe('test isValidHttpUrl', () => {

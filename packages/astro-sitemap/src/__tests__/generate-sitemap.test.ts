@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { generateSitemap } from '../generate-sitemap';
 import type { SitemapOptions } from '../index';
 

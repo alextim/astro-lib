@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import type { RobotsTxtOptions } from '../index';
 import { validateOptions } from '../validate-options';
 import { ROBOTS_TXT_CONFIG_DEFAULTS } from '../config-defaults';

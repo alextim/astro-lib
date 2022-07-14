@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 /* cSpell:disable */
 import { isValidHostname } from '../is-valid-hostname';
 

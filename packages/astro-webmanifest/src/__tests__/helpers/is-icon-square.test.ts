@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import path from 'node:path';
 import { isIconSquare } from '../../helpers/is-icon-square';
 

@@ -1,3 +1,5 @@
+import { describe, it, expect, vi } from 'vitest';
+
 import fs from 'node:fs';
 import type { AstroConfig } from 'astro';
 import { Logger } from '@/at-utils';

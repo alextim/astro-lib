@@ -1,3 +1,5 @@
+import { describe, it, expect, vi } from 'vitest';
+
 import type { WebmanifestOptions, Shortcut } from '../index';
 import { validateOptions } from '../validate-options';
 import { WEBMANIFEST_CONFIG_DEFAULTS } from '../config-defaults';

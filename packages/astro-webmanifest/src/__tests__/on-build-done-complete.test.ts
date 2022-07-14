@@ -1,3 +1,5 @@
+import { describe, it, expect, vi } from 'vitest';
+
 import fs from 'node:fs';
 import type { AstroConfig } from 'astro';
 import { Logger } from '@/at-utils';
@@ -164,6 +166,6 @@ describe('onBuildDone complete', () => {
     expect(fn.mock.calls[1][0].pathname).toBe('/manifest-fr.webmanifest');
     expect(fn.mock.calls[2][0].pathname).toBe('/manifest-de.webmanifest');
 
-    // expect(fn.mock.calls[1][1]).toMatchSnapshot();
+    expect(fn.mock.calls[1][1]).toMatchSnapshot();
   });
 });

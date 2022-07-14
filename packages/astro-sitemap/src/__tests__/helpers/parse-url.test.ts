@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { parseUrl } from '../../helpers/parse-url';
 
 const localeCodes = ['en', 'fr', 'es'];

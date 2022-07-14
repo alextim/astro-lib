@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import type { AstroConfig } from 'astro';
 
 import type { RobotsTxtOptions } from '../index';

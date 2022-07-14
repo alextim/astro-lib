@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { isDirExists } from '../is-dir-exists';
 
 import path from 'node:path';
