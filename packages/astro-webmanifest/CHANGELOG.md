@@ -1,5 +1,11 @@
 # astro-webmanifest
 
+## 0.3.5
+
+### Patch Changes
+
+- f33cf34: fix: vitetest stack size error in validation
+
 ## 0.3.4
 
 ### Patch Changes
