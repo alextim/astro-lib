@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`onBuildDone > options is complete, should match snapshot 1`] = `
+exports[`onBuildDone complete > options is complete, should match snapshot 1`] = `
 "{
   \\"name\\": \\"nom\\",
   \\"icons\\": [
