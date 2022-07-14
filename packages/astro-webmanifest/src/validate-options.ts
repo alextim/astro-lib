@@ -11,9 +11,8 @@ export const validateOptions = (opts: WebmanifestOptions) => {
     const result: Record<string, any> = {};
     if (opts?.locales && !isObjectEmpty(opts.locales)) {
       Object.keys(opts.locales).forEach((locale) => {
-        result[locale] = z.object({
-          ...manifestSchema,
-        });
+        // result[locale] = z.object({...manifestSchema});
+        result[locale] = z.object(manifestSchema);
       });
     }
     return result;
