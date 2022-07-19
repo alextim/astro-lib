@@ -128,9 +128,7 @@ Sitemap: https://example.com/sitemap-index.xml
 
 </details>
 
-:exclamation: Important Notes
-
-Only official **@astrojs/\*** integrations are currently supported by Astro.
+:exclamation: Important notes: only official **@astrojs/\*** integrations are currently supported by Astro.
 
 There are two possibilities to make **astro-robots-txt** integration working with current version of Astro.
 
