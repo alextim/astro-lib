@@ -245,8 +245,22 @@ For the most users - you need only the `icon` option to generate all required ic
 
 The integration has default icon preset to generate all icons.
 
+__`astro.config.mjs`__
+
 ```js
-icon: 'src/images/your-icon.svg',
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      icon: 'src/images/your-icon.svg',
+    }),
+  ],
+};
 ...
 ```
 
@@ -259,22 +273,35 @@ Additionally to the `icon` option you need to provide the `icons` array as a tem
 
 No default icons. Only icons from the array will be created.
 
+__`astro.config.mjs`__
+
 ```js
-icon: 'src/images/your-icon.svg',
-icons: [
-  {
-    src: 'icons/icon-96x96.png',
-    sizes: '96x96',
-    type: 'image/png',
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
   },
-  {
-    src: 'icons/icon-256x256.png',
-    sizes: '256x256',
-    type: 'image/png',
-  },
-  // add any other icon sizes
-],
-...
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      icon: 'src/images/your-icon.svg',
+      icons: [
+        {
+          src: 'icons/icon-96x96.png',
+          sizes: '96x96',
+          type: 'image/png',
+        },
+        {
+          src: 'icons/icon-256x256.png',
+          sizes: '256x256',
+          type: 'image/png',
+        },
+        // add any other icon sizes
+      ],
+    }),
+  ],
+};  
 ```
 
 </details>
@@ -286,20 +313,34 @@ If you don't provide `icon` option, you will be fully responsible for manifest c
 
 You should create all icons and favicons manually and put them to the `public` folder.
 
+__`astro.config.mjs`__
+
 ```js
-icons: [
-  {
-    src: 'icons/icon-96x96.png',
-    sizes: '96x96',
-    type: 'image/png',
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
   },
-  {
-    src: 'icons/icon-256x256.png',
-    sizes: '256x256',
-    type: 'image/png',
-  },
-  // add any other icons
-],
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      icons: [
+        {
+          src: 'icons/icon-96x96.png',
+          sizes: '96x96',
+          type: 'image/png',
+        },
+        {
+          src: 'icons/icon-256x256.png',
+          sizes: '256x256',
+          type: 'image/png',
+        },
+        // add any other icons
+      ],
+    }),
+  ],
+};
 ...
 ```
 
@@ -384,37 +425,48 @@ The integration expects page paths in the following format: /{locale}{path}, whe
 
 Sample configuration below:
 
+__`astro.config.mjs`__
+
 ```js
-...
-  icon: 'src/images/logomark-light.svg',
+import webmanifest from 'astro-webmanifest';
 
-  name: 'Webmanifest i18n test',
-  short_name: 'Test',
-  description: 'This is the application description',
-  lang: 'en-US',
-  start_url: '/',
-
-  theme_color: '#3367D6',
-  background_color: '#3367D6',
-  display: 'standalone',
-
-  locales: {
-    es: {
-      name: 'Prueba Webmanifest i18n',
-      short_name: 'Prueba',
-      description: 'Esta es la descripción de la aplicación.',
-      lang: 'es-ES',
-      start_url: '/es',
-    },
-    fr: {
-      name: 'Test i18n du manifeste Web',
-      short_name: 'Test',
-      description: "Ceci est la description de l'application",
-      lang: 'fr-CA',
-      start_url: '/fr',
-    },
+export default {
+  experimental: {
+    integrations: true,
   },
-...
+  integrations: [
+    webmanifest({
+      icon: 'src/images/logomark-light.svg',
+
+      name: 'Webmanifest i18n test',
+      short_name: 'Test',
+      description: 'This is the application description',
+      lang: 'en-US',
+      start_url: '/',
+
+      theme_color: '#3367D6',
+      background_color: '#3367D6',
+      display: 'standalone',
+
+      locales: {
+        es: {
+          name: 'Prueba Webmanifest i18n',
+          short_name: 'Prueba',
+          description: 'Esta es la descripción de la aplicación.',
+          lang: 'es-ES',
+          start_url: '/es',
+        },
+        fr: {
+          name: 'Test i18n du manifeste Web',
+          short_name: 'Test',
+          description: "Ceci est la description de l'application",
+          lang: 'fr-CA',
+          start_url: '/fr',
+        },
+      },
+    }),
+  ],
+};  
 ```
 
 By this configuration three separate manifests will be generated:
@@ -427,23 +479,35 @@ And language specific html will be inserted to `<head>` section of generated pag
 
 If you need a separate set of icons for each language add `icon` property.
 
+__`astro.config.mjs`__
+
 ```js
-...
-  icon: 'src/images/logo.svg',
-  lang: 'en-US',
-  ...
-  locales: {
-    es: {
-      icon: 'src/images/logo-es.svg',
-      lang: 'es-ES',
-      ...
-    },
-    fr: {
-      lang: 'fr-CA',
-      ...
-    },
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
   },
-...
+  integrations: [
+    webmanifest({
+      name: 'Your app name',  
+      icon: 'src/images/logo.svg',
+      lang: 'en-US',
+      // ...
+      locales: {
+        es: {
+          icon: 'src/images/logo-es.svg',
+          lang: 'es-ES',
+          // ...
+        },
+        fr: {
+          lang: 'fr-CA',
+          // ...
+        },
+      },
+    }),
+  ],
+};
 ```
 
 In this configuration the default `en` language and the `fr` language will have common icon set, `es` - own icon set.
