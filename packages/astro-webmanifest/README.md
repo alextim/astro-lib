@@ -553,12 +553,11 @@ The external configuration usage example is in this demo [repo](https://github.c
 
 ## Examples
 
-| Example       | Source                                                                                 | Playground                                                                                                  |
-| ------------- | -------------------------------------------------------------------------------------- | 
-| basic         | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/basic)    | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/basic)    |
-| advanced      | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced) | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/advanced) |
-| i18n          | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/i18n)     |
-| 
+| Example  | Source                                                                                 | Playground                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| basic    | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/basic)    | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/basic)    |
+| advanced | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced) | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/advanced) |
+| i18n     | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/i18n)     |
 
 ## Contributing
 
