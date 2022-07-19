@@ -10,6 +10,7 @@ const schemaSitemapItem = z
     message: 'Only valid URLs with `http` or `https` protocol allowed',
   });
 const schemaCleanParam = z.string().max(500);
+const schemaPath = z.string().or(z.string().array()).optional();
 
 export const RobotsTxtOptionsSchema = z
   .object({
@@ -25,8 +26,8 @@ export const RobotsTxtOptionsSchema = z
     policy: z
       .object({
         userAgent: z.string().min(1),
-        allow: z.string().or(z.string().array()).optional(),
-        disallow: z.string().or(z.string().array()).optional(),
+        allow: schemaPath,
+        disallow: schemaPath,
         cleanParam: schemaCleanParam.or(schemaCleanParam.array()).optional(),
         crawlDelay: z
           .number()

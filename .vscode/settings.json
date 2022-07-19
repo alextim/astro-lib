@@ -1,16 +1,25 @@
 {
   "vitest.enable": true,
-  "search.exclude": {"**/*.log": true, "**/dist": true },
+  "search.exclude": {"**/*.log": true, "**/dist": true, "pnpm-lock.yaml": true},
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
   "editor.quickSuggestions": {
     "strings": true
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  },
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.eslint"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "astro"
+  ],
   "cSpell.words": [
     "alextim",
     "Astro",
@@ -29,7 +38,9 @@
     "anonymus",
     "<br/>",
     "frontmatter"
-
   ],
-  "prettier.documentSelectors": ["**/*.ts"]
+  "[json][jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

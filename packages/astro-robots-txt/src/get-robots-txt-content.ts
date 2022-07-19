@@ -5,11 +5,11 @@ const addBackSlash = (s: string) => (s.endsWith('/') ? s : `${s}/`);
 
 const addLine = (name: string, rule: string | string[] | number) => {
   if (rule && Array.isArray(rule) && rule.length > 0) {
-    let contents = '';
+    let content = '';
     rule.forEach((item) => {
-      contents += addLine(name, item);
+      content += addLine(name, item);
     });
-    return contents;
+    return content;
   }
 
   const ruleContent = name === 'Allow' || name === 'Disallow' ? encodeURI(rule.toString()) : rule.toString();
@@ -20,33 +20,33 @@ const addLine = (name: string, rule: string | string[] | number) => {
 };
 
 const generatePoliceItem = (item: PolicyItem, index: number) => {
-  let contents = '';
+  let content = '';
 
   if (index !== 0) {
-    contents += '\n';
+    content += '\n';
   }
 
-  contents += addLine('User-agent', item.userAgent);
+  content += addLine('User-agent', item.userAgent);
 
   if (typeof item.disallow === 'string' || Array.isArray(item.disallow)) {
-    contents += addLine('Disallow', item.disallow);
+    content += addLine('Disallow', item.disallow);
   }
 
   if (item.allow) {
-    contents += addLine('Allow', item.allow);
+    content += addLine('Allow', item.allow);
   }
 
   if (item.crawlDelay) {
-    contents += addLine('Crawl-delay', item.crawlDelay);
+    content += addLine('Crawl-delay', item.crawlDelay);
   }
 
   // Move from policy for next master version
   // https://yandex.ru/support/webmaster/controlling-robot/robots-txt.html
   if (item.cleanParam && item.cleanParam.length > 0) {
-    contents += addLine('Clean-param', item.cleanParam);
+    content += addLine('Clean-param', item.cleanParam);
   }
 
-  return contents;
+  return content;
 };
 
 const getSitemapArr = (sitemap: string | string[] | boolean | undefined, finalSiteHref: string, sitemapBaseFileName: string) => {

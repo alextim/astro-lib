@@ -7,7 +7,7 @@ import { Logger, loadConfig, getErrorMessage } from '@/at-utils';
 import { validateOptions } from './validate-options';
 import { getRobotsTxtContent } from './get-robots-txt-content';
 /**
- * `pkg-name.ts` is generated during build from the `name` property of a `package.json`
+ * `pkg-name.ts` is generated during build from the `name` property of the `package.json`
  */
 import { packageName } from './data/pkg-name';
 
@@ -34,18 +34,9 @@ function formatConfigErrorMessage(err: ZodError) {
   return errorList.join('\n');
 }
 
-const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
+const createRobotsTxtIntegration = (options: RobotsTxtOptions = {}): AstroIntegration => {
   let config: AstroConfig;
   return {
-    /**
-     * Only official "@astrojs/*" integrations are currently supported.
-     * To enable 3rd-party integrations, use the "--experimental-integrations" flag.
-     * Breaking changes may occur in this API before Astro v1.0 is released.
-     *
-     * We've been using the 'name' property from 'package.json', ie 'astro-robots-txt'
-     *
-     * Official name should be '@astrojs/robotstxt', but this integration is not official  :).
-     */
     name: packageName,
 
     hooks: {
@@ -55,8 +46,8 @@ const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
 
       'astro:build:done': async ({ dir }) => {
         const namespace = packageName.replace('astro-', '');
-        const external = await loadConfig(namespace, config.root);
-        const merged: RobotsTxtOptions = merge(external || {}, options || {});
+        const external = (await loadConfig(namespace, config.root)) || {};
+        const merged: RobotsTxtOptions = merge(external, options);
         const logger = new Logger(packageName);
         try {
           const opts = validateOptions(config.site, merged);
@@ -92,4 +83,4 @@ const createPlugin = (options?: RobotsTxtOptions): AstroIntegration => {
   };
 };
 
-export default createPlugin;
+export default createRobotsTxtIntegration;

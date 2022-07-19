@@ -6,30 +6,39 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
+- <strong>[Why astro-robots-txt](#why-astro-robots-txt)</strong>
+- <strong>[Installation](#installation)</strong>
+- <strong>[Usage](#usage)</strong>
+- <strong>[Configuration](#configuration)</strong>
+- <strong>[External config file](#external-config-file)</strong>
+- <strong>[Examples](#examples)</strong>
+- <strong>[Inspirations](#inspirations)</strong>
+- <strong>[Contributing](#contributing)</strong>
+- <strong>[Changelog](#changelog)</strong>
+
 ---
 
-The _robots.txt_ file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
-
 ## Why astro-robots-txt?
+
+The _robots.txt_ file informs search engines which pages on your website should be crawled. [See Google's own advice on robots.txt](https://developers.google.com/search/docs/advanced/robots/intro) to learn more.
 
 For Astro project you usually create the _robots.txt_ in a text editor and place it to the `public/` directory.
 In that case you must manually synchronize `site` option in _astro.config.\*_ with `Sitemap:` record in _robots.txt_.  
 It brakes DRY principle.
 
-Sometimes, especially during development, it's needed to prevent your site from being indexed. To achieve this you need place meta tag `<meta name="robots" content="noindex">` in the `<head>` section of pages or add `X-Robots-Tag: noindex` in HTTP header response, then add lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
-Again you do it manually in two separate places.
+Sometimes, especially during development, it's necessary to prevent your site from being indexed. To achieve this you need to place the meta tag `<meta name="robots" content="noindex">` in the `<head>` section of your pages or add `X-Robots-Tag: noindex` to the HTTP response header, then add the lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
+Again you have to do it manually in two different places.
 
-**astro-robots-txt** could help in both two cases on the _robots.txt_ side. See details in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
+**astro-robots-txt** can help in both cases on the _robots.txt_ side. See details in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
 
 ---
 
 ## Installation
 
-There are two ways to add **astro-robots-txt** integration to your Astro project.
+<details>
+  <summary>Quick Install</summary>
 
-### Astro CLI tool
-
-You should run `astro add` command in your project directory. This command after prompt will install required dependencies and apply changes to _astro.config.\*_.
+The experimental `astro add` command-line tool automates the installation for you. Run one of the following commands in a new terminal window. (If you aren't sure which package manager you're using, run the first command.) Then, follow the prompts, and type "y" in the terminal (meaning "yes") for each one.
 
 ```sh
 # Using NPM
@@ -42,26 +51,38 @@ yarn astro add astro-robots-txt
 pnpx astro add astro-robots-txt
 ```
 
-If you run into any hiccups, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-lib/issues).
+Then, restart the dev server by typing `CTRL-C` and then `npm run astro dev` in the terminal window that was running Astro.
+  
+Because this command is new, it might not properly set things up. If that happens, [feel free to log an issue on Astro GitHub](https://github.com/withastro/astro/issues) and try the manual installation steps below.
 
-### Install dependencies manually
+</details>
 
-First, install the **astro-robots-txt** integration like so:
+<details>
+  <summary>Manual Install</summary>
+
+First, install the `astro-robots-txt` package using your package manager. If you're using npm or aren't sure, run this in the terminal:
 
 ```sh
-# Using NPM
 npm install --save-dev astro-robots-txt
-
-# Using Yarn
-yarn add -D astro-robots-txt
-
-# Using PNPM
-pnpm add -D astro-robots-txt
 ```
 
-Then apply this integration to your _astro.config.\*_. All details below in **Getting started**.
+Then, apply this integration to your `astro.config.*` file using the `integrations` property:
 
-## Getting started
+__`astro.config.mjs`__
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+export default {
+  // ...
+  integrations: [robotsTxt()],
+}
+```
+  
+Then, restart the dev server.
+</details>
+
+## Usage
 
 The `astro-robots-txt` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.\*_ using the `site` property.
 
@@ -69,16 +90,15 @@ The `astro-robots-txt` integration requires a deployment / site URL for generati
 
 Then, apply this integration to your _astro.config.\*_ file using the `integrations` property.
 
-**astro.config.mjs**
+__`astro.config.mjs`__
 
 ```js
-// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import robotsTxt from 'astro-robots-txt';
 
 export default defineConfig({
-  // ...
   site: 'https://example.com',
+
   // Important!
   // Only official '@astrojs/*' integrations are currently supported by Astro.
   // Add 'experimental.integrations: true' to make 'astro-robots-txt' working
@@ -90,9 +110,17 @@ export default defineConfig({
 });
 ```
 
+Note that unlike other configuration options, `site` is set in the root `defineConfig` object, rather than inside the `robotsTxt()` call.  
+
 Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _robots.txt_ under `dist/robots.txt`!
 
-The _robots.txt_'s content will be
+> **Warning**
+> If you forget to add a `site`, you'll get a friendly warning when you build, and the `robots.txt` file won't be generated.
+
+<details>
+  <summary>Example of generated `robots.txt` file</summary>
+
+**`robots.txt`**
 
 ```text
 User-agent: *
@@ -100,131 +128,7 @@ Allow: /
 Sitemap: https://example.com/sitemap-index.xml
 ```
 
-You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
-
-## Configuration
-
-## Options
-
-|   Name      |              Type               | Required |     Default     |                                                                      |
-| :---------: | :-----------------------------: | :------: | :-------------: | :------------------------------------------------------------------- |
-|  `host`     |            `String`             |   No     |                 | Host of your site                                                    |
-| `sitemap`   |`Boolean` / `String` / `String[]`|   No     |     `true`      | Resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap-index.xml`.<br/>If `sitemap: false` - no `Sitemap` line in the output.<br/>When the `sitemap` is `String` or `String[]` its values have to be a valid **http** url. Empty strings or other protocols are not allowed. |
-| `policy`    |            `Policy[]`           |   No     | [{ allow: `/`, userAgent: `*` }] | List of `Policy` rules                              |
-| `sitemapBaseFileName`  |  `String`            |   No     | `sitemap-index`| The name of a sitemap file before the file extension (`.xml`). It will be used if the `sitemap` option is `true`.<br/>[@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) and [astro-sitemap](https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap) have `sitemap-index.xml` as their primary output. |
-| `transform` |`(content: String):`<br/> `String`\|`Promise<String>` |  No |    | Called just before writing the text output to disk. Sync or async.   |
-
-### Policy
-
-|     Name     |         Type          | Required |                                              Description                                              |
-| :----------: | :-------------------: | :------: | :---------------------------------------------------------------------------------------------------- |
-| `userAgent`  |       `String`        |   Yes    | You must provide name of user agent or wildcard                                                       |
-|  `disallow`  | `String` / `String[]` |    No    | Disallowed paths to index                                                                             |
-|   `allow`    | `String` / `String[]` |    No    | Allowed paths to index                                                                                |
-| `crawlDelay` |       `Number`        |    No    | Minimum interval (in secs) for the search robot to wait after loading one page, before starting other |
-| `cleanParam` | `String` / `String[]` |    No    | Indicates that the page URL contains parameters that should be ignored when indexing                  |
-
-**Sample of _astro.config.mjs_**
-
-```js
-// astro.config.mjs
-import { defineConfig } from 'astro/config';
-import robotsTxt from 'astro-robots-txt';
-
-export default defineConfig({
-  site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
-  integrations: [
-    robotsTxt({
-      host: 'example.com',
-      sitemap: ['https://example.com/main-sitemap.xml', 'https://example.com/images-sitemap.xml'],
-      policy: [
-        {
-          userAgent: 'Googlebot',
-          allow: '/',
-          disallow: ['/search'],
-          crawlDelay: 2,
-        },
-        {
-          userAgent: 'OtherBot',
-          allow: ['/allow-for-all-bots', '/allow-only-for-other-bot'],
-          disallow: ['/admin', '/login'],
-          crawlDelay: 2,
-        },
-        {
-          userAgent: '*',
-          allow: '/',
-          disallow: '/search',
-          crawlDelay: 10,
-          cleanParam: 'ref /articles/',
-        },
-      ],
-      transform(content) {
-        return `# Some comments before main content.\n# Second line.\n\n${content}`;
-      },
-    }),
-  ],
-});
-```
-
-if you want to get a _robots.txt_ without `Sitemap: ...` record please set the `sitemap` option to `false`.
-
-```js
-// astro.config.mjs
-import { defineConfig } from 'astro/config';
-import robotsTxt from 'astro-robots-txt';
-
-export default defineConfig({
-  // ...
-  site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
-  integrations: [
-    robotsTxt({
-      sitemap: false,
-      // ...
-    }),
-  ],
-});
-```
-
-## Using Configuration Files
-
-You could configure the integration with an external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
-
-The external config must contain the default export statement:
-
-```js
-// ESM
-export default {
-  ...
-};
-```
-
-or
-
-```js
-// CommonJS
-module.exports = {
-  ...
-};
-```
-
-:exclamation: The current version of integration doesn't support typescript configs.
-
-### How does the integration internally resolve a config?
-
-| Options parameter provided? | External config exists? | Result                                           |
-| :-------------------------- | :---------------------: | :----------------------------------------------- |
-| No                          |           No            | Default config used                              |
-| Yes                         |           No            | Options parameter used                           |
-| No                          |           Yes           | External config used                             |
-| Yes                         |           Yes           | External config is merged with options parameter |
-
-The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
+</details>
 
 :exclamation: Important Notes
 
@@ -250,10 +154,282 @@ Or use the `--experimental-integrations` flag for build command.
 astro build --experimental-integrations
 ```
 
-[astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
+## Configuration
 
-**Inspirations:**
+To configure this integration, pass an object to the `robotsTxt()` function call in `astro.config.mjs`.
+
+__`astro.config.mjs`__
+
+```js
+...
+export default defineConfig({
+  integrations: [robotsTxt({
+    transform: ...
+  })]
+});
+```
+
+<details>
+  <summary><strong>sitemap</strong></summary>
+
+|              Type               | Required |  Default value  |
+| :-----------------------------: | :------: | :-------------: |
+|`Boolean` / `String` / `String[]`|   No     |     `true`      |
+
+If you omit `sitemap` option or its value is `true`, the resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap-index.xml`.  
+
+If you want to get a _robots.txt_ without `Sitemap: ...` record please set the `sitemap` option to `false`.
+
+__`astro.config.mjs`__
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    robotsTxt({
+      sitemap: false,
+    }),
+  ],
+};
+```
+
+When the `sitemap` is `String` or `String[]` its values should be a valid URL. Only **http** or **https** protocols are allowed. 
+
+__`astro.config.mjs`__
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    robotsTxt({
+      sitemap: [
+        'https://example.com/first-sitemap.xml',
+        'http://another.com/second-sitemap.xml',
+      ],
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>sitemapBaseFileName</strong></summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| `String`|   No     | `sitemap-index` |
+
+Sitemap file name before file extension (`.xml`). It will be used if the `sitemap` option is `true` or omitted.
+
+:information: [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) and [astro-sitemap](https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap) integrations have the `sitemap-index.xml` as their primary output.
+
+__`astro.config.mjs`__
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    robotsTxt({
+      sitemapBaseFileName: 'custom-sitemap',
+    }),
+  ],
+};
+```
+
+</details>
+
+
+<details>
+  <summary><strong>host</strong></summary>
+
+| Type     | Required |  Default value  |
+| :------: | :------: | :-------------: |
+| `String` |   No     |  `undefined`    |
+
+
+Some crawlers (Yandex) support a `Host` directive, allowing websites with multiple mirrors to specify their preferred domain.
+
+__`astro.config.mjs`__
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    robotsTxt({
+      host: 'your-domain-name.com',
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>transform</strong></summary>
+
+| Type                       | Required |  Default value  |
+| :------------------------: | :------: | :-------------: |
+| `(content: String):String` |   No     |  `undefined`    |
+
+Sync or async function called just before writing the text output to disk.
+
+__`astro.config.mjs`__
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    robotsTxt({
+      transform(content) {
+        return `# Some comments before main content.\n# Second line.\n\n${content}`;        
+      },
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>policy</strong></summary>
+
+| Type       | Required |  Default value                      |
+| :--------: | :------: | :---------------------------------: |
+| `Policy[]` |   No     |  [{ allow: `/`, userAgent: `*` }]   |
+
+List of `Policy` rules
+
+### Policy
+
+|     Name     |         Type          | Required |                                              Description                                              |
+| :----------: | :-------------------: | :------: | :---------------------------------------------------------------------------------------------------- |
+| `userAgent`  |       `String`        |   Yes    | You must provide a name of the of the automatic client (search engine crawler). Wildcards are allowed.|
+|  `disallow`  | `String` / `String[]` |    No    | Disallowed paths for crawling                                                                         |
+|   `allow`    | `String` / `String[]` |    No    | Allowed paths for crawling                                                                            |
+| `crawlDelay` |       `Number`        |    No    | Minimum interval (in secs) for the crawler to wait after loading one page, before starting other |
+| `cleanParam` | `String` / `String[]` |    No    | Indicates that the page's URL contains parameters that should be ignored during crawling              |
+
+__`astro.config.mjs`__
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    robotsTxt({
+      policy: [
+        {
+          userAgent: 'Googlebot',
+          allow: '/',
+          disallow: ['/search'],
+          crawlDelay: 2,
+        },
+        {
+          userAgent: 'OtherBot',
+          allow: ['/allow-for-all-bots', '/allow-only-for-other-bot'],
+          disallow: ['/admin', '/login'],
+          crawlDelay: 2,
+        },
+        {
+          userAgent: '*',
+          allow: '/',
+          disallow: '/search',
+          crawlDelay: 10,
+          cleanParam: 'ref /articles/',
+        },
+      ],
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>External config file</strong></summary>
+You could configure the integration with an external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+
+The external config must contain the default export statement:
+
+```js
+// ESM
+export default {
+  ...
+};
+```
+
+or
+
+```js
+// CommonJS
+module.exports = {
+  ...
+};
+```
+
+:exclamation: The current version of the integration doesn't support typescript configs.
+
+### How does the integration internally resolve a config?
+
+| Options parameter provided? | External config exists? | Result                                           |
+| :-------------------------- | :---------------------: | :----------------------------------------------- |
+| No                          |           No            | Default config used                              |
+| Yes                         |           No            | Options parameter used                           |
+| No                          |           Yes           | External config used                             |
+| Yes                         |           Yes           | External config is merged with options parameter |
+
+The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
+</details>
+
+## Examples
+
+| Example       | Source                                                                                 | Playground                                                                                                  |
+| ------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| basic         | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/basic)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/robots-txt/basic)     |
+| advanced      | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced)  | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/robots-txt/advanced)  |
+
+## Inspirations
 
 - [gatsby-plugin-robots-txt](https://github.com/mdreizin/gatsby-plugin-robots-txt)
 - [generate-robotstxt](https://github.com/itgalaxy/generate-robotstxt)
 - [is-valid-hostname](https://github.com/miguelmota/is-valid-hostname)
+
+## Contributing
+
+You're welcome to submit an issue or PR!
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a history of changes to this integration.
+
+[astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
