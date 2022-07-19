@@ -156,7 +156,7 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 | `xslUrl`       |   `String`   |    No    |         | Absolute URL of XSL file to style XML or transform it to other format. Ignored by search engines. |
 | `xmlns`        |   `NSArgs`   |    No    |         | Set the XML namespaces by xmlns attributes in `<urlset>` element.  |
 | `lastmodDateOnly` | `Boolean` |    No    |         | If it's `true` the XML output will contain a date part only.                                    |
-| `createLinkInHead`| `Boolean` |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It could impact on a build time for large sites. |
+| `createLinkInHead`| `Boolean` |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It can impact build time for large sites. |
 | **i18n**       |           `object`         |    No    |         |                                                                                                 |
 | `defaultLocale`|           `String`         |   Yes    |         | Its value must exist as one of the `locales` keys.                                             |
 | `locales`      | `Record<String, String>`   |   Yes    |         | Key/value - pairs.<br/>The key is used to look up the locale part of the page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
@@ -319,7 +319,7 @@ Let's have the following integration config:
 
 ```js
 ...
-  canonicalURL: 'https://example.com', // You could provide the `site` option in astro.config instead of `canonicalURL`.
+  canonicalURL: 'https://example.com', // You should provide the `site` option in astro.config instead of `canonicalURL`.
   i18n: {
     defaultLocale: 'en',   // All urls that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`
     locales: {
@@ -365,7 +365,7 @@ The sitemap content will be:
 
 ## Using Configuration Files
 
-You could configure the integration with an external file `sitemap.config.*` (`js`, `cjs`, `mjs`). Put it to the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+You can configure the integration using the external file `sitemap.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
 The external config must contain the default export statement:
 
@@ -385,7 +385,7 @@ module.exports = {
 };
 ```
 
-:exclamation: The current version of integration doesn't support typescript configs.
+:exclamation: The current version of the integration doesn't support typescript configs.
 
 ### How does the integration internally resolve a config?
 

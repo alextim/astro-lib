@@ -62,4 +62,4 @@
 
 ### Patch Changes
 
-- 5b45607: fix: pluginOptions could be set to `undefined`
+- 5b45607: fix: pluginOptions can be set to `undefined`

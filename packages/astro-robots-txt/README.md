@@ -12,9 +12,9 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 - <strong>[Configuration](#configuration)</strong>
 - <strong>[External config file](#external-config-file)</strong>
 - <strong>[Examples](#examples)</strong>
-- <strong>[Inspirations](#inspirations)</strong>
 - <strong>[Contributing](#contributing)</strong>
 - <strong>[Changelog](#changelog)</strong>
+- <strong>[Inspirations](#inspirations)</strong>
 
 ---
 
@@ -85,8 +85,6 @@ Then, restart the dev server.
 ## Usage
 
 The `astro-robots-txt` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.\*_ using the `site` property.
-
-:exclamation: Provide the `experimental` property to your _astro.config.\*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true`.
 
 Then, apply this integration to your _astro.config.\*_ file using the `integrations` property.
 
@@ -232,7 +230,7 @@ export default {
 
 Sitemap file name before file extension (`.xml`). It will be used if the `sitemap` option is `true` or omitted.
 
-:information: [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) and [astro-sitemap](https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap) integrations have the `sitemap-index.xml` as their primary output.
+:grey_exclamation: [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) and [astro-sitemap](https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap) integrations have the `sitemap-index.xml` as their primary output. That is why the default value of `sitemapBaseFileName` is set to `sitemap-index`.
 
 __`astro.config.mjs`__
 
@@ -307,7 +305,7 @@ export default {
   integrations: [
     robotsTxt({
       transform(content) {
-        return `# Some comments before main content.\n# Second line.\n\n${content}`;        
+        return `# Some comments before the main content.\n# Second line.\n\n${content}`;        
       },
     }),
   ],
@@ -329,11 +327,11 @@ List of `Policy` rules
 
 |     Name     |         Type          | Required |                                              Description                                              |
 | :----------: | :-------------------: | :------: | :---------------------------------------------------------------------------------------------------- |
-| `userAgent`  |       `String`        |   Yes    | You must provide a name of the of the automatic client (search engine crawler). Wildcards are allowed.|
+| `userAgent`  |       `String`        |   Yes    | You must provide a name of the automatic client (search engine crawler). Wildcards are allowed.|
 |  `disallow`  | `String` / `String[]` |    No    | Disallowed paths for crawling                                                                         |
 |   `allow`    | `String` / `String[]` |    No    | Allowed paths for crawling                                                                            |
 | `crawlDelay` |       `Number`        |    No    | Minimum interval (in secs) for the crawler to wait after loading one page, before starting other |
-| `cleanParam` | `String` / `String[]` |    No    | Indicates that the page's URL contains parameters that should be ignored during crawling              |
+| `cleanParam` | `String` / `String[]` |    No    | Indicates that the page's URL contains parameters that should be ignored during crawling.<br/>Maximum string length is limited to 500.|
 
 __`astro.config.mjs`__
 
@@ -375,9 +373,9 @@ export default {
 
 </details>
 
-<details>
-  <summary><strong>External config file</strong></summary>
-You could configure the integration with an external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+## External config file
+
+You can configure the integration using the external file `robots-txt.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
 The external config must contain the default export statement:
 
@@ -409,7 +407,6 @@ module.exports = {
 | Yes                         |           Yes           | External config is merged with options parameter |
 
 The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
-</details>
 
 ## Examples
 
@@ -417,12 +414,6 @@ The external configuration usage example is in the demo [repo](https://github.co
 | ------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | basic         | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/basic)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/robots-txt/basic)     |
 | advanced      | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced)  | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/robots-txt/advanced)  |
-
-## Inspirations
-
-- [gatsby-plugin-robots-txt](https://github.com/mdreizin/gatsby-plugin-robots-txt)
-- [generate-robotstxt](https://github.com/itgalaxy/generate-robotstxt)
-- [is-valid-hostname](https://github.com/miguelmota/is-valid-hostname)
 
 ## Contributing
 
@@ -433,3 +424,10 @@ You're welcome to submit an issue or PR!
 See [CHANGELOG.md](CHANGELOG.md) for a history of changes to this integration.
 
 [astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
+
+
+## Inspirations
+
+- [gatsby-plugin-robots-txt](https://github.com/mdreizin/gatsby-plugin-robots-txt)
+- [generate-robotstxt](https://github.com/itgalaxy/generate-robotstxt)
+- [is-valid-hostname](https://github.com/miguelmota/is-valid-hostname)
