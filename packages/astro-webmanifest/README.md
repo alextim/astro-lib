@@ -305,7 +305,6 @@ icons: [
 
 </details>
 
-:bulb: If icon entry `sizes` property has value `any` or contains more then one size (`96x96 128x128`) in that case such entry will be excluded from automatic generation.
 
 ## Configuration
 
@@ -364,6 +363,9 @@ icons: [
 | `sizes`   | `String` |    No    | Space-separated image dimensions. Syntax on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-sizes) |
 | `type`    | `String` |    No    | Media type of the image                                                                                                      |
 | `purpose` | `String` |    No    | Space separated list of image purposes (`IconPurpose` type). See on [W3C](https://w3c.github.io/manifest/#purpose-member)    |
+
+:bulb: If icon entry `sizes` property has value `any` or contains more then one size (`96x96 128x128`) in that case such entry will be excluded from automatic generation.  
+
 
 For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
 Also you can find the detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
