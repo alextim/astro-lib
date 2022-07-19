@@ -328,7 +328,7 @@ List of `Policy` rules
 
 |     Name     |         Type          | Required |                                              Description                                              |
 | :----------: | :-------------------: | :------: | :---------------------------------------------------------------------------------------------------- |
-| `userAgent`  |       `String`        |   Yes    | You must provide a name of the automatic client (search engine crawler). Wildcards are allowed.|
+| `userAgent`  |       `String`        |   Yes    | You must provide a name of the automatic client (search engine crawler).<br/>Wildcards are allowed.|
 |  `disallow`  | `String` / `String[]` |    No    | Disallowed paths for crawling                                                                         |
 |   `allow`    | `String` / `String[]` |    No    | Allowed paths for crawling                                                                            |
 | `crawlDelay` |       `Number`        |    No    | Minimum interval (in secs) for the crawler to wait after loading one page, before starting other |

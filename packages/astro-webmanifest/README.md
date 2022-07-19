@@ -6,7 +6,7 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-- <strong>[Why astro-robots-txt](#why-astro-robots-txt)</strong>
+- <strong>[Why astro-webmanifest](#why-astro-webmanifest)</strong>
 - <strong>[Installation](#installation)</strong>
 - <strong>[Usage](#usage)</strong>
 - <strong>[Generation modes](#generation-modes)</strong>
