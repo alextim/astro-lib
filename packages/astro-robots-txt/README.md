@@ -320,7 +320,7 @@ export default {
 
 | Type       | Required |  Default value                      |
 | :--------: | :------: | :---------------------------------: |
-| `Policy[]` |   No     |  [{ allow: `/`, userAgent: `*` }]   |
+| `Policy[]` |   No     |  `[{ allow: '/', userAgent: '*' }]` |
 
 List of `Policy` rules
 
