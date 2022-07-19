@@ -34,8 +34,6 @@ This integration provides numerous features beyond manifest configuration to mak
 
 Each of these features has extensive configuration available so you are always in control.
 
-See usage in the demo repos: [basic](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/basic), [advanced](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced) and [i18n](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
-
 ---
 
 ## Installation
