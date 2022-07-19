@@ -16,7 +16,6 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 - <strong>[Examples](#examples)</strong>
 - <strong>[Contributing](#contributing)</strong>
 - <strong>[Changelog](#changelog)</strong>
-- <strong>[Inspirations](#inspirations)</strong>
 ---
 
 ## Why astro-webmanifest?
@@ -200,7 +199,7 @@ Now, [build your site for production](https://docs.astro.build/en/reference/cli-
 </details>
 
 <details>
-  <summary>Iserted HTML in the `&#60;head&#62;` section of every generated page</summary>
+  <summary>Iserted HTML in the &#60;head&#62; section of every generated page</summary>
 
 ```html
 <link rel="icon" href="/favicon-32x32.png" type="image/png" />
