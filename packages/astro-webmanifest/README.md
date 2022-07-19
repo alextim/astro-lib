@@ -311,7 +311,7 @@ export default {
 
 If you don't provide `icon` option, you will be fully responsible for manifest configuration.
 
-You should create all icons and favicons manually and put them to the `public` folder.
+You should create all icons and favicons manually and put them in a `public` folder.
 
 __`astro.config.mjs`__
 
