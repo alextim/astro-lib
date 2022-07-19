@@ -6,11 +6,23 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
+- <strong>[Why astro-robots-txt](#why-astro-robots-txt)</strong>
+- <strong>[Installation](#installation)</strong>
+- <strong>[Usage](#usage)</strong>
+- <strong>[Generation modes](#generation-modes)</strong>
+- <strong>[Configuration](#configuration)</strong>
+- <strong>[Localization](#localization)</strong>
+- <strong>[External config file](#external-config-file)</strong>
+- <strong>[Examples](#examples)</strong>
+- <strong>[Contributing](#contributing)</strong>
+- <strong>[Changelog](#changelog)</strong>
+- <strong>[Inspirations](#inspirations)</strong>
 ---
 
-The _web app manifest_ provides information about a [Progressive Web App (PWA)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) in a JSON text file. [See Google's advice on web app manifest](https://web.dev/add-manifest/) to learn more. Current standard for the manifest is on [W3C](https://w3c.github.io/manifest/). See also on [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
-
 ## Why astro-webmanifest?
+
+The _web app manifest_ provides information about a [Progressive Web App (PWA)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) in a JSON text file. [See Google's advice on web app manifest](https://web.dev/add-manifest/) to learn more. Current standard for the manifest is on [W3C](https://w3c.github.io/manifest/). See also on [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).  
+
 
 This integration provides numerous features beyond manifest configuration to make your life easier, they are:
 
@@ -28,11 +40,10 @@ See usage in the demo repos: [basic](https://github.com/alextim/astro-lib/tree/m
 
 ## Installation
 
-There are two main ways to add **astro-webmanifest** integration to your Astro project.
+<details>
+  <summary>Quick Install</summary>
 
-### Astro CLI tool
-
-You should run `astro add` command in your project directory. This command after prompt will install required dependencies and apply changes to _astro.config.\*_.
+The experimental `astro add` command-line tool automates the installation for you. Run one of the following commands in a new terminal window. (If you aren't sure which package manager you're using, run the first command.) Then, follow the prompts, and type "y" in the terminal (meaning "yes") for each one.  
 
 ```sh
 # Using NPM
@@ -45,56 +56,75 @@ yarn astro add astro-webmanifest
 pnpx astro add astro-webmanifest
 ```
 
-If you run into any hiccups, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-lib/issues).
+Then, restart the dev server by typing `CTRL-C` and then `npm run astro dev` in the terminal window that was running Astro.
+  
+Because this command is new, it might not properly set things up. If that happens, [log an issue on Astro GitHub](https://github.com/withastro/astro/issues) and try the manual installation steps below.
 
-### Install dependencies manually
+</details>  
 
-First, install the **astro-webmanifest** integration like so:
+<details>
+  <summary>Manual Install</summary>
+
+First, install the `astro-webmanifest` package using your package manager. If you're using npm or aren't sure, run this in the terminal:
 
 ```sh
-# Using NPM
 npm install --save-dev astro-webmanifest
-
-# Using Yarn
-yarn add -D astro-webmanifest
-
-# Using PNPM
-pnpm add -D astro-webmanifest
 ```
 
-Then apply this integration to your _astro.config.\*_. All details below in **Getting started**.
+Then, apply this integration to your `astro.config.*` file using the `integrations` property:
 
-## Getting started
-
-The `astro-webmanifest` requires the options parameter to configure the integration.
-
-:exclamation: Provide the `experimental` property to your _astro.config.\*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true`.
-
-Then, apply this integration to your _astro.config.\*_ by using the `integrations` property.
-
-The sample configuration is below:
-
-**astro.config.mjs**
+__`astro.config.mjs`__
 
 ```js
-// astro.config.mjs
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  // ...
+  integrations: [
+    webmanifest({
+      ...
+    }),
+  ],
+};
+```
+  
+Then, restart the dev server.
+</details>
+
+## Usage
+
+The `astro-webmanifest` integration requires the configuration object with at least the `name` option parameter to configure.
+
+__`astro.config.mjs`__
+
+
+```js
 import { defineConfig } from 'astro/config';
 import webmanifest from 'astro-webmanifest';
 
 export default defineConfig({
   // ...
-  // Important!
-  // Only official '@astrojs/*' integrations are currently supported by Astro.
-  // Add 'experimental.integrations: true' to make 'astro-webmanifest' working
-  // with 'astro build' command.
+  /**
+   *  Important!
+   * Only official '@astrojs/*' integrations are currently supported by Astro.
+   * Add 'experimental.integrations: true' to make 'astro-webmanifest' working
+   * with 'astro build' command.
+   **/
   experimental: {
     integrations: true,
   },
   integrations: [
     webmanifest({
+      /**
+       * required
+       **/
+      name: 'Your App name',
+
+      /**
+       * optional
+       **/
       icon: 'src/images/your-icon.svg', // source for favicon & icons
 
-      name: 'Your App name', // required
       short_name: 'App',
       description: 'Here is your app description',
       start_url: '/',
@@ -106,11 +136,14 @@ export default defineConfig({
 });
 ```
 
-Next put a source file for icons generation to the `src/images` folder.
+Next put a source file `your-icon.svg` for icons generation to the `src/images` folder. This is optional.  
 
 Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _web manifest_, all icons, favicons under `dist/` folder!
 
-The _manifest.webmanifest_'s content will be:
+<details>
+  <summary>Example of generated `manifest.webmanifest` file</summary>
+
+**`manifest.webmanifest`**
 
 ```json
 {
@@ -166,7 +199,10 @@ The _manifest.webmanifest_'s content will be:
 }
 ```
 
-The integration inserts into `<head>` section of every generated page the following html tags:
+</details>
+
+<details>
+  <summary>Iserted HTML in the `<head>` section of every generated page</summary>
 
 ```html
 <link rel="icon" href="/favicon-32x32.png" type="image/png" />
@@ -175,13 +211,37 @@ The integration inserts into `<head>` section of every generated page the follow
 <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous" />
 ```
 
-You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
+</details>
+
+:exclamation: Only official **@astrojs/\*** integrations are currently supported by Astro.
+
+There are two possibilities to make **astro-webmanifest** integration working with current version of Astro.
+
+Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
+
+__`astro.config.mjs`__
+
+```js
+export default {
+  // ...
+  experimental: {
+    integrations: true,
+  },
+};
+```
+
+Or use the `--experimental-integrations` flag for the build command.
+
+```sh
+astro build --experimental-integrations
+```
 
 ## Generations modes
 
 There are 3 usage modes of `astro-webmanifest` integration: auto, hybrid and manual.
 
-### Automatic mode
+<details>
+  <summary>Automatic mode</summary>
 
 For the most users - you need only the `icon` option to generate all required icons and favicons.
 
@@ -192,7 +252,10 @@ icon: 'src/images/your-icon.svg',
 ...
 ```
 
-### Hybrid mode
+</details>
+
+<details>
+  <summary>Hybrid mode</summary>
 
 Additionally to the `icon` option you need to provide the `icons` array as a template to generate required icons.
 
@@ -216,7 +279,10 @@ icons: [
 ...
 ```
 
-### Manual mode
+</details>
+
+<details>
+  <summary>Manual mode</summary>
 
 If you don't provide `icon` option, you will be fully responsible for manifest configuration.
 
@@ -239,9 +305,11 @@ icons: [
 ...
 ```
 
+</details>
+
 :bulb: If icon entry `sizes` property has value `any` or contains more then one size (`96x96 128x128`) in that case such entry will be excluded from automatic generation.
 
-## Options
+## Configuration
 
 | Name             |              Type              | Required |   Default     | Description                                                                                     |
 | :--------------- | :----------------------------: | :----: | :-------------: | :---------------------------------------------------------------------------------------------- |
@@ -266,8 +334,8 @@ icons: [
 
 | Name                          |          Type          | Required | Description                                                                                                                     |
 | :---------------------------- | :--------------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------ |
-| `icon`                        |        `String`        |    No    | See usage in **Generation modes** section.                                                                                      |
-| `icons`                       |        `Icon[]`        |    No    | See usage in **Generation modes** section.                                                                                      |
+| `icon`                        |        `String`        |    No    | See usage in [Generation modes](#generation-modes) section.                                                                     |
+| `icons`                       |        `Icon[]`        |    No    | See usage in [Generation modes](#generation-modes) section.                                                                     |
 |                               |                        |          |                                                                                                                                 |
 | `name`                        |        `String`        |   Yes    | You must provide the name of your app.                                                                                          |
 | `short_name`                  |        `String`        |    No    |                                                                                                                                 |
@@ -300,7 +368,7 @@ icons: [
 | `purpose` | `String` |    No    | Space separated list of image purposes (`IconPurpose` type). See on [W3C](https://w3c.github.io/manifest/#purpose-member)    |
 
 For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
-Also you can find detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+Also you can find the detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 
 Demo with advanced configuration is in this [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).
 
@@ -384,7 +452,7 @@ In this configuration the default `en` language and the `fr` language will have 
 
 You can explore a localization usage in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
 
-## Using Configuration Files
+## External config file
 
 You can configure the integration using the external file `webmanifest.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
@@ -406,8 +474,6 @@ module.exports = {
 };
 ```
 
-:exclamation: The current version of the integration doesn't support typescript configs.
-
 ### How does the integration internally resolve a config?
 
 | Options parameter provided? | External config exists? | Result                                           |
@@ -417,26 +483,32 @@ module.exports = {
 | No                          |           Yes           | External config used                             |
 | Yes                         |           Yes           | External config is merged with options parameter |
 
-The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).
+The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).  
 
-:exclamation: Only official **@astrojs/\*** integrations are currently supported by Astro.
+:exclamation: The current version of the integration doesn't support typescript configs.
 
-There are two possibilities to make **astro-webmanifest** integration working with current version of Astro.
+## Examples
 
-Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
+| Example       | Source                                                                                 | Playground                                                                                                  |
+| ------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `robots.txt`  |                                                                                        |                                                                                                             |
+| basic         | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/basic)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/robots-txt/basic)     |
+| advanced      | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced)  | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/robots-txt/advanced)  |
+| `webmanifest` |                                                                                        |                                                                                                             |
+| basic         | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/basic)    | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/basic)    |
+| advanced      | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced) | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/advanced) |
+| i18n          | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/webmanifest/i18n)     |
+| `sitemap`     |                                                                                        |                                                                                                             |
+| basic         | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/basic)        | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/basic)        |
+| advanced      | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/advanced)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/advanced)     |
+| i18n          | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/i18n)         | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/i18n)         |
 
-```js
-// astro.config.mjs
-export default defineConfig({
-  // ...
-  experimental: {
-    integrations: true,
-  },
-});
-```
+## Contributing
 
-Or use the `--experimental-integrations` flag for build command.
+You're welcome to submit an issue or PR!
 
-```sh
-astro build --experimental-integrations
-```
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a history of changes to this integration.
+
+[astro-integration]: https://docs.astro.build/en/guides/integrations-guide/

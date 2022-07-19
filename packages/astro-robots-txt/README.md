@@ -53,7 +53,7 @@ pnpx astro add astro-robots-txt
 
 Then, restart the dev server by typing `CTRL-C` and then `npm run astro dev` in the terminal window that was running Astro.
   
-Because this command is new, it might not properly set things up. If that happens, [feel free to log an issue on Astro GitHub](https://github.com/withastro/astro/issues) and try the manual installation steps below.
+Because this command is new, it might not properly set things up. If that happens, [log an issue on Astro GitHub](https://github.com/withastro/astro/issues) and try the manual installation steps below.
 
 </details>
 
@@ -136,17 +136,18 @@ There are two possibilities to make **astro-robots-txt** integration working wit
 
 Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
 
+__`astro.config.mjs`__
+
 ```js
-// astro.config.mjs
-export default defineConfig({
+export default {
   // ...
   experimental: {
     integrations: true,
   },
-});
+};
 ```
 
-Or use the `--experimental-integrations` flag for build command.
+Or use the `--experimental-integrations` flag for the build command.
 
 ```sh
 astro build --experimental-integrations
@@ -395,8 +396,6 @@ module.exports = {
 };
 ```
 
-:exclamation: The current version of the integration doesn't support typescript configs.
-
 ### How does the integration internally resolve a config?
 
 | Options parameter provided? | External config exists? | Result                                           |
@@ -407,6 +406,8 @@ module.exports = {
 | Yes                         |           Yes           | External config is merged with options parameter |
 
 The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
+
+:exclamation: The current version of the integration doesn't support typescript configs.
 
 ## Examples
 
