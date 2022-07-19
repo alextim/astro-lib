@@ -289,7 +289,7 @@ export default {
 
 | Type                       | Required |  Default value  |
 | :------------------------: | :------: | :-------------: |
-| `(content: String):String` |   No     |  `undefined`    |
+| `(content: String): String`<br/>or<br/>`(content: String): Promise<String>` |   No     |  `undefined`    |
 
 Sync or async function called just before writing the text output to disk.
 
