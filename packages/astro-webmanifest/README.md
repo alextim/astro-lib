@@ -91,7 +91,7 @@ Then, restart the dev server.
 
 ## Usage
 
-The `astro-webmanifest` integration requires the configuration object with at least the `name` option parameter to configure.
+The `astro-webmanifest` integration requires the config object to have at least a `name` option.
 
 __`astro.config.mjs`__
 
