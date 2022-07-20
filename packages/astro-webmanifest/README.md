@@ -346,14 +346,10 @@ export default {
 
 ## Configuration
 
-The config object extends the `Webmanifest` type and additionally has `config` and `locales` properties as an object.
+The config object extends the `Webmanifest` type and optionally has `config` and `locales` properties as an object.
 
+### `config` property
 <details>
-  <summary>config</summary>
-|  Type   | Required | 
-| :-----: | :------: |
-| `Object`|   No     | 
-  <details>
     <summary>outfile</summary>
 
 |  Type   | Required |  Default value  |
@@ -414,6 +410,7 @@ export default {
 ```
 
   </details>
+
   <details>
     <summary>indent</summary>
 
@@ -448,6 +445,7 @@ export default {
 ```
 
   </details>  
+
   <details>
     <summary>eol</summary>
 
@@ -482,6 +480,7 @@ export default {
 ```
 
   </details>
+
   <details>
     <summary>createFavicon</summary>
 
@@ -549,9 +548,11 @@ export default {
   ],
 };  
 ```
+
 :exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
 
   </details>
+
   <details>
     <summary>insertThemeColorMeta</summary>
 
@@ -588,6 +589,7 @@ export default {
 :exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
 
   </details>
+
   <details>
     <summary>insertManifestLink</summary>
 
@@ -620,6 +622,7 @@ export default {
 
 :exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
   </details>
+
   <details>
     <summary>crossOrigin</summary>
 
@@ -653,6 +656,7 @@ export default {
 ```
 
   </details>
+
   <details>
     <summary>insertAppleTouchLinks</summary>
 
@@ -690,6 +694,7 @@ export default {
 
 :exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
   </details>
+
   <details>
     <summary>iconPurpose</summary>
 
@@ -728,14 +733,10 @@ export default {
 
 :exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
   </details>
-  <summary>locales</summary>
-|  Type   | Required |
-| :-----: | :------: |
-| `Locales`|   No     |
+
+### `locales` property
 
 `Record<string, Webmanifest>` - key/object pairs. See usage in [Localization](#localization) section.
-
-</details>
 
 ### `Webmanifest` type
 
