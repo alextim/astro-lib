@@ -344,10 +344,9 @@ export default {
 
 </details>
 
-
 ## Configuration
 
-The config object implements the `Webmanifest` interface and additionally has `config` and `locales` properties as an object.
+The config object extends the `Webmanifest` type and additionally has `config` and `locales` properties as an object.
 
 <details>
   <summary>config</summary>
