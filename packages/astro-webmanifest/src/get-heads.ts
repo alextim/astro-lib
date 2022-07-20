@@ -41,8 +41,7 @@ export const getHeads = (opts: WebmanifestOptions, base: string, results: { loca
     }
 
     if (headComponents.length > 0) {
-      const data = headComponents.map((item) => cfg?.indent + item + cfg?.eol).join('');
-      heads[locale] = data;
+      heads[locale] = headComponents.map((item) => cfg?.indent + item + cfg?.eol).join('');
     }
   }
 
