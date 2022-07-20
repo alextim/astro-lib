@@ -385,37 +385,6 @@ export default {
 
 |  Type   | Required |  Default value  |
 | :-----: | :------: | :-------------: |
-| `String`|   No     | 4 spaces |
-
-Leading characters for every line in `<head>` to make output more readable.
-
-__`astro.config.mjs`__
-
-```js
-import webmanifest from 'astro-webmanifest';
-
-export default {
-  experimental: {
-    integrations: true,
-  },
-  integrations: [
-    webmanifest({
-      name: 'Your app name',
-      config: {
-        indent: '',
-      },
-    }),
-  ],
-};  
-```
-
-  </details>
-
-  <details>
-    <summary>indent</summary>
-
-|  Type   | Required |  Default value  |
-| :-----: | :------: | :-------------: |
 | `String`|   No     | `    ` (4 spaces) |
 
 Leading characters for every line in `<head>` to make output more readable.
