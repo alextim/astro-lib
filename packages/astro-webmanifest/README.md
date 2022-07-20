@@ -199,7 +199,7 @@ Now, [build your site for production](https://docs.astro.build/en/reference/cli-
 </details>
 
 <details>
-  <summary>Iserted HTML in the &#60;head&#62; section of every generated page</summary>
+  <summary>Inserted HTML in the &#60;head&#62; section of every generated page</summary>
 
 ```html
 <link rel="icon" href="/favicon-32x32.png" type="image/png" />
@@ -340,7 +340,6 @@ export default {
     }),
   ],
 };
-...
 ```
 
 </details>
@@ -348,30 +347,402 @@ export default {
 
 ## Configuration
 
-| Name             |              Type              | Required |   Default     | Description                                                                                     |
-| :--------------- | :----------------------------: | :----: | :-------------: | :---------------------------------------------------------------------------------------------- |
-| `icon`           |            `String`            |   No  |                  | This is a source for automatically generated favicon and icons. It's a part of `Webmanifest` type.<br/>Format: JPEG, PNG, WebP, TIFF, GIF or SVG<br/>Size: at least as big as the largest icon being generated (512x512 by default).<br/>Form: preferably square, otherwise the results will be padded with transparent bars to be square.<br/><br/>If the `icon` is empty - no automatic icon generation. |
-| **`config`**     |                                |   No  |                  |                                                                                                 |
-| - `iconPurpose`  |         `IconPurpose[]`        |   No  |                  | Array of `badge`\|`maskable`\|`any`\|`monochrome`.<br/>If provided it will be appended to the `purpose` property of generated icons. |
-| - `createFavicon`|            `Boolean`           |   No  |    `true`        | Enable (if `icon` is not empty) or disable a favicon generation                                 |
-| - `insertFaviconLinks` |      `Boolean`           |   No  |    `true`        | Enable (if `icon` is not empty) or disable a favicon links in `<head>`                          |
-| - `insertThemeColorMeta`|      `Boolean`          |   No  |   `true`         | Enable (if `theme_color` is not empty) or disable `meta` in `<head>`                            |
-| - `insertManifestLink`  |      `Boolean`          |   No  |   `true`         | Enable or disable a manifest link in `<head>`                                                   |
-| - `crossOrigin`   | `anonymous`\|`use-credentials`|  No   | `anonymus`       | `crossorigin` attribute for the manifest link in `<head>`. More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)|
-| - `insertAppleTouchLinks`|      `Boolean`         |  No   | `false`          | Enable or disable `apple-touch-icon` links in `<head>`.<br/>iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed.  |
-| - `indent`              |       `String`          |  No   | 4 spaces         | Leading characters for every line in `<head>` to make output more readable.                      |
-| - `eol`                 |       `String`          |  No   |   `\n`           | Trailing characters for every line in `<head>` to make output more readable.<br/>Set it to `""` to save few bytes on html output.                                                                                                                                                                                                                                                                          |
-| - `outfile`             |       `String`          |  No   | `manifest.webmanifest` | Template name for generated manifest file.                                                |
-|                         |                         |       |                        |                                                                                           |
-| **`locales`**           |       `Locales`         |  No   |                        | `Record<string, Webmanifest>` - key/object pairs. See usage in **Localization** section.  |
+The config object implements the `Webmanifest` interface and additionally has `config` and `locales` properties as an object.
+
+<details>
+  <summary>config</summary>
+|  Type   | Required | 
+| :-----: | :------: |
+| `Object`|   No     | 
+  <details>
+    <summary>outfile</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| `String`|   No     | `manifest.webmanifest` |
+
+Template name for generated manifest file.
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        outfile: 'site.webmanifest',
+      },
+    }),
+  ],
+};  
+```
+
+  </details>
+  
+  <details>
+    <summary>indent</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| `String`|   No     | 4 spaces |
+
+Leading characters for every line in `<head>` to make output more readable.
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        indent: '',
+      },
+    }),
+  ],
+};  
+```
+
+  </details>
+  <details>
+    <summary>indent</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| `String`|   No     | `    ` (4 spaces) |
+
+Leading characters for every line in `<head>` to make output more readable.
+
+This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties is set to `true`.  
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        // Empty string to cut off some bytes from html
+        indent: '',
+        // ...
+      },
+    }),
+  ],
+};  
+```
+
+  </details>  
+  <details>
+    <summary>eol</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| `String`|   No     | `\n` (4 spaces) |
+
+Trailing characters for every line in `<head>` to make output more readable.  
+
+This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties is set to `true`.  
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        // Empty string to cut off some bytes from html
+        eol: '',
+        // ...
+      },
+    }),
+  ],
+};  
+```
+
+  </details>
+  <details>
+    <summary>createFavicon</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| Boolean |   No     | `true` |
+
+Enable or disable a favicon generation.
+
+This only works when the `icon` property is not empty.
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        icon: 'src/images/your-icon.png',
+        createFavicon: false, // default - true
+        // ...
+      },
+    }),
+  ],
+};  
+```
+
+  </details>
+
+  <details>
+    <summary>insertFaviconLinks</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| Boolean |   No     | `true` |
+
+Enable or disable the favicon links insertion in `<head>`  
+
+This only works when the `icon` property is not empty and `createFavicon` is `true`.
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        icon: 'src/images/your-icon.png',
+        insertFaviconLinks: false, // default - true
+        // ...
+      },
+    }),
+  ],
+};  
+```
+:exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
+
+  </details>
+  <details>
+    <summary>insertThemeColorMeta</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| Boolean |   No     | `true` |
+
+Enable or disable the `meta` insertion in `<head>`.  
+
+This only works when the `theme_color` property is not empty.
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        theme_color: '0xFFFF',
+        insertThemeColorMeta: false, // default - true
+        // ...
+      },
+    }),
+  ],
+};  
+```
 
 :exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
 
-### Webmanifest
+  </details>
+  <details>
+    <summary>insertManifestLink</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| Boolean |   No     | `true` |
+
+Enable or disable the manifest link insertion in `<head>`.  
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        insertManifestLink: false, // default - true
+        // ...
+      },
+    }),
+  ],
+};  
+```
+
+:exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
+  </details>
+  <details>
+    <summary>crossOrigin</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| String |   No     | `anonymus` |
+
+`crossorigin` attribute for the manifest link in `<head>`. Available values are `anonymous` or `use-credentials`.  
+
+More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin).  
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        crossOrigin: 'use-credentials', // default - anonymus
+        // ...
+      },
+    }),
+  ],
+};  
+```
+
+  </details>
+  <details>
+    <summary>insertAppleTouchLinks</summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| Boolean |   No     | `false` |
+
+Enable or disable `apple-touch-icon` links in `<head>`.  
+
+iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed.   
+
+This only works when the `icon` property is not empty.
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        icon: 'src/images/your-icon.png',
+        insertAppleTouchLinks: true, // default - false
+        // ...
+      },
+    }),
+  ],
+};  
+```
+
+:exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
+  </details>
+  <details>
+    <summary>iconPurpose</summary>
+
+|  Type         | Required |  Default value  |
+| :-----------: | :------: | :-------------: |
+| IconPurpose[] |   No     | `undefined`     |
+
+Array of `badge` | `maskable` | `any` |`monochrome`.  
+
+If provided it will be appended to the `purpose` property of generated icons.
+
+This only works when the `icon` property is not empty.  
+
+
+__`astro.config.mjs`__
+
+```js
+import webmanifest from 'astro-webmanifest';
+
+export default {
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    webmanifest({
+      name: 'Your app name',
+      config: {
+        icon: 'src/images/your-icon.png',
+        insertAppleTouchLinks: true, // default - false
+        // ...
+      },
+    }),
+  ],
+};  
+```
+
+:exclamation: The final output reprocessing is used to insert the links into `<head>` sections. It can impact build times for large sites.
+  </details>
+  <summary>locales</summary>
+|  Type   | Required |
+| :-----: | :------: |
+| `Locales`|   No     |
+
+`Record<string, Webmanifest>` - key/object pairs. See usage in [Localization](#localization) section.
+
+</details>
+
+### `Webmanifest` type
 
 | Name                          |          Type          | Required | Description                                                                                                                     |
 | :---------------------------- | :--------------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------ |
-| `icon`                        |        `String`        |    No    | See usage in [Generation modes](#generation-modes) section.                                                                     |
+| `icon`                        |        `String`        |    No    | This is a source for automatically generated favicon and icons. It's a part of `Webmanifest` type.<br/>Format: JPEG, PNG, WebP, TIFF, GIF or SVG<br/>Size: at least as big as the largest icon being generated (512x512 by default).<br/>Form: preferably square, otherwise the results will be padded with transparent bars to be square.<br/><br/>If the `icon` is empty - no automatic icon generation.<br/>See usage in [Generation modes](#generation-modes) section.                                                                     |
 | `icons`                       |        `Icon[]`        |    No    | See usage in [Generation modes](#generation-modes) section.                                                                     |
 |                               |                        |          |                                                                                                                                 |
 | `name`                        |        `String`        |   Yes    | You must provide the name of your app.                                                                                          |
@@ -395,7 +766,7 @@ export default {
 | `screenshots`                 |       `Image[]`        |    No    |                                                                                                                                 |
 | `shortcuts`                   |      `Shortcut[]`      |    No    |                                                                                                                                 |
 
-### Icon
+### `Icon` type
 
 | Name      |   Type   | Required | Description                                                                                                                  |
 | :-------- | :------: | :------: | :--------------------------------------------------------------------------------------------------------------------------- |
@@ -405,7 +776,6 @@ export default {
 | `purpose` | `String` |    No    | Space separated list of image purposes (`IconPurpose` type). See on [W3C](https://w3c.github.io/manifest/#purpose-member)    |
 
 :bulb: If icon entry `sizes` property has value `any` or contains more then one size (`96x96 128x128`) in that case such entry will be excluded from automatic generation.  
-
 
 For `Image`, `Shortcut`, `RelatedApplication`, `ProtocolHandler` look on content of [index.ts](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/src/index.ts).
 Also you can find the detailed descriptions on [W3C](https://w3c.github.io/manifest/) and [MDN](https://developer.mozilla.org/en-US/docs/Web/Manifest).
