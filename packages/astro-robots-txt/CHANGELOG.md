@@ -1,5 +1,11 @@
 # astro-robots-txt
 
+## 0.3.7
+
+### Patch Changes
+
+- 004bb4e: refactor: schema, vars naming
+
 ## 0.3.6
 
 ### Patch Changes
