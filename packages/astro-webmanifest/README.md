@@ -378,6 +378,8 @@ export default {
 };  
 ```
 
+See also [Localization](#localization) section.
+
   </details>
   
   <details>
@@ -385,11 +387,11 @@ export default {
 
 |  Type   | Required |  Default value  |
 | :-----: | :------: | :-------------: |
-| `String`|   No     | `    ` (4 spaces) |
+| `String`|   No     |  4 spaces |
 
-Leading characters for every line into `<head>` to make output more readable.
+Leading characters for each line inserted into `<head>` to make the output more readable.
 
-This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties is set to `true`.  
+This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties are set to `true`.  
 
 __`astro.config.mjs`__
 
@@ -422,9 +424,9 @@ export default {
 | :-----: | :------: | :-------------: |
 | `String`|   No     | `\n` |
 
-Trailing characters for every line into `<head>` to make output more readable.  
+Trailing characters for each line inserted into `<head>` to make the output more readable.  
 
-This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties is set to `true`.  
+This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties are set to `true`.  
 
 __`astro.config.mjs`__
 
@@ -601,7 +603,7 @@ export default {
 
 `crossorigin` attribute for the manifest link into `<head>`.
 
-Available values for the **CrossOrigin** type are `anonymous` or `use-credentials`.  
+Available values for the **CrossOrigin** type are `anonymous` | `use-credentials`.  
 
 More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin).  
 
@@ -713,24 +715,23 @@ export default {
 
 | Name                          |          Type          | Required | Description                                                                                                                     |
 | :---------------------------- | :--------------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------ |
-| `icon`                        |        `String`        |    No    | This is a source for automatically generated favicon and icons. It's a part of `Webmanifest` type.<br/>Format: JPEG, PNG, WebP, TIFF, GIF or SVG<br/>Size: at least as big as the largest icon being generated (512x512 by default).<br/>Form: preferably square, otherwise the results will be padded with transparent bars to be square.<br/><br/>If the `icon` is empty - no automatic icon generation.<br/>See usage in [Generation modes](#generation-modes) section.                                                                     |
+| `icon`                        |        `String`        |    No    | This is a source for automatically generated favicon and icons. It's a part of `Webmanifest` type.<br/><br/>Icon format: JPEG, PNG, WebP, TIFF, GIF or SVG<br/>Icon size: at least as big as the largest icon being generated (512x512 by default).<br/>Icon geometry: preferably square, otherwise the results will be padded with transparent bars to be square.<br/><br/>If the `icon` is empty - no automatic icon generation.<br/>See more about usage in [Generation modes](#generation-modes) section.                                                                     |
 | `icons`                       |        `Icon[]`        |    No    | See usage in [Generation modes](#generation-modes) section.                                                                     |
-|                               |                        |          |                                                                                                                                 |
 | `name`                        |        `String`        |   Yes    | You must provide the name of your app.                                                                                          |
 | `short_name`                  |        `String`        |    No    |                                                                                                                                 |
 | `description`                 |        `String`        |    No    |                                                                                                                                 |
 | `categories`                  |       `String[]`       |    No    |                                                                                                                                 |
 | `lang`                        |        `String`        |    No    |                                                                                                                                 |
-| `dir`                         |         `Dir`          |    No    | `auto`\|`ltr`\|`rtl`                                                                                                            |
+| `dir`                         |         `Dir`          |    No    | `auto` \| `ltr` \| `rtl`                                                                                                        |
 | `iarc_rating_id`              |        `String`        |    No    |                                                                                                                                 |
 | `id`                          |        `String`        |    No    |                                                                                                                                 |
 | `start_url`                   |        `String`        |    No    |                                                                                                                                 |
 | `scope`                       |        `String`        |    No    |                                                                                                                                 |
-| `theme_color`                 |        `String`        |    No    | Source for `meta` into `<head>`                                                                                                   |
+| `theme_color`                 |        `String`        |    No    | Source for `meta` in `<head>`                                                                                                   |
 | `background_color`            |        `String`        |    No    |                                                                                                                                 |
-| `display`                     |       `Display`        |    No    | `fullscreen`\|`standalone`\|`minimal-ui`\|`browser`                                                                             |
+| `display`                     |       `Display`        |    No    | `fullscreen` \| `standalone` \| `minimal-ui` \| `browser`                                                                       |
 | `display_override`            |      `Display[]`       |    No    |                                                                                                                                 |
-| `orientation`                 |     `Orientation`      |    No    | `any`\|`natural`\|`landscape`\|`landscape-primary`\|`landscape-secondary`\|`portrait`\|`portrait-primary`\|`portrait-secondary` |
+| `orientation`                 |     `Orientation`      |    No    | `any` \| `natural` \| `landscape` \| `landscape-primary` \| `landscape-secondary` \| `portrait` \| `portrait-primary` \| `portrait-secondary` |
 | `protocol_handlers`           |  `ProtocolHandler[]`   |    No    |                                                                                                                                 |
 | `prefer_related_applications` |       `Boolean`        |    No    |                                                                                                                                 |
 | `related_applications`        | `RelatedApplication[]` |    No    |                                                                                                                                 |
@@ -759,9 +760,9 @@ Localization allows you to create a unique manifest, icon set and `<head>` html 
 
 You need to provide `locales` property as a `Record<string, Webmanifest>`.
 
-The integration uses keys of `locales` property to make a manifest name unique and to determine a page language by path.
+The integration uses the keys of the `locales` property to make the manifest name unique and to determine the page language by page's path.
 
-The integration expects page paths in the following format: /{locale}{path}, where the locale is a key from `locales` property.
+The integration expects page paths in the following format: /{locale}{path}, where the locale is a key from the `locales` property.
 
 Sample configuration below:
 
@@ -817,7 +818,7 @@ By this configuration three separate manifests will be generated:
 
 And language specific html will be inserted into `<head>` section of generated pages.
 
-If you need a separate set of icons for each language add `icon` property.
+If you need a separate set of icons for each language, add the `icon` property.
 
 __`astro.config.mjs`__
 
@@ -850,9 +851,9 @@ export default {
 };
 ```
 
-In this configuration the default `en` language and the `fr` language will have common icon set, `es` - own icon set.
+In this configuration, the default `en` language and `fr` language will have a common icon set, `es` will have its own icon set.
 
-:bulb: The favicon will be only one for all languages. The source for generation will be taken from the default language.
+:bulb: The favicon will be the same for all languages. The source for generation will be taken from the default language.
 
 You can explore a localization usage in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
 
