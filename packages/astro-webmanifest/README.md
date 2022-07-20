@@ -90,7 +90,7 @@ Then, restart the dev server.
 
 ## Usage
 
-The `astro-webmanifest` integration requires the config object to have at least a `name` option.
+The `astro-webmanifest` integration requires the [config](#config) object to have at least a `name` option.
 
 __`astro.config.mjs`__
 
@@ -346,7 +346,7 @@ export default {
 
 ## Configuration
 
-The config object extends the `Webmanifest` type and optionally has `config` and `locales` properties as an object.
+The integration option object extends the `Webmanifest` type and optionally has `config` and `locales` properties as an object.
 
 ### `config` property
 <details>
