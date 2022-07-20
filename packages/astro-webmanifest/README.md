@@ -2,7 +2,7 @@
 
 # astro-webmanifest
 
-This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide/)** generates a _web application manifest_, favicon, icons and inserts appropriate html to `<head>` section for your Astro project during build.
+This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide/)** generates a _web application manifest_, favicon, icons and inserts appropriate html into `<head>` section for your Astro project during build.
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -27,7 +27,7 @@ This integration provides numerous features beyond manifest configuration to mak
 
 - automatic icon generation - generates multiple icon sizes from a single source;
 - favicon support;
-- inserts all required `link`s and `meta` to `<head>` section of generated pages;
+- inserts all required `link`s and `meta` into `<head>` section of generated pages;
 - legacy icon support (iOS);
 - localization - provides unique manifests for path-based localization.
 
@@ -387,7 +387,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | `String`|   No     | `    ` (4 spaces) |
 
-Leading characters for every line in `<head>` to make output more readable.
+Leading characters for every line into `<head>` to make output more readable.
 
 This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties is set to `true`.  
 
@@ -422,7 +422,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | `String`|   No     | `\n` |
 
-Trailing characters for every line in `<head>` to make output more readable.  
+Trailing characters for every line into `<head>` to make output more readable.  
 
 This only works when any of the `insertFaviconLinks`, `insertThemeColorMeta`, `insertManifestLink`, `insertAppleTouchLinks` properties is set to `true`.  
 
@@ -492,7 +492,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | Boolean |   No     | `true` |
 
-Enable or disable the favicon links insertion in `<head>`  
+Enable or disable the favicon links insertion into `<head>`  
 
 This only works when the `icon` property is not empty and `createFavicon` is `true`.
 
@@ -529,7 +529,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | Boolean |   No     | `true` |
 
-Enable or disable the `meta` insertion in `<head>`.  
+Enable or disable the `meta` insertion into `<head>`.  
 
 This only works when the `theme_color` property is not empty.
 
@@ -566,7 +566,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | Boolean |   No     | `true` |
 
-Enable or disable the manifest link insertion in `<head>`.  
+Enable or disable the manifest link insertion into `<head>`.  
 
 __`astro.config.mjs`__
 
@@ -599,7 +599,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | CrossOrigin |   No     | `anonymus` |
 
-`crossorigin` attribute for the manifest link in `<head>`.
+`crossorigin` attribute for the manifest link into `<head>`.
 
 Available values for the **CrossOrigin** type are `anonymous` or `use-credentials`.  
 
@@ -635,9 +635,9 @@ export default {
 | :-----: | :------: | :-------------: |
 | Boolean |   No     | `false` |
 
-Enable or disable `apple-touch-icon` links in `<head>`.  
+Enable or disable `apple-touch-icon` links into `<head>`.  
 
-iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links in `<head>` is needed.   
+iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links into `<head>` is needed.   
 
 This only works when the `icon` property is not empty.
 
@@ -726,7 +726,7 @@ export default {
 | `id`                          |        `String`        |    No    |                                                                                                                                 |
 | `start_url`                   |        `String`        |    No    |                                                                                                                                 |
 | `scope`                       |        `String`        |    No    |                                                                                                                                 |
-| `theme_color`                 |        `String`        |    No    | Source for `meta` in `<head>`                                                                                                   |
+| `theme_color`                 |        `String`        |    No    | Source for `meta` into `<head>`                                                                                                   |
 | `background_color`            |        `String`        |    No    |                                                                                                                                 |
 | `display`                     |       `Display`        |    No    | `fullscreen`\|`standalone`\|`minimal-ui`\|`browser`                                                                             |
 | `display_override`            |      `Display[]`       |    No    |                                                                                                                                 |
@@ -815,7 +815,7 @@ By this configuration three separate manifests will be generated:
 - `manifest-fr.webmanifest` - for `fr` language;
 - `manifest-es.webmanifest` - for `es` language.
 
-And language specific html will be inserted to `<head>` section of generated pages.
+And language specific html will be inserted into `<head>` section of generated pages.
 
 If you need a separate set of icons for each language add `icon` property.
 

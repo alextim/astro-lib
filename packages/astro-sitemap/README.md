@@ -19,7 +19,7 @@ The _sitemap.xml_ file provides information about structure of your website, abo
   - manage xml namespaces;
   - `lastmod` format option;
   - possibility to add a link to custom xsl.
-- Automatically creates a link to sitemap in `<head>` section of generated pages.
+- Automatically creates a link to sitemap into `<head>` section of generated pages.
 - Flexible configuration: configure the integration with external config, astro.config or combine both.
 
 Part of the functionality from **astro-sitemap** became an update for the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) from v0.1.2 to v0.2.0.
@@ -132,7 +132,7 @@ Generated sitemap content for a two-page website:
 </urlset>
 ```
 
-All pages generated at build time will contain a link to the sitemap in the `<head>` section :
+All pages generated at build time will contain a link to the sitemap into the `<head>` section :
 
 ```html
 <link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
@@ -156,7 +156,7 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 | `xslUrl`       |   `String`   |    No    |         | Absolute URL of XSL file to style XML or transform it to other format. Ignored by search engines. |
 | `xmlns`        |   `NSArgs`   |    No    |         | Set the XML namespaces by xmlns attributes in `<urlset>` element.  |
 | `lastmodDateOnly` | `Boolean` |    No    |         | If it's `true` the XML output will contain a date part only.                                    |
-| `createLinkInHead`| `Boolean` |    No    | true    | Create a link on the sitemap in `<head>` of generated pages.<br/>The final output reprocessing is used for this. It can impact build time for large sites. |
+| `createLinkInHead`| `Boolean` |    No    | true    | Create a link on the sitemap into `<head>` of generated pages.<br/>The final output reprocessing is used for this. It can impact build time for large sites. |
 | **i18n**       |           `object`         |    No    |         |                                                                                                 |
 | `defaultLocale`|           `String`         |   Yes    |         | Its value must exist as one of the `locales` keys.                                             |
 | `locales`      | `Record<String, String>`   |   Yes    |         | Key/value - pairs.<br/>The key is used to look up the locale part of the page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
@@ -272,7 +272,7 @@ export default defineConfig({
         ],
       },
 
-      // Create or not a link to sitemap in '<head>' section of generated pages
+      // Create or not a link to sitemap into '<head>' section of generated pages
       createLinkInHead: true,                     // default - true 
     }),
   ],
