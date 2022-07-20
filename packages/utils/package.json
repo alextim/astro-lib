@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.0.6",
-    "c8": "^7.11.3",
+    "c8": "^7.12.0",
     "typescript": "^4.7.4",
     "vite": "^3.0.2",
     "vitest": "^0.18.1"

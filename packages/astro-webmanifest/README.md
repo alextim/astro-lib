@@ -597,9 +597,11 @@ export default {
 
 |  Type   | Required |  Default value  |
 | :-----: | :------: | :-------------: |
-| String |   No     | `anonymus` |
+| CrossOrigin |   No     | `anonymus` |
 
-`crossorigin` attribute for the manifest link in `<head>`. Available values are `anonymous` or `use-credentials`.  
+`crossorigin` attribute for the manifest link in `<head>`.
+
+Available values for the **CrossOrigin** type are `anonymous` or `use-credentials`.  
 
 More details on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin).  
 
@@ -671,7 +673,7 @@ export default {
 | :-----------: | :------: | :-------------: |
 | IconPurpose[] |   No     | `undefined`     |
 
-Available values of type `IconPurpose`: `badge` | `maskable` | `any` |`monochrome`.  
+Available values for the **IconPurpose** type are `badge` | `maskable` | `any` |`monochrome`.  
 
 If provided it will be appended to the `purpose` property of generated icons.
 
