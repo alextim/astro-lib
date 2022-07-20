@@ -420,7 +420,7 @@ export default {
 
 |  Type   | Required |  Default value  |
 | :-----: | :------: | :-------------: |
-| `String`|   No     | `\n` (4 spaces) |
+| `String`|   No     | `\n` |
 
 Trailing characters for every line in `<head>` to make output more readable.  
 
@@ -671,7 +671,7 @@ export default {
 | :-----------: | :------: | :-------------: |
 | IconPurpose[] |   No     | `undefined`     |
 
-Array of `badge` | `maskable` | `any` |`monochrome`.  
+Available values of type `IconPurpose`: `badge` | `maskable` | `any` |`monochrome`.  
 
 If provided it will be appended to the `purpose` property of generated icons.
 
@@ -692,7 +692,7 @@ export default {
       name: 'Your app name',
       config: {
         icon: 'src/images/your-icon.png',
-        insertAppleTouchLinks: true, // default - false
+        iconPurpose: ['badge', 'maskable'], 
         // ...
       },
     }),
@@ -707,7 +707,7 @@ export default {
 
 `Record<string, Webmanifest>` - key/object pairs. See usage in [Localization](#localization) section.
 
-### `Webmanifest` type
+### Type `Webmanifest`
 
 | Name                          |          Type          | Required | Description                                                                                                                     |
 | :---------------------------- | :--------------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------ |
@@ -735,7 +735,7 @@ export default {
 | `screenshots`                 |       `Image[]`        |    No    |                                                                                                                                 |
 | `shortcuts`                   |      `Shortcut[]`      |    No    |                                                                                                                                 |
 
-### `Icon` type
+### Type `Icon`
 
 | Name      |   Type   | Required | Description                                                                                                                  |
 | :-------- | :------: | :------: | :--------------------------------------------------------------------------------------------------------------------------- |
