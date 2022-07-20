@@ -199,7 +199,7 @@ Now, [build your site for production](https://docs.astro.build/en/reference/cli-
 </details>
 
 <details>
-  <summary>Inserted HTML in the &#60;head&#62; section of every generated page</summary>
+  <summary>Example of inserted HTML in the &#60;head&#62; section of every generated page</summary>
 
 ```html
 <link rel="icon" href="/favicon-32x32.png" type="image/png" />
