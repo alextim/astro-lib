@@ -10,8 +10,11 @@ on:
       - 'packages/**'
       - '!examples/**'
       - '!.github/**'
+      - '!.husky/**'
       - '!.vscode/**'
-      - '!**/*.md'
+      - '!**/README.md'
+      - '!**/CHANGELOG.md'
+      - '!**/LICENSE'
       - '!packages/**/__tests__/**'
 
 # Automatically cancel in-progress actions on the same branch

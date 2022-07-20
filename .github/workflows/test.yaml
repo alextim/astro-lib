@@ -7,6 +7,7 @@ on:
     paths-ignore:
       - '.changeset/**'
       - '.github/**'
+      - '.husky/**'
       - '.vscode/**'
       - '**/*.md'
       - 'examples/**'
@@ -15,6 +16,7 @@ on:
     paths-ignore:
       - '.changeset/**'
       - '.github/**'
+      - '.husky/**'
       - '.vscode/**'
       - '**/*.md'
       - 'examples/**'
