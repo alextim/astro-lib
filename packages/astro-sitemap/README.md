@@ -22,7 +22,7 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 
 The _sitemap.xml_ file provides information about structure of your website, about its content: pages, images, videos and relations between them. [See Google's advice on sitemap](https://developers.google.com/search/docs/advanced/sitemaps/overview) to learn more.
 
-**astro-sitemap** does everything the official [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) integration does but much more.
+The **astro-sitemap** integration does everything the official [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) integration does but much more.
 
 Advantages of **astro-sitemap** over [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap):
 
@@ -31,7 +31,7 @@ Advantages of **astro-sitemap** over [@astrojs/sitemap](https://github.com/witha
   - manage XML namespaces;
   - `lastmod` format option;
   - possibility to add a link to custom XSL.
-- Automatically creates a link to sitemap into `<head>` section of generated pages.
+- Automatically creates a link to sitemap in `<head>` section of generated pages.
 - Flexible configuration: configure the integration with an external config, `astro.config.*` or a combination of both.
 - Better logging.
 
@@ -180,7 +180,7 @@ __`astro.config.mjs`__
 ```js
 ...
 export default defineConfig({
-  integrations: [robotsTxt({
+  integrations: [sitemap({
     filter: ...
   })]
 });
@@ -205,11 +205,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      canonicalURL: 'https://another-domain.com',
-    }),
-  ],
+  integrations: [sitemap({
+    canonicalURL: 'https://another-domain.com',
+  })],
 };
 ```
 
@@ -234,13 +232,11 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      filter(page) {
-        return !/exclude-this/.test(page);
-      },
-    }),
-  ],
+  integrations: [sitemap({
+    filter(page) {
+      return !/exclude-this/.test(page);
+    },
+  })],
 };
 ```
 
@@ -265,11 +261,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      exclude: ['404', 'blog-*/'],
-    }),
-  ],
+  integrations: [sitemap({
+    exclude: ['404', 'blog-*/'],
+  })],
 };
 ```
 
@@ -296,14 +290,12 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      customPages: [
-        'https://example.com/virtual-one.html',
-        'https://example.com/virtual-two.html',
-      ],
-    }),
-  ],
+  integrations: [sitemap({
+    customPages: [
+      'https://example.com/virtual-one.html',
+      'https://example.com/virtual-two.html',
+    ],
+  })],
 };
 ```
 
@@ -332,11 +324,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      entryLimit: 10000,
-    }),
-  ],
+  integrations: [sitemap({
+    entryLimit: 10000,
+  })],
 };
 ```
 
@@ -363,11 +353,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      changefreq: 'weekly',
-    }),
-  ],
+  integrations: [sitemap({
+    changefreq: 'weekly',
+  })],
 };
 ```
 
@@ -393,11 +381,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      lastmod: Date(),
-    }),
-  ],
+  integrations: [sitemap({
+    lastmod: Date(),
+  })],
 };
 ```
 
@@ -424,11 +410,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      priority: 0.9,
-    }),
-  ],
+  integrations: [sitemap({
+    priority: 0.9,
+  })],
 };
 ```
 
@@ -488,21 +472,19 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      serialize(item) { 
-        if (/exclude-this/.test(item.url)) {
-          return undefined;
-        }        
-        if (/special-page/.test(item.url)) {
-          item.changefreq = 'daily';
-          item.lastmod = new Date();
-          item.priority = 0.9;
-        }
-        return item;
-      },
-    }),
-  ],
+  integrations: [sitemap({
+    serialize(item) { 
+      if (/exclude-this/.test(item.url)) {
+        return undefined;
+      }        
+      if (/special-page/.test(item.url)) {
+        item.changefreq = 'daily';
+        item.lastmod = new Date();
+        item.priority = 0.9;
+      }
+      return item;
+    },
+  })],
 };
 ```
 
@@ -527,11 +509,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      xslUrl: 'https://example.com/style.xsl',
-    }),
-  ],
+  integrations: [sitemap({
+    xslUrl: 'https://example.com/style.xsl',
+  })],
 };
 ```
 
@@ -577,20 +557,18 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      xmlns: { 
-        xhtml: true,
-        news: true, 
-        image: true,
-        video: true,
-        custom: [
-          'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"',
-          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
-        ],
-      },
-    }),
-  ],
+  integrations: [sitemap({
+    xmlns: { 
+      xhtml: true,
+      news: true, 
+      image: true,
+      video: true,
+      custom: [
+        'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"',
+        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+      ],
+    },
+  })],
 };
 ```
 
@@ -625,12 +603,10 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      lastmodDateOnly: true,
-      lastmod: Date(),
-    }),
-  ],
+  integrations: [sitemap({
+    lastmodDateOnly: true,
+    lastmod: Date(),
+  })],
 };
 ```
 
@@ -657,11 +633,9 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      createLinkInHead: false,
-    }),
-  ],
+  integrations: [sitemap({
+    createLinkInHead: false,
+  })],
 };
 ```
 
@@ -707,18 +681,16 @@ export default {
   experimental: {
     integrations: true,
   },
-  integrations: [
-    sitemap({
-      i18n: {
-        defaultLocale: 'en',   // All URLs that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`
-        locales: {
-          en: 'en-US',         // The `defaultLocale` value must present in `locales` keys
-          es: 'es-ES',
-          fr: 'fr-CA',
-        },
+  integrations: [sitemap({
+    i18n: {
+      defaultLocale: 'en',   // All URLs that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`
+      locales: {
+        en: 'en-US',         // The `defaultLocale` value must present in `locales` keys
+        es: 'es-ES',
+        fr: 'fr-CA',
       },
-    }),
-  ],
+    },
+  })],
 };
 ```
 
