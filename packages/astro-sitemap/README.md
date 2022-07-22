@@ -37,7 +37,7 @@ Advantages of **astro-sitemap** over [@astrojs/sitemap](https://github.com/witha
 
 Part of the functionality of **astro-sitemap** has become a minor update of the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) from v0.1.2 to version 0.2.0.
 
-Shared functionality with the official **@astrojs/sitemap**:
+Shared functionality with the official [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap):
 
 - Split up your large sitemap into multiple sitemaps by a custom limit.
 - Ability to add sitemap specific attributes such as `changefreq`, `lastmod`, `priority`.
