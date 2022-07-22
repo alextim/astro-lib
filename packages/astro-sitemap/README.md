@@ -680,9 +680,9 @@ Supply the integration config with the `i18n` option as an object with two requi
 | :----------: | :------: |
 |  `Record<String, String>`    |   Yes    |
 
- Key/value - pairs. The key is used to look up the locale part of the page path. The value is a language attribute, only English alphabet and hyphen allowed.  
+Key/value - pairs. The key is used to look up the locale part of the page path. The value is a language attribute, only English alphabet and hyphen allowed.  
  
- See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang).
+See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang).
 
 </details>
 
