@@ -67,7 +67,7 @@ function formatConfigErrorMessage(err: ZodError) {
   return errorList.join('\n');
 }
 
-const createSitemapIntegration = (options?: SitemapOptions): AstroIntegration => {
+const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegration => {
   let config: AstroConfig;
   return {
     name: packageName,
@@ -79,8 +79,8 @@ const createSitemapIntegration = (options?: SitemapOptions): AstroIntegration =>
 
       'astro:build:done': async ({ dir, pages: srcPages }) => {
         const namespace = packageName.replace('astro-', '');
-        const external = await loadConfig(namespace, config.root);
-        const merged: SitemapOptions = merge(external || {}, options || {});
+        const external = (await loadConfig(namespace, config.root)) || {};
+        const merged: SitemapOptions = merge(external, options);
 
         try {
           const opts = validateOptions(config.site, merged);
