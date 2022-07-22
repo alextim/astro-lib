@@ -31,7 +31,7 @@ Advantages of **astro-sitemap** over [@astrojs/sitemap](https://github.com/witha
   - manage XML namespaces;
   - `lastmod` format option;
   - possibility to add a link to custom XSL.
-- Automatically creates a link to sitemap in `<head>` section of generated pages.
+- Automatically creates a link to the sitemap in the `<head>` section of generated pages.
 - Flexible configuration: configure the integration with an external config, `astro.config.*` or a combination of both.
 - Better logging.
 
