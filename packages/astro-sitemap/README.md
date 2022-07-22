@@ -683,9 +683,10 @@ export default {
   },
   integrations: [sitemap({
     i18n: {
-      defaultLocale: 'en',   // All URLs that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`
+      // All URLs that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`
+      defaultLocale: 'en',  
       locales: {
-        en: 'en-US',         // The `defaultLocale` value must present in `locales` keys
+        en: 'en-US',     // The `defaultLocale` value must present in `locales` keys
         es: 'es-ES',
         fr: 'fr-CA',
       },
