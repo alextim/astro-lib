@@ -41,7 +41,7 @@
   "dependencies": {
     "deepmerge": "^4.2.2",
     "valid-filename": "^4.0.0",
-    "zod": "^3.17.9"
+    "zod": "^3.17.10"
   },
   "devDependencies": {
     "@types/node": "^18.0.6",

@@ -6,21 +6,34 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 
 ![Release](https://github.com/alextim/astro-lib/actions/workflows/release.yaml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
+- <strong>[Why astro-sitemap](#why-astro-sitemap)</strong>
+- <strong>[Installation](#installation)</strong>
+- <strong>[Usage](#usage)</strong>
+- <strong>[Configuration](#configuration)</strong>
+- <strong>[Localization](#localization)</strong>
+- <strong>[External config file](#external-config-file)</strong>
+- <strong>[Examples](#examples)</strong>
+- <strong>[Contributing](#contributing)</strong>
+- <strong>[Changelog](#changelog)</strong>
+- <strong>[Inspirations](#inspirations)</strong>
 ---
-
-The _sitemap.xml_ file provides information about structure of your website, about its content: pages, images, videos and relations between them. [See Google's advice on sitemap](https://developers.google.com/search/docs/advanced/sitemaps/overview) to learn more.
 
 ## Why astro-sitemap?
 
-**astro-sitemap** advantages over the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap):
+The _sitemap.xml_ file provides information about structure of your website, about its content: pages, images, videos and relations between them. [See Google's advice on sitemap](https://developers.google.com/search/docs/advanced/sitemaps/overview) to learn more.
+
+**astro-sitemap** does everything the official [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) integration does but much more.
+
+Advantages of **astro-sitemap** over [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap):
 
 - Exclude pages from a sitemap by glob patterns.
 - More control on the sitemap output:
-  - manage xml namespaces;
+  - manage XML namespaces;
   - `lastmod` format option;
-  - possibility to add a link to custom xsl.
+  - possibility to add a link to custom XSL.
 - Automatically creates a link to sitemap into `<head>` section of generated pages.
-- Flexible configuration: configure the integration with external config, astro.config or combine both.
+- Flexible configuration: configure the integration with an external config, `astro.config.*` or a combination of both.
+- Better logging.
 
 Part of the functionality from **astro-sitemap** became an update for the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) from v0.1.2 to v0.2.0.
 
@@ -29,20 +42,21 @@ Shared functionality with the official **@astrojs/sitemap**:
 - Split up your large sitemap into multiple sitemaps by a custom limit.
 - Ability to add sitemap specific attributes such as `changefreq`, `lastmod`, `priority`.
 - Final output customization via JS function (sync or async).
-- localization support. In a build time the integration analyses the pages urls for presence of locale signatures in paths to establish relations between pages.
+- Localization support. In a build time the integration analyses the pages urls for presence of locale signatures in paths to establish relations between pages.
 - Reliability: all config options are validated.
 
-:exclamation: Both the official and **astro-sitemap** integrations don't support SSR.
+:exclamation: Both official and **astro-sitemap** integrations don't support SSR.
+
+:exclamation: This integration uses `astro:build:done` hook (the official [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) does the same). This hook exposes only generated page paths. Thus, in the current version of Astro, both integrations don't have the ability to analyze the page source, frontmatter, etc. They can add `changefreq`, `lastmod` and `priority` attributes only in a batch or nothing.
 
 ---
 
 ## Installation
 
-There are two ways to add **astro-sitemap** integration to your Astro project.
+<details>
+  <summary>Quick Install</summary>
 
-### Astro CLI tool
-
-You should run `astro add` command in your project directory. This command after prompt will install required dependencies and apply changes to _astro.config.\*_.
+The experimental `astro add` command-line tool automates the installation for you. Run one of the following commands in a new terminal window. (If you aren't sure which package manager you're using, run the first command.) Then, follow the prompts, and type "y" in the terminal (meaning "yes") for each one.
 
 ```sh
 # Using NPM
@@ -55,37 +69,48 @@ yarn astro add astro-sitemap
 pnpx astro add astro-sitemap
 ```
 
-If you run into any troubles, [feel free to log an issue on my GitHub](https://github.com/alextim/astro-lib/issues).
+Then, restart the dev server by typing `CTRL-C` and then `npm run astro dev` in the terminal window that was running Astro.
+  
+Because this command is new, it might not properly set things up. If that happens, [log an issue on Astro GitHub](https://github.com/withastro/astro/issues) and try the manual installation steps below.
 
-### Install dependencies manually
+</details>
 
-First, install the **astro-sitemap** integration like so:
+<details>
+  <summary>Manual Install</summary>
+
+First, install the `astro-sitemap` package using your package manager. If you're using npm or aren't sure, run this in the terminal:
 
 ```sh
-# Using NPM
 npm install --save-dev astro-sitemap
-
-# Using Yarn
-yarn add -D astro-sitemap
-
-# Using PNPM
-pnpm add -D astro-sitemap
 ```
 
-Then apply this integration to your _astro.config.\*_. All details below in **Getting started**.
+Then, apply this integration to your `astro.config.*` file using the `integrations` property:
 
-## Getting started
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  // ...
+  integrations: [sitemap()],
+}
+```
+  
+Then, restart the dev server.
+</details>
+
+## Usage
 
 The `astro-sitemap` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.\*_ using the `site` property.
 
-:exclamation: Provide the `experimental` property to your _astro.config.\*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true`.
+:exclamation: Provide the `experimental` property to your _astro.config.\*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true` or use the `--experimental-integrations` flag for build command.
 
 Then, apply this integration to your _astro.config.\*_ file using the `integrations` property.
 
-**astro.config.mjs**
+__`astro.config.mjs`__
 
 ```js
-// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import sitemap from 'astro-sitemap';
 
@@ -105,9 +130,10 @@ export default defineConfig({
 
 Now, [build your site for production](https://docs.astro.build/en/reference/cli-reference/#astro-build) via the `astro build` command. You should find your _sitemap_ under `dist/sitemap-index.xml` and `dist/sitemap-0.xml`!
 
-Generated sitemap content for a two-page website:
+<details>
+  <summary>Example of generated sitemap content</summary>
 
-**sitemap-index.xml**
+**`sitemap-index.xml`**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -118,7 +144,7 @@ Generated sitemap content for a two-page website:
 </sitemapindex>
 ```
 
-**sitemap-0.xml**
+**`sitemap-0.xml`**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -132,40 +158,296 @@ Generated sitemap content for a two-page website:
 </urlset>
 ```
 
-All pages generated at build time will contain a link to the sitemap into the `<head>` section :
+</details>
+
+<details>
+  <summary>Example of inserted HTML</summary>
+
+All pages generated at build time will contain a link to the sitemap in the `<head>` section:
 
 ```html
 <link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
 ```
 
-You can also check [Astro Integration Documentation](https://docs.astro.build/en/guides/integrations-guide/) for more on integrations.
+</details>
 
 ## Configuration
 
-|   Name         |             Type           | Required | Default | Description                                                                                     |
-| :------------: | :------------------------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
-| `canonicalURL` | `String`     |    No    |         | Absolute URL. The integration needs `site` from astro.config or `canonicalURL`. If both values are provided then only `canonicalURL` will be used by the integration. |
-| `filter`    | `(page: String):`<br/>`Boolean`|   No    |         | Function to filter generated pages to exclude some paths from the sitemap.                       |
-| `exclude`      |   `String[]` |    No    |         | The `exclude` option is an array of [glob patterns](https://github.com/isaacs/minimatch#features) to exclude static routes from the generated sitemap. |
-| `customPages`  |          `String[]`        |    No    |         | Absolute URL list. It will be merged with generated pages urls.<br/>You should also use `customPages` to manually list sitemap pages when using an SSR adapter. Currently, integration cannot detect your site's pages unless you are building statically. To avoid an empty sitemap, list all pages (including the base origin) with this configuration option.  |
-| `entryLimit`   |           `Number`         |    No    | 45000   | Number of entries per one sitemap file. Single sitemap index and multiple sitemaps will be created if you have more entries. See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps/) |
-| `changefreq`   |         `ChangeFreq`       |    No    |         | Sitemap specific. Ignored by Google.<br/>How frequently the page is likely to change.<br/>Available values: `always`\|`hourly`\|`daily`\|`weekly`\|`monthly`\| `yearly`\|`never` |
-| `lastmod`      |            `Date`          |    No    |         | Sitemap specific. The date of page last modification.                                           |
-| `priority`     |           `Number`         |    No    |         | Sitemap specific. Ignored by Google.<br/>The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0 |
-| `serialize` | `(item: SitemapItem):`<br>`SitemapItemLoose`\|`undefined`\|<br/>Promise<`SitemapItemLoose`\|`undefined`>| No |    | Function to process an array of sitemap entries just before writing them to disk. Async or sync.<br/>The `undefined` return value excludes the passed entry from the sitemap. |
-| `xslUrl`       |   `String`   |    No    |         | Absolute URL of XSL file to style XML or transform it to other format. Ignored by search engines. |
-| `xmlns`        |   `NSArgs`   |    No    |         | Set the XML namespaces by xmlns attributes in `<urlset>` element.  |
-| `lastmodDateOnly` | `Boolean` |    No    |         | If it's `true` the XML output will contain a date part only.                                    |
-| `createLinkInHead`| `Boolean` |    No    | true    | Create a link on the sitemap into `<head>` of generated pages.<br/>The final output reprocessing is used for this. It can impact build time for large sites. |
-| **i18n**       |           `object`         |    No    |         |                                                                                                 |
-| `defaultLocale`|           `String`         |   Yes    |         | Its value must exist as one of the `locales` keys.                                             |
-| `locales`      | `Record<String, String>`   |   Yes    |         | Key/value - pairs.<br/>The key is used to look up the locale part of the page path.<br/> The value is a language attribute, only English alphabet and hyphen allowed. See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) |
+To configure this integration, pass an object to the `sitemap()` function call in `astro.config.mjs`.
 
-:bulb: See detailed explanation of sitemap specific options on [sitemap.org](https://www.sitemaps.org/protocol.html).
+__`astro.config.mjs`__
 
-:exclamation: This integration uses `astro:build:done` hook (the official [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) does the same). This hook exposes only generated page paths. Thus, in the current version of Astro, both integrations don't have the ability to analyze the page source, frontmatter, etc. They can add `changefreq`, `lastmod` and `priority` attributes only in a batch or nothing.
+```js
+...
+export default defineConfig({
+  integrations: [robotsTxt({
+    filter: ...
+  })]
+});
+```
 
-### SitemapItem
+<details>
+  <summary><strong>canonicalURL</strong></summary>
+
+|  Type   | Required |  Default value  |
+| :-----: | :------: | :-------------: |
+| `String`|   No     |   `undefined`   |
+
+ Absolute URL. The integration needs `canonicalURL` or `site` from astro.config. If both values are provided, only `canonicalURL` will be used by the integration.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      canonicalURL: 'https://another-domain.com',
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>filter</strong></summary>
+
+|  Type                       | Required |  Default value  |
+| :-------------------------: | :------: | :-------------: |
+| (page: `String`): `Boolean` |   No     |   `undefined`   |
+
+Function to filter generated pages to exclude some paths from the sitemap. 
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      filter(page) {
+        return !/exclude-this/.test(page);
+      },
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>exclude</strong></summary>
+
+|  Type      | Required |  Default value  |
+| :--------: | :------: | :-------------: |
+| `String[]` |   No     |   `undefined`   |
+
+The `exclude` option is an array of [glob patterns](https://github.com/isaacs/minimatch#features) to exclude static routes from the generated sitemap.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      exclude: ['404', 'blog-*/'],
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>customPages</strong></summary>
+
+|  Type      | Required |  Default value  |
+| :--------: | :------: | :-------------: |
+| `String[]` |   No     |   `undefined`   |
+
+Absolute URL list. It will be merged with generated pages urls.  
+
+You should also use `customPages` to manually list sitemap pages when using an SSR adapter. Currently, integration cannot detect your site's pages unless you are building statically. To avoid an empty sitemap, list all pages (including the base origin) with this configuration option.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      customPages: [
+        'https://example.com/virtual-one.html',
+        'https://example.com/virtual-two.html',
+      ],
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>entryLimit</strong></summary>
+
+|  Type    | Required |  Default value  |
+| :------: | :------: | :-------------: |
+| `Number` |   No     |   45000         |
+
+Number of entries per one sitemap file.  
+
+The integration creates a separate `sitemap-${i}.xml` file for each batch of 45000 and adds this file to index - `sitemap-index.xml`.  
+
+See more on [Google](https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps/).
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      entryLimit: 10000,
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>changefreq</strong></summary>
+
+|  Type        | Required |  Default value  |
+| :----------: | :------: | :-------------: |
+| `ChangeFreq` |   No     |   `undefined`   |
+
+Sitemap specific. How frequently the page is likely to change. Ignored by Google.  
+
+Available values: `always` | `hourly` | `daily` | `weekly` | `monthly` | `yearly` | `never`.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      changefreq: 'weekly',
+    }),
+  ],
+};
+```
+
+</details>
+
+
+<details>
+  <summary><strong>lastmod</strong></summary>
+
+|  Type        | Required |  Default value  |
+| :----------: | :------: | :-------------: |
+| `Date`       |   No     |   `undefined`   |
+
+Sitemap specific. The date of page last modification.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      lastmod: Date(),
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>priority</strong></summary>
+
+|  Type        | Required |  Default value  |
+| :----------: | :------: | :-------------: |
+| `Number`     |   No     |   `undefined`   |
+
+Sitemap specific. The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.  
+
+Ignored by Google.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      priority: 0.9,
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>serialize</strong></summary>
+
+|  Type        | Required |  Default value  |
+| :----------: | :------: | :-------------: |
+| (item: `SitemapItem`): `SitemapItemLoose` | `undefined` |<br/>Promise<`SitemapItemLoose` | `undefined`> |   No     |   `undefined`   |
+
+Function to process an array of sitemap entries just before writing them to disk. Async or sync.  
+
+The `undefined` return value excludes the passed entry from the sitemap.
+
+<details>
+  <summary><strong>Type `SitemapItem`*</strong></summary>
+
 
 |   Name         |     Type     | Required | Description        |
 | :------------: | :----------: | :------: | :----------------- |
@@ -174,15 +456,107 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 | `lastmod`      |   `String`   |    No    | ISO formatted date |
 | `priority`     |   `Number`   |    No    |                    |
 | `links`        | `LinkItem[]` |    No    | for localization   |
+</details>
 
-### LinkItem
+<details>
+  <summary><strong>Type `LinkItem`</strong></summary>
 
 |   Name         |      Type       | Required | Description               |
 | :------------: | :-------------: | :------: | :------------------------ |
-| `url`          |    `String`     |   Yes    | Absolute url              |
+| `url`          |    `String`     |   Yes    | Absolute URL              |
 | `lang`         |    `String`     |   Yes    | hreflag, example: 'en-US' |
+</details>
 
-### NSArgs
+<details>
+  <summary><strong>Interface `SitemapItemLoose`</strong></summary>
+
+The `SitemapItemLoose` interface is a base for the `SitemapItem`.  
+
+It has the properties `video`, `img` and many more.  
+
+More details about `SitemapItemLoose` interface see in the **sitemap.js** repo [readme](https://github.com/ekalinin/sitemap.js/blob/master/README.md) and types source [code](https://github.com/ekalinin/sitemap.js/blob/master/lib/types.ts).  
+
+</details>
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      serialize(item) { 
+        if (/exclude-this/.test(item.url)) {
+          return undefined;
+        }        
+        if (/special-page/.test(item.url)) {
+          item.changefreq = 'daily';
+          item.lastmod = new Date();
+          item.priority = 0.9;
+        }
+        return item;
+      },
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>xslUrl</strong></summary>
+
+|  Type        | Required |  Default value  |
+| :----------: | :------: | :-------------: |
+|  `String`    |   No     |   `undefined`   |
+
+Absolute URL of XSL file to style XML or transform it to other format. Ignored by search engines.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      xslUrl: 'https://example.com/style.xsl',
+    }),
+  ],
+};
+```
+
+**Example of XML output**
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://example/style.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+...
+```
+
+</details>
+
+<details>
+  <summary><strong>xmlns</strong></summary>
+
+|  Type        | Required |  Default value  |
+| :----------: | :------: | :-------------: |
+|  `NSArgs`    |   No     |   `undefined`   |
+
+Set the XML namespaces by xmlns attributes in `<urlset>` element.
+
+<details>
+  <summary><strong>Type `NSArgs`</strong></summary>
 
 |   Name   |  Type     | Required | Default | Description                                                              |
 | :------: | :-------: | :------: | :-----: | :----------------------------------------------------------------------- |
@@ -191,76 +565,20 @@ You can also check [Astro Integration Documentation](https://docs.astro.build/en
 | `video`  | `Boolean` |    No    |         | `xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"`          |
 | `image`  | `Boolean` |    No    |         | `xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"`          |
 | `custom` | `String[]`|    No    |         | Any custom namespace. Elements of array'll be used `as is` without any validation. |
+</details>
 
-### SitemapItemLoose
-
-The `SitemapItemLoose` interface is a base for the `SitemapItem`.  
-
-It has the properties `video`, `img` and many more.  
-
-More details about `SitemapItemLoose` interface see in the **sitemap.js** repo [readme](https://github.com/ekalinin/sitemap.js/blob/master/README.md) and types source [code](https://github.com/ekalinin/sitemap.js/blob/master/lib/types.ts).  
-
-**Sample of _astro.config.mjs_**
+__`astro.config.mjs`__
 
 ```js
-// astro.config.ts
-import { defineConfig } from 'astro/config';
 import sitemap from 'astro-sitemap';
 
-export default defineConfig({
-  site: 'https://your-awesome-site.com',
+export default {
+  site: 'https://example.com',
   experimental: {
     integrations: true,
   },
   integrations: [
     sitemap({
-      /**
-       *  These options are the same with the official integration `@astrojs/sitemap`
-       */ 
-      // exclude pages from sitemap
-      filter: (page: string) => !/exclude-this/.test(page), 
-      // Absolute urls of extra pages
-      customPages: [
-        // extra pages for sitemap
-        'https://example.com/virtual-one.html',
-        'https://example.com/virtual-two.html',
-      ],
-
-      // Here the `canonicalURL` is provided. 
-      // It will be used during sitemap generation instead of `site` value. 
-      canonicalURL: 'https://example.com',
-
-      // This function is called just before a sitemap writing to disk.
-      // You have more control on resulting output.
-      // sync or async
-      serialize(item: SitemapItem): SitemapItem { 
-        if (/special-page/.test(item.url)) {
-          item.changefreq = 'daily';
-          item.lastmod = new Date();
-          item.priority = 0.9;
-        }
-        return item;
-      },
-
-      // The integration creates a separate `sitemap-${i}.xml` file for each batch of 45000 and adds this file to index - `sitemap-index.xml`.
-      entryLimit: 1000,                           // default - 45000
-
-      // sitemap specific
-      changefreq: 'yearly',
-      lastmod: new Date('May 01, 2019 03:24:00'),
-      priority: 0.2,
-
-      /**
-       *  `astro-sitemap` integration extra options
-       */ 
-      exclude: ['404', 'blog-*/']
-      // print date not time
-      lastmodDateOnly: false, 
-      
-      // style to transform to another format, ignored by search engines
-      xslUrl: 'https://example.com/style.xsl',
-
-      // set the xml namespace
       xmlns: { 
         xhtml: true,
         news: true, 
@@ -271,71 +589,147 @@ export default defineConfig({
           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
         ],
       },
-
-      // Create or not a link to sitemap into '<head>' section of generated pages
-      createLinkInHead: true,                     // default - true 
     }),
   ],
-});
+};
 ```
 
-Generated sitemap content for this configuration:
+__Example of XML output__
+
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="https://example/style.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 ...
-  <url>
-    <loc>https://example.com/</loc>
-    <lastmod>2019-05-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  ...
-  <url>
-    <loc>https://example.com/virtual-one.html</loc>
-    <lastmod>2019-05-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  ...
-    <url>
-    <loc>https://example.com/some-special-path.html</loc>
-    <lastmod>2022-06-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  ...
 ```
+
+</details>
+
+<details>
+  <summary><strong>lastmodDateOnly</strong></summary>
+
+|  Type         | Required |  Default value  |
+| :-----------: | :------: | :-------------: |
+|  `Boolean`    |   No     |   `undefined`   |
+
+If its value is `true`, the `lastmod` field in the XML output will contain a date part only. 
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      lastmodDateOnly: true,
+      lastmod: Date(),
+    }),
+  ],
+};
+```
+
+</details>
+
+<details>
+  <summary><strong>createLinkInHead</strong></summary>
+
+|  Type         | Required |  Default value  |
+| :-----------: | :------: | :-------------: |
+|  `Boolean`    |   No     |   `true`        |
+
+Create a link on the sitemap in `<head>` section of generated pages.  
+
+The final output reprocessing is used for this. It can impact build time for large sites.
+
+__`astro.config.mjs`__
+
+```js
+import sitemap from 'astro-sitemap';
+
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      createLinkInHead: false,
+    }),
+  ],
+};
+```
+
+</details>
+
+:bulb: See detailed explanation of sitemap specific options on [sitemap.org](https://www.sitemaps.org/protocol.html).
 
 ## Localization
 
-Supply the integration config with the `i18n` option. The integration will check the generated page paths for locale keys in the paths.
+| **i18n**       |           `object`         |    No    |         |                                                                                                 |
+| `locales`      | `Record<String, String>`   |   Yes    |         | |
 
-Read more about localization on Google in [Advanced SEO](https://developers.google.com/search/docs/advanced/crawling/localized-versions#all-method-guidelines).
+Supply the integration config with the `i18n` option as an object with two required properties:
 
-Let's have the following integration config:
+<details>
+  <summary><strong>locales</strong></summary>
+
+|  Type        | Required |
+| :----------: | :------: |
+|  `Record<String, String>`    |   Yes    |
+
+ Key/value - pairs. The key is used to look up the locale part of the page path. The value is a language attribute, only English alphabet and hyphen allowed.  
+ 
+ See more on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang)
+
+</details>
+
+<details>
+  <summary><strong>defaultLocale</strong></summary>
+
+|  Type        | Required |
+| :----------: | :------: |
+|  `String`    |   Yes    |
+
+`defaultLocale` value must exist as one of the `locales` keys.
+
+</details>
+
+__`astro.config.mjs`__
 
 ```js
-...
-  canonicalURL: 'https://example.com', // You should provide the `site` option in astro.config instead of `canonicalURL`.
-  i18n: {
-    defaultLocale: 'en',   // All urls that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`
-    locales: {
-      en: 'en-US',         // The `defaultLocale` value must present in `locales` keys
-      es: 'es-ES',
-      fr: 'fr-CA',
-    }
-  }
-...
+import sitemap from 'astro-sitemap';
 
+export default {
+  site: 'https://example.com',
+  experimental: {
+    integrations: true,
+  },
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',   // All URLs that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`
+        locales: {
+          en: 'en-US',         // The `defaultLocale` value must present in `locales` keys
+          es: 'es-ES',
+          fr: 'fr-CA',
+        },
+      },
+    }),
+  ],
+};
 ```
 
-The sitemap content will be:
+__Example of XML output__
 
 ```xml
-...
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://example.com/</loc>
     <xhtml:link rel="alternate" hreflang="en-US" href="https://example.com/"/>
@@ -360,10 +754,12 @@ The sitemap content will be:
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://example.com/fr/second-page/"/>
     <xhtml:link rel="alternate" hreflang="en-US" href="https://example.com/second-page/"/>
   </url>
+
 ...
+</urlset>
 ```
 
-## Using Configuration Files
+## External config file
 
 You can configure the integration using the external file `sitemap.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
@@ -385,9 +781,7 @@ module.exports = {
 };
 ```
 
-:exclamation: The current version of the integration doesn't support typescript configs.
-
-### How does the integration internally resolve a config?
+**How does the integration internally resolve a config?**
 
 | Options parameter provided? | External config exists? | Result                                           |
 | :-------------------------- | :---------------------: | :----------------------------------------------- |
@@ -398,29 +792,23 @@ module.exports = {
 
 The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/advanced).
 
-:exclamation: Important Notes
+:exclamation: The current version of the integration doesn't support typescript configs.
 
-Only official **@astrojs/\*** integrations are currently supported by Astro.
+## Examples
 
-There are two possibilities to make **astro-sitemap** integration working with current version of Astro.
+| Example       | Source                                                                                 | Playground                                                                                                  |
+| ------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| basic         | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/basic)        | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/basic)        |
+| advanced      | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/advanced)     | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/advanced)     |
+| i18n          | [GitHub](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/i18n)         | [Play Online](https://stackblitz.com/fork/github/alextim/astro-lib/tree/main/examples/sitemap/i18n)         |
 
-Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
+## Contributing
 
-```js
-// astro.config.mjs
-export default defineConfig({
-  // ...
-  experimental: {
-    integrations: true,
-  },
-});
-```
+You're welcome to submit an issue or PR!
 
-Or use the `--experimental-integrations` flag for build command.
+## Changelog
 
-```sh
-astro build --experimental-integrations
-```
+See [CHANGELOG.md](CHANGELOG.md) for a history of changes to this integration.
 
 [astro-integration]: https://docs.astro.build/en/guides/integrations-guide/
 

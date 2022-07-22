@@ -53,7 +53,7 @@ export type SitemapOptions =
       lastmod?: Date;
       priority?: number;
 
-      // called for each sitemap item just before to save them on disk, sync or async
+      // called for each sitemap item just before to save them on a disk, sync or async
       serialize?(item: SitemapItem): SitemapItemLoose | undefined | Promise<SitemapItemLoose | undefined>;
 
       createLinkInHead?: boolean;
@@ -67,18 +67,9 @@ function formatConfigErrorMessage(err: ZodError) {
   return errorList.join('\n');
 }
 
-const createPlugin = (options?: SitemapOptions): AstroIntegration => {
+const createSitemapIntegration = (options?: SitemapOptions): AstroIntegration => {
   let config: AstroConfig;
   return {
-    /**
-     * Only official "@astrojs/*" integrations are currently supported.
-     * To enable 3rd-party integrations, use the "--experimental-integrations" flag.
-     * Breaking changes may occur in this API before Astro v1.0 is released.
-     *
-     * We've been using the 'name' property from 'package.json', ie 'astro-robots-txt'
-     *
-     * Official name should be '@astrojs/robotstxt', but this integration is not official  :).
-     */
     name: packageName,
 
     hooks: {
@@ -104,8 +95,10 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
               finalSiteUrl.pathname += '/'; // normalizes the final url since it's provided by user
             }
           } else {
-            // `validateOptions` forces to provide `canonicalURL` or `config.site` at least.
-            // So step to check on empty values of `canonicalURL` and `config.site` is dropped.
+            /**
+             * `validateOptions` forces to provide `canonicalURL` or `config.site` at least.
+             * Thus, the step of checking for empty `canonicalURL` and `config.site` values is dropped.
+             */
             finalSiteUrl = new URL(config.base, config.site);
           }
 
@@ -115,7 +108,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             try {
               pages = excludeRoutes(exclude, pages);
             } catch (err) {
-              logger.error(['Error exclude pages', getErrorMessage(err)]);
+              logger.error(['Page exclusion error', getErrorMessage(err)]);
               return;
             }
           }
@@ -124,7 +117,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
             try {
               pages = pages.filter(filter);
             } catch (err) {
-              logger.error(['Error filtering pages', getErrorMessage(err)]);
+              logger.error(['Page filtering error', getErrorMessage(err)]);
               return;
             }
           }
@@ -141,12 +134,10 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
           if (pageUrls.length === 0) {
             if (typeof config.adapter !== 'undefined') {
               // offer suggestion for SSR users
-              logger.warn([
-                'No pages found!',
-                '`We can only detect sitemap routes for "static" projects. Since you are using an SSR adapter, we recommend manually listing your sitemap routes using the "customPages" integration option.',
-                '',
-                "Example: `sitemap({ customPages: ['https://example.com/route'] })`",
-              ]);
+              logger.warn(`No pages found!
+                We can only detect sitemap routes for "static" projects. Since you are using an SSR adapter, we recommend manually listing your sitemap routes using the "customPages" integration option.
+
+                Example: \`sitemap({ customPages: ['https://example.com/route'] })\``);
             } else {
               logger.warn('No pages found!');
             }
@@ -170,7 +161,7 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
               }
               urlData = serializedUrls;
             } catch (err) {
-              logger.error(['Error serializing pages', getErrorMessage(err)]);
+              logger.error(['Page serialization error', getErrorMessage(err)]);
               return;
             }
           }
@@ -204,4 +195,4 @@ const createPlugin = (options?: SitemapOptions): AstroIntegration => {
   };
 };
 
-export default createPlugin;
+export default createSitemapIntegration;

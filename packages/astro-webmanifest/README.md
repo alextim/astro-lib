@@ -94,7 +94,6 @@ The `astro-webmanifest` integration requires the [config](#config) object to hav
 
 __`astro.config.mjs`__
 
-
 ```js
 import { defineConfig } from 'astro/config';
 import webmanifest from 'astro-webmanifest';
@@ -199,7 +198,10 @@ Now, [build your site for production](https://docs.astro.build/en/reference/cli-
 </details>
 
 <details>
-  <summary>Example of inserted HTML in the &#60;head&#62; section of every generated page</summary>
+  <summary>Example of inserted HTML</summary>
+
+  All pages generated at build time will contain the following in the `<head>` section:
+
 
 ```html
 <link rel="icon" href="/favicon-32x32.png" type="image/png" />
@@ -212,7 +214,7 @@ Now, [build your site for production](https://docs.astro.build/en/reference/cli-
 
 :exclamation: Important notes: only official **@astrojs/\*** integrations are currently supported by Astro.
 
-There are two possibilities to make **astro-webmanifest** integration working with current version of Astro.
+There are two ways to make **astro-webmanifest** integration working with current version of Astro.
 
 Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
 
@@ -345,6 +347,19 @@ export default {
 </details>
 
 ## Configuration
+
+To configure this integration, pass an object to the `webmanifest()` function call in `astro.config.mjs`.
+
+__`astro.config.mjs`__
+
+```js
+...
+export default defineConfig({
+  integrations: [webmanifest({
+    name: ...
+  })]
+});
+```
 
 The integration option object extends the `Webmanifest` type and optionally has `config` and `locales` properties as an object.
 
@@ -879,7 +894,7 @@ module.exports = {
 };
 ```
 
-### How does the integration internally resolve a config?
+**How does the integration internally resolve a config?**
 
 | Options parameter provided? | External config exists? | Result                                           |
 | :-------------------------- | :---------------------: | :----------------------------------------------- |

@@ -130,7 +130,7 @@ Sitemap: https://example.com/sitemap-index.xml
 
 :exclamation: Important notes: only official **@astrojs/\*** integrations are currently supported by Astro.
 
-There are two possibilities to make **astro-robots-txt** integration working with current version of Astro.
+There are two ways to make **astro-robots-txt** integration working with current version of Astro.
 
 Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
 
@@ -250,7 +250,6 @@ export default {
 ```
 
 </details>
-
 
 <details>
   <summary><strong>host</strong></summary>
@@ -394,7 +393,7 @@ module.exports = {
 };
 ```
 
-### How does the integration internally resolve a config?
+**How does the integration internally resolve a config?**
 
 | Options parameter provided? | External config exists? | Result                                           |
 | :-------------------------- | :---------------------: | :----------------------------------------------- |
