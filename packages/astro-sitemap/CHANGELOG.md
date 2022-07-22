@@ -1,5 +1,11 @@
 # astro-sitemap
 
+## 0.2.8
+
+### Patch Changes
+
+- 30f8166: code refactoring and deps update
+
 ## 0.2.7
 
 ### Patch Changes
