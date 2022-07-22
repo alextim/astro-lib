@@ -108,7 +108,7 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
             try {
               pages = excludeRoutes(exclude, pages);
             } catch (err) {
-              logger.error(['Page exclusion error', getErrorMessage(err)]);
+              logger.error('Page exclusion error', getErrorMessage(err));
               return;
             }
           }
@@ -117,7 +117,7 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
             try {
               pages = pages.filter(filter);
             } catch (err) {
-              logger.error(['Page filtering error', getErrorMessage(err)]);
+              logger.error('Page filtering error', getErrorMessage(err));
               return;
             }
           }
@@ -161,7 +161,7 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
               }
               urlData = serializedUrls;
             } catch (err) {
-              logger.error(['Page serialization error', getErrorMessage(err)]);
+              logger.error('Page serialization error', getErrorMessage(err));
               return;
             }
           }
@@ -175,7 +175,7 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
             xslUrl,
             xmlns,
           });
-          logger.success([`${fileNames.map((name) => `\`${name}\``).join(', ')} are created.`, `Total entries: ${urlData.length}.`]);
+          logger.success(`${fileNames.map((name) => `\`${name}\``).join(', ')} are created.`, `Total entries: ${urlData.length}.`);
 
           if (createLinkInHead) {
             const sitemapHref = path.posix.join(config.base, fileNames[0]);

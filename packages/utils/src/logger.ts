@@ -1,9 +1,9 @@
 // @internal
 export interface ILogger {
-  info(msg: string): void;
-  success(msg: string): void;
-  warn(msg: string): void;
-  error(msg: string): void;
+  info(...msg: string[]): void;
+  success(...msg: string[]): void;
+  warn(...msg: string[]): void;
+  error(...msg: string[]): void;
 }
 
 // @internal
@@ -23,29 +23,25 @@ export class Logger implements ILogger {
     this.packageName = packageName;
   }
 
-  private toArray(msg: string | string[]) {
-    return Array.isArray(msg) ? msg : [msg];
-  }
-
-  private log(msg: string | string[], prefix: string = '') {
-    const s = Array.isArray(msg) ? msg.join('\n') : msg;
+  private log(msg: string[], prefix: string = '') {
+    const s = msg.join('\n');
     // eslint-disable-next-line no-console
     console.log(`%s${this.packageName}:%s ${s}\n`, prefix, prefix ? this.colors.reset : '');
   }
 
-  info(msg: string | string[]) {
+  info(...msg: string[]) {
     this.log(msg);
   }
 
-  success(msg: string | string[]) {
+  success(...msg: string[]) {
     this.log(msg, this.colors.fg.green);
   }
 
-  warn(msg: string | string[]) {
-    this.log(['Skipped!', ...this.toArray(msg)], this.colors.fg.yellow);
+  warn(...msg: string[]) {
+    this.log(['Skipped!', ...msg], this.colors.fg.yellow);
   }
 
-  error(msg: string | string[]) {
-    this.log(['Failed!', ...this.toArray(msg)], this.colors.fg.red);
+  error(...msg: string[]) {
+    this.log(['Failed!', ...msg], this.colors.fg.red);
   }
 }

@@ -63,7 +63,7 @@ const createRobotsTxtIntegration = (options: RobotsTxtOptions = {}): AstroIntegr
                 return;
               }
             } catch (err) {
-              logger.error(['Error transforming content', getErrorMessage(err)]);
+              logger.error('Error transforming content', getErrorMessage(err));
               return;
             }
           }
