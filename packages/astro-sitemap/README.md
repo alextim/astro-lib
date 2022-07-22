@@ -671,9 +671,6 @@ export default {
 
 ## Localization
 
-| **i18n**       |           `object`         |    No    |         |                                                                                                 |
-| `locales`      | `Record<String, String>`   |   Yes    |         | |
-
 Supply the integration config with the `i18n` option as an object with two required properties:
 
 <details>
