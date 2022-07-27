@@ -1,5 +1,11 @@
 # astro-sitemap
 
+## 0.3.0
+
+### Minor Changes
+
+- 6057e90: **Astro** has the new config option [output](https://docs.astro.build/en/reference/configuration-reference/#output).
+
 ## 0.2.8
 
 ### Patch Changes
