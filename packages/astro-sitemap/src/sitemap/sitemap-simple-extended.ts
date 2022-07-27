@@ -4,7 +4,7 @@ import { createWriteStream, WriteStream, promises } from 'node:fs';
 import { normalize, resolve } from 'node:path';
 import { Readable, pipeline } from 'node:stream';
 import { createGzip } from 'node:zlib';
-import { promisify } from 'node:util';
+import { format, promisify } from 'node:util';
 import { URL } from 'node:url';
 
 import { NSArgs } from '../index';
@@ -76,7 +76,7 @@ export const simpleSitemapAndIndexExtended = async ({
         xmlns,
       });
 
-      const chunkName = SITEMAP_CHUNK_TEMPLATE.replace('%d', i.toString(10)) + suffix;
+      const chunkName = format(SITEMAP_CHUNK_TEMPLATE, i) + suffix;
       result.push(chunkName);
 
       const writePath = resolve(destinationDir, chunkName);
