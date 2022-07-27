@@ -132,12 +132,14 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
           }
 
           if (pageUrls.length === 0) {
-            if (typeof config.adapter !== 'undefined') {
+            if (config.output !== 'static') {
               // offer suggestion for SSR users
-              logger.warn(`No pages found!
-                We can only detect sitemap routes for "static" projects. Since you are using an SSR adapter, we recommend manually listing your sitemap routes using the "customPages" integration option.
-
-                Example: \`sitemap({ customPages: ['https://example.com/route'] })\``);
+              logger.warn(
+                'No pages found!',
+                'We can only detect sitemap routes for "static" projects. Since you are using an SSR adapter, we recommend manually listing your sitemap routes using the "customPages" integration option.',
+                '',
+                "Example: `sitemap({ customPages: ['https://example.com/route'] })`",
+              );
             } else {
               logger.warn('No pages found!');
             }
