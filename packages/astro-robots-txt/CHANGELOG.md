@@ -1,5 +1,11 @@
 # astro-robots-txt
 
+## 0.3.8
+
+### Patch Changes
+
+- 31a8143: Astro v1.0, no changes
+
 ## 0.3.7
 
 ### Patch Changes
