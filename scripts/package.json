@@ -8,6 +8,6 @@
     "at-scripts": "./index.mjs"
   },
   "dependencies": {
-    "esbuild": "^0.14.50"
+    "esbuild": "^0.15.5"
   }
 }
