@@ -15,7 +15,6 @@
     "changeset": "changeset",
     "release": "pnpm run build && changeset publish",
     "build": "turbo run build --no-deps --scope=astro-robots-txt --scope=astro-webmanifest --scope=astro-sitemap",
-    "b": "turbo run build --no-deps --scope=@example/sitemap-basic",
     "build:examples": "turbo run build --scope=\"@example/*\"",
     "typecheck": "turbo run typecheck --no-deps --concurrency=1",
     "lint": "eslint \"packages/**/*.ts\"",
