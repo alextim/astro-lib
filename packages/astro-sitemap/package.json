@@ -41,7 +41,6 @@
   "dependencies": {
     "deepmerge": "^4.2.2",
     "minimatch": "^5.1.0",
-    "node-html-parser": "^5.4.1",
     "sitemap": "^7.1.1",
     "zod": "^3.18.0"
   },

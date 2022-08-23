@@ -1,5 +1,5 @@
+import { ILogger } from '@/at-utils';
 import { promises as fs } from 'node:fs';
-import { parse, HTMLElement } from 'node-html-parser';
 
 const addTailSlash = (s: string) => (s.endsWith('/') ? s : s + '/');
 const removeHeadSlash = (s: string) => s.replace(/^\/+/, '');
@@ -28,7 +28,13 @@ const getFileFile = (pathname: string) => {
   return `${removeTrailingSlash(pathname)}.html`;
 };
 
-export async function processPages(pages: { pathname: string }[], dir: URL, heads: Record<string, string>, buildFormat: string) {
+export async function processPages(
+  pages: { pathname: string }[],
+  dir: URL,
+  heads: Record<string, string>,
+  buildFormat: string,
+  logger: ILogger,
+) {
   if (buildFormat !== 'directory' && buildFormat !== 'file') {
     throw new Error(`Unsupported build.format: '${buildFormat}' in your astro.config`);
   }
@@ -41,21 +47,23 @@ export async function processPages(pages: { pathname: string }[], dir: URL, head
     return data;
   };
 
+  let insertedCount = 0;
+  const HEAD_END_TAG = '</head>';
   for (const page of pages) {
     const locale = getLocaleFromPathname(page.pathname);
 
     const fileUrl = new URL(buildFormat === 'directory' ? getFileDir(page.pathname) : getFileFile(page.pathname), dir);
 
-    const html = await fs.readFile(fileUrl, 'utf-8');
-    const root = parse(html);
-    let head = root.querySelector('head');
-    if (!head) {
-      head = new HTMLElement('head', {}, '', root);
-      root.appendChild(head);
-      console.warn(`<head> section will be created in \`${fileUrl.pathname}\`.`);
+    const content = await fs.readFile(fileUrl, 'utf-8');
+
+    const index = content.indexOf(HEAD_END_TAG);
+    if (index === -1) {
+      logger.info(`Cannot insert links. Reason: no <head> section in \`${fileUrl.pathname}\`.`);
+    } else {
+      const inlined = content.substring(0, index) + getData(locale) + content.substring(index);
+      await fs.writeFile(fileUrl, inlined, 'utf-8');
+      insertedCount += 1;
     }
-    head.innerHTML = head.innerHTML + getData(locale);
-    const inlined = root.toString();
-    await fs.writeFile(fileUrl, inlined, 'utf-8');
   }
+  return insertedCount;
 }

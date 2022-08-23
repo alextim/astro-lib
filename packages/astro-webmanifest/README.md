@@ -509,7 +509,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | Boolean |   No     | `true` |
 
-Enable or disable the favicon links insertion into `<head>`  
+Enable or disable the favicon links insertion into `<head>`.  
 
 This only works when the `icon` property is not empty and `createFavicon` is `true`.
 
@@ -654,7 +654,7 @@ export default {
 
 Enable or disable `apple-touch-icon` links into `<head>`.  
 
-iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links into `<head>` is needed.   
+iOS versions before 11.3 don't have support for web app manifest spec and don't recognize the icons defined in the webmanifest, so the creation of `apple-touch-icon` links into `<head>` is needed.  
 
 This only works when the `icon` property is not empty.
 

@@ -51,12 +51,16 @@ const onBuildDone = async (
     }
   }
 
-  if (pages.length > 0) {
-    const heads = getHeads(opts, config.base, results);
-    if (!isObjectEmpty(heads)) {
-      await processPages(pages, dir, heads, config.build.format);
-      logger.success('Webmanifest links are inserted into <head> section of generated pages.');
-    }
+  if (pages.length === 0) {
+    return;
+  }
+  const heads = getHeads(opts, config.base, results);
+  if (isObjectEmpty(heads)) {
+    return;
+  }
+  const insertedCount = await processPages(pages, dir, heads, config.build.format, logger);
+  if (insertedCount > 0) {
+    logger.success(`Webmanifest links are inserted into <head> section of generated pages (${insertedCount} of ${pages.length}).`);
   }
 };
 

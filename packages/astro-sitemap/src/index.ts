@@ -179,11 +179,13 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
           });
           logger.success(`${fileNames.map((name) => `\`${name}\``).join(', ')} are created.`, `Total entries: ${urlData.length}.`);
 
-          if (createLinkInHead) {
+          if (createLinkInHead && srcPages.length > 0) {
             const sitemapHref = path.posix.join(config.base, fileNames[0]);
             const headHTML = `<link rel="sitemap" type="application/xml" href="${sitemapHref}">`;
-            await processPages(srcPages, dir, headHTML, config.build.format);
-            logger.success('Sitemap links are inserted into <head> section of generated pages.');
+            const insertedCount = await processPages(srcPages, dir, headHTML, config.build.format, logger);
+            if (insertedCount > 0) {
+              logger.success(`Sitemap links are inserted into <head> section of generated pages (${insertedCount} of ${srcPages.length}).`);
+            }
           }
         } catch (err) {
           if (err instanceof ZodError) {
