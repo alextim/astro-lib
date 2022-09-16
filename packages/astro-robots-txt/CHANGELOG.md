@@ -1,5 +1,13 @@
 # astro-robots-txt
 
+## 0.3.9
+
+### Patch Changes
+
+- 7ad0be0: chore: deps update
+
+  fix: missing types
+
 ## 0.3.8
 
 ### Patch Changes
