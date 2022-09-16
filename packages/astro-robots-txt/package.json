@@ -32,7 +32,7 @@
     "dist/index.d.ts"
   ],
   "scripts": {
-    "build": "at-scripts create-pkg-name && at-scripts build && tsc -p tsconfig.build.json && at-scripts copy-index.d.ts",
+    "build": "at-scripts create-pkg-name && at-scripts build && tsc -p tsconfig.build.json && at-scripts copy index.d.ts",
     "typecheck": "tsc --noEmit --pretty",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
@@ -41,16 +41,16 @@
   "dependencies": {
     "deepmerge": "^4.2.2",
     "valid-filename": "^4.0.0",
-    "zod": "^3.18.0"
+    "zod": "^3.19.1"
   },
   "devDependencies": {
-    "@types/node": "^18.7.11",
-    "astro": "^1.0.7",
+    "@types/node": "^18.7.18",
+    "astro": "^1.2.5",
     "at-scripts": "workspace:*",
     "c8": "^7.12.0",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.9",
-    "vitest": "^0.22.1"
+    "typescript": "^4.8.3",
+    "vite": "^3.1.1",
+    "vitest": "^0.23.2"
   },
   "publishConfig": {
     "access": "public",

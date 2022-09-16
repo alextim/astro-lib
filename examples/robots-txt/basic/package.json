@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@astrojs/sitemap": "^1.0.0",
-    "astro": "^1.0.7",
+    "astro": "^1.2.5",
     "astro-robots-txt": "latest"
   }
 }

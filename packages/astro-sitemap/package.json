@@ -42,17 +42,17 @@
     "deepmerge": "^4.2.2",
     "minimatch": "^5.1.0",
     "sitemap": "^7.1.1",
-    "zod": "^3.18.0"
+    "zod": "^3.19.1"
   },
   "devDependencies": {
-    "@types/minimatch": "^3.0.5",
-    "@types/node": "^18.7.11",
-    "astro": "^1.0.7",
+    "@types/minimatch": "^5.1.2",
+    "@types/node": "^18.7.18",
+    "astro": "^1.2.5",
     "at-scripts": "workspace:*",
     "c8": "^7.12.0",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.9",
-    "vitest": "^0.22.1"
+    "typescript": "^4.8.3",
+    "vite": "^3.1.1",
+    "vitest": "^0.23.2"
   },
   "publishConfig": {
     "access": "public",
