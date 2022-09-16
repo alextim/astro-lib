@@ -173,9 +173,9 @@ export default defineConfig({
 | :-----------------------------: | :------: | :-------------: |
 |`Boolean` / `String` / `String[]`|   No     |     `true`      |
 
-If you omit `sitemap` option or its value is `true`, the resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap-index.xml`.  
+If you omit the `sitemap` parameter or set it to `true`, the resulting output in a _robots.txt_ will be `Sitemap: your-site-url/sitemap-index.xml`.  
 
-If you want to get a _robots.txt_ without `Sitemap: ...` record please set the `sitemap` option to `false`.
+If you want to get the _robots.txt_ file without the `Sitemap: ...` entry, set the `sitemap` parameter to `false`.
 
 __`astro.config.mjs`__
 
@@ -195,7 +195,7 @@ export default {
 };
 ```
 
-When the `sitemap` is `String` or `String[]` its values should be a valid URL. Only **http** or **https** protocols are allowed. 
+When the `sitemap` is `String` or `String[]` its values must be a valid URL. Only **http** or **https** protocols are allowed. 
 
 __`astro.config.mjs`__
 
@@ -227,7 +227,7 @@ export default {
 | :-----: | :------: | :-------------: |
 | `String`|   No     | `sitemap-index` |
 
-Sitemap file name before file extension (`.xml`). It will be used if the `sitemap` option is `true` or omitted.
+Sitemap file name before file extension (`.xml`). It will be used if the `sitemap` parameter is `true` or omitted.
 
 :grey_exclamation: [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) and [astro-sitemap](https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap) integrations have the `sitemap-index.xml` as their primary output. That is why the default value of `sitemapBaseFileName` is set to `sitemap-index`.
 
