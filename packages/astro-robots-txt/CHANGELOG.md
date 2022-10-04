@@ -1,5 +1,12 @@
 # astro-robots-txt
 
+## 0.3.10
+
+### Patch Changes
+
+- 54f0c95: The `host` option supports a boolean value as well.
+  `host: true` -> resolves the host automatically via the Astro `site` prop.
+
 ## 0.3.9
 
 ### Patch Changes
