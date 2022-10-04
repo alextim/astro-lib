@@ -11,7 +11,7 @@ const onBuildDone = async (pluginOptions: RobotsTxtOptions, config: AstroConfig)
   const opts = validateOptions(config.site, pluginOptions);
 
   const finalSiteHref = new URL(config.base, config.site).href;
-  let robotsTxtContent = getRobotsTxtContent(finalSiteHref, opts);
+  let robotsTxtContent = getRobotsTxtContent(finalSiteHref, opts, config.site!);
 
   if (opts.transform) {
     try {
@@ -63,6 +63,12 @@ describe('onBuildDone', () => {
   // host
   it('host = "", should return robots.txt without `Host:`', async () => {
     await expect(getRobotsTxt({ host: '' })).resolves.toMatchSnapshot();
+  });
+  it('host = false, should return robots.txt without `Host:`', async () => {
+    await expect(getRobotsTxt({ host: false })).resolves.toMatchSnapshot();
+  });
+  it('host = true, should return robots.txt with `Host: example.com`', async () => {
+    await expect(getRobotsTxt({ host: true })).resolves.toMatchSnapshot();
   });
   it('host is valid, should return robots.txt with `Host: abc`', async () => {
     await expect(getRobotsTxt({ host: 'abc' })).resolves.toMatchSnapshot();

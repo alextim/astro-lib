@@ -72,7 +72,7 @@ const getSitemapArr = (sitemap: string | string[] | boolean | undefined, finalSi
  *
  * @internal
  */
-export const getRobotsTxtContent = (finalSiteHref: string, opts: RobotsTxtOptions) => {
+export const getRobotsTxtContent = (finalSiteHref: string, opts: RobotsTxtOptions, site: string) => {
   const { host, sitemap, policy, sitemapBaseFileName } = opts!;
 
   let result = '';
@@ -86,7 +86,14 @@ export const getRobotsTxtContent = (finalSiteHref: string, opts: RobotsTxtOption
   });
 
   if (host) {
-    result += addLine('Host', host);
+    let hostStr: string;
+    if (typeof host === 'boolean') {
+      const { hostname } = new URL(site);
+      hostStr = hostname;
+    } else {
+      hostStr = host;
+    }
+    result += addLine('Host', hostStr);
   }
 
   return result;

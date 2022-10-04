@@ -104,10 +104,6 @@ Then, restart the dev server.
 
 The `astro-sitemap` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.\*_ using the `site` property.
 
-:exclamation: Provide the `experimental` property to your _astro.config.\*_, because only official **@astrojs/\*** integrations are currently supported by Astro. Set the `experimental.integrations` value to `true` or use the `--experimental-integrations` flag for build command.
-
-Then, apply this integration to your _astro.config.\*_ file using the `integrations` property.
-
 __`astro.config.mjs`__
 
 ```js
@@ -117,14 +113,8 @@ import sitemap from 'astro-sitemap';
 export default defineConfig({
   // ...
   site: 'https://example.com',
-  // Important!
-  // Only official '@astrojs/*' integrations are currently supported by Astro.
-  // Add 'experimental.integrations: true' to make 'astro-sitemap' working
-  // with 'astro build' command.
-  experimental: {
-    integrations: true,
-  },
-  integrations: [sitemap()],
+
+integrations: [sitemap()],
 });
 ```
 
@@ -202,9 +192,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     canonicalURL: 'https://another-domain.com',
   })],
@@ -229,9 +217,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     filter(page) {
       return !/exclude-this/.test(page);
@@ -258,9 +244,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     exclude: ['404', 'blog-*/'],
   })],
@@ -287,9 +271,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     customPages: [
       'https://example.com/virtual-one.html',
@@ -321,9 +303,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     entryLimit: 10000,
   })],
@@ -350,9 +330,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     changefreq: 'weekly',
   })],
@@ -378,9 +356,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     lastmod: Date(),
   })],
@@ -407,9 +383,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     priority: 0.9,
   })],
@@ -469,9 +443,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     serialize(item) { 
       if (/exclude-this/.test(item.url)) {
@@ -506,9 +478,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     xslUrl: 'https://example.com/style.xsl',
   })],
@@ -554,9 +524,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     xmlns: { 
       xhtml: true,
@@ -598,9 +566,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     lastmodDateOnly: true,
     lastmod: Date(),
@@ -628,9 +594,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     createLinkInHead: false,
   })],
@@ -676,9 +640,7 @@ import sitemap from 'astro-sitemap';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [sitemap({
     i18n: {
       // All URLs that don't contain `es` or `fr` after `https://example.com/` will be treated as default locale, i.e. `en`

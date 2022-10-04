@@ -100,15 +100,6 @@ import webmanifest from 'astro-webmanifest';
 
 export default defineConfig({
   // ...
-  /**
-   *  Important!
-   * Only official '@astrojs/*' integrations are currently supported by Astro.
-   * Add 'experimental.integrations: true' to make 'astro-webmanifest' working
-   * with 'astro build' command.
-   **/
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       /**
@@ -212,29 +203,6 @@ Now, [build your site for production](https://docs.astro.build/en/reference/cli-
 
 </details>
 
-:exclamation: Important notes: only official **@astrojs/\*** integrations are currently supported by Astro.
-
-There are two ways to make **astro-webmanifest** integration working with current version of Astro.
-
-Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
-
-__`astro.config.mjs`__
-
-```js
-export default {
-  // ...
-  experimental: {
-    integrations: true,
-  },
-};
-```
-
-Or use the `--experimental-integrations` flag for the build command.
-
-```sh
-astro build --experimental-integrations
-```
-
 ## Generations modes
 
 There are 3 usage modes of `astro-webmanifest` integration: auto, hybrid and manual.
@@ -252,9 +220,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -280,9 +245,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -320,9 +282,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -379,9 +338,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -414,9 +370,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -449,9 +402,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -484,9 +434,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -519,9 +466,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -556,9 +500,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -591,9 +532,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -628,9 +566,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -664,9 +599,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -703,9 +635,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',
@@ -787,9 +716,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       icon: 'src/images/logomark-light.svg',
@@ -841,9 +767,6 @@ __`astro.config.mjs`__
 import webmanifest from 'astro-webmanifest';
 
 export default {
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       name: 'Your app name',  

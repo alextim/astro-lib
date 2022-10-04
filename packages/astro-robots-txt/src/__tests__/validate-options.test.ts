@@ -80,7 +80,7 @@ describe('test validateOptions', () => {
     };
     expect(() => validateOptions(site, options)).toThrow();
   });
-  it('host is empty, should not throw', () => {
+  it('host is empty string, should not throw', () => {
     const options: RobotsTxtOptions = {
       sitemap: false,
       host: '',
@@ -90,6 +90,28 @@ describe('test validateOptions', () => {
     const result = fn();
     expect(result?.sitemap).toBeFalsy();
     expect(result?.host).toBe('');
+  });
+  it('host is `false`, should not throw', () => {
+    const options: RobotsTxtOptions = {
+      sitemap: false,
+      host: false,
+    };
+    const fn = () => validateOptions(site, options);
+    expect(fn).not.toThrow();
+    const result = fn();
+    expect(result?.sitemap).toBeFalsy();
+    expect(result?.host).toBeFalsy();
+  });
+  it('host is `true`, should not throw', () => {
+    const options: RobotsTxtOptions = {
+      sitemap: false,
+      host: true,
+    };
+    const fn = () => validateOptions(site, options);
+    expect(fn).not.toThrow();
+    const result = fn();
+    expect(result?.sitemap).toBeFalsy();
+    expect(result?.host).toBeTruthy();
   });
 
   // policy

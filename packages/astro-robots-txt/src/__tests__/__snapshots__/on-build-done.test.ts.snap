@@ -47,6 +47,21 @@ Sitemap: https://example.com/sitemap-index.xml
 "
 `;
 
+exports[`onBuildDone > host = false, should return robots.txt without \`Host:\` 1`] = `
+"User-agent: *
+Allow: /
+Sitemap: https://example.com/sitemap-index.xml
+"
+`;
+
+exports[`onBuildDone > host = true, should return robots.txt with \`Host: example.com\` 1`] = `
+"User-agent: *
+Allow: /
+Sitemap: https://example.com/sitemap-index.xml
+Host: example.com
+"
+`;
+
 exports[`onBuildDone > host is valid, should return robots.txt with \`Host: abc.com\` 1`] = `
 "User-agent: *
 Allow: /

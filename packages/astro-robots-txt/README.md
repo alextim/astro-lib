@@ -97,13 +97,6 @@ import robotsTxt from 'astro-robots-txt';
 export default defineConfig({
   site: 'https://example.com',
 
-  // Important!
-  // Only official '@astrojs/*' integrations are currently supported by Astro.
-  // Add 'experimental.integrations: true' to make 'astro-robots-txt' working
-  // with 'astro build' command.
-  experimental: {
-    integrations: true,
-  },
   integrations: [robotsTxt()],
 });
 ```
@@ -127,29 +120,6 @@ Sitemap: https://example.com/sitemap-index.xml
 ```
 
 </details>
-
-:exclamation: Important notes: only official **@astrojs/\*** integrations are currently supported by Astro.
-
-There are two ways to make **astro-robots-txt** integration working with current version of Astro.
-
-Set the `experimental.integrations` option to `true` in your _astro.config.\*_.
-
-__`astro.config.mjs`__
-
-```js
-export default {
-  // ...
-  experimental: {
-    integrations: true,
-  },
-};
-```
-
-Or use the `--experimental-integrations` flag for the build command.
-
-```sh
-astro build --experimental-integrations
-```
 
 ## Configuration
 
@@ -184,9 +154,6 @@ import robotsTxt from 'astro-robots-txt';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     robotsTxt({
       sitemap: false,
@@ -204,9 +171,6 @@ import robotsTxt from 'astro-robots-txt';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     robotsTxt({
       sitemap: [
@@ -238,9 +202,7 @@ import robotsTxt from 'astro-robots-txt';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [
     robotsTxt({
       sitemapBaseFileName: 'custom-sitemap',
@@ -254,10 +216,9 @@ export default {
 <details>
   <summary><strong>host</strong></summary>
 
-| Type     | Required |  Default value  |
-| :------: | :------: | :-------------: |
-| `String` |   No     |  `undefined`    |
-
+| Type                | Required |  Default value  |
+| :-----------------: | :------: | :-------------: |
+|`Boolean` / `String` |   No     |  `undefined`    |
 
 Some crawlers (Yandex) support a `Host` directive, allowing websites with multiple mirrors to specify their preferred domain.
 
@@ -268,9 +229,7 @@ import robotsTxt from 'astro-robots-txt';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [
     robotsTxt({
       host: 'your-domain-name.com',
@@ -278,6 +237,8 @@ export default {
   ],
 };
 ```
+
+If the `host` option is set to `true`, the `Host` output will be automatically resolved using the [site](https://docs.astro.build/en/reference/configuration-reference/#site) option from Astro config.
 
 </details>
 
@@ -297,9 +258,7 @@ import robotsTxt from 'astro-robots-txt';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [
     robotsTxt({
       transform(content) {
@@ -338,9 +297,7 @@ import robotsTxt from 'astro-robots-txt';
 
 export default {
   site: 'https://example.com',
-  experimental: {
-    integrations: true,
-  },
+
   integrations: [
     robotsTxt({
       policy: [

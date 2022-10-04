@@ -3,12 +3,6 @@ import webmanifest from 'astro-webmanifest';
 
 // https://astro.build/config
 export default defineConfig({
-  // Important!
-  // Only official '@astrojs/*' integrations are currently supported by Astro.
-  // Add 'experimental.integrations: true' to make 'astro-webmanifest' working with 'astro build' command.
-  experimental: {
-    integrations: true,
-  },
   integrations: [
     webmanifest({
       icon: 'src/images/logomark-light.svg',

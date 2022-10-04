@@ -16,8 +16,9 @@ export const RobotsTxtOptionsSchema = z
   .object({
     host: z
       .string()
+      .or(z.boolean())
       .optional()
-      .refine((val) => !val || isValidHostname(val), {
+      .refine((val) => !val || typeof val === 'boolean' || isValidHostname(val), {
         message: 'Not valid host',
       }),
 

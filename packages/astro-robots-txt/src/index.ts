@@ -21,7 +21,7 @@ export type PolicyItem = {
 
 export type RobotsTxtOptions =
   | {
-      host?: string;
+      host?: string | boolean;
       sitemap?: string | string[] | boolean;
       policy?: PolicyItem[];
       sitemapBaseFileName?: string;
@@ -53,7 +53,7 @@ const createRobotsTxtIntegration = (options: RobotsTxtOptions = {}): AstroIntegr
           const opts = validateOptions(config.site, merged);
 
           const finalSiteHref = new URL(config.base, config.site).href;
-          let robotsTxtContent = getRobotsTxtContent(finalSiteHref, opts);
+          let robotsTxtContent = getRobotsTxtContent(finalSiteHref, opts, config.site!);
 
           if (opts.transform) {
             try {
