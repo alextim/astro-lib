@@ -1,5 +1,11 @@
 # astro-webmanifest
 
+## 0.4.2
+
+### Patch Changes
+
+- a74260d: chore: deps update
+
 ## 0.4.1
 
 ### Patch Changes
