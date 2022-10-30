@@ -319,7 +319,11 @@ export default {
 | :----------: | :------: | :-------------: |
 | `ChangeFreq` |   No     |   `undefined`   |
 
-Sitemap specific. How frequently the page is likely to change. Ignored by Google.  
+This option corresponds to the `<changefreq>` tag in the [Sitemap XML specification.](https://www.sitemaps.org/protocol.html).  
+
+How frequently the page is likely to change.  
+
+Ignored by Google.  
 
 Available values: `always` | `hourly` | `daily` | `weekly` | `monthly` | `yearly` | `never`.
 
@@ -347,7 +351,9 @@ export default {
 | :----------: | :------: | :-------------: |
 | `Date`       |   No     |   `undefined`   |
 
-Sitemap specific. The date of page last modification.
+This option corresponds to the `<lastmod>` tag in the [Sitemap XML specification.](https://www.sitemaps.org/protocol.html).  
+
+The date of page last modification.
 
 __`astro.config.mjs`__
 
@@ -372,7 +378,9 @@ export default {
 | :----------: | :------: | :-------------: |
 | `Number`     |   No     |   `undefined`   |
 
-Sitemap specific. The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.  
+This option corresponds to the `<priority>` tag in the [Sitemap XML specification.](https://www.sitemaps.org/protocol.html).  
+
+The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.  
 
 Ignored by Google.
 
