@@ -1,5 +1,13 @@
 # astro-webmanifest
 
+## 0.4.3
+
+### Patch Changes
+
+- 7cb29c0: - chore: deps update;
+  - fix: `astro-integration` key added to **keywords** in `package.json` for `npx astro add...` command to work correctly;
+  - refactor: external config loader.
+
 ## 0.4.2
 
 ### Patch Changes
