@@ -10,7 +10,7 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^1.4.4",
+    "astro": "^1.9.1",
     "astro-sitemap": "latest"
   }
 }

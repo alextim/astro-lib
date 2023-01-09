@@ -10,9 +10,9 @@ import { packageName } from './data/pkg-name';
 import onBuildDone from './on-build-done';
 import { crossOriginValues, dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
-export type CrossOrigin = typeof crossOriginValues[number];
-export type IconPurpose = typeof iconPurposeValues[number];
-export type ApplicationPlatform = typeof applicationPlatformValues[number];
+export type CrossOrigin = (typeof crossOriginValues)[number];
+export type IconPurpose = (typeof iconPurposeValues)[number];
+export type ApplicationPlatform = (typeof applicationPlatformValues)[number];
 
 export type RelatedApplication = {
   platform: ApplicationPlatform;
@@ -47,11 +47,11 @@ export type Shortcut = {
   icons?: Icon[];
 };
 
-export type Display = typeof displayValues[number];
+export type Display = (typeof displayValues)[number];
 
-export type Dir = typeof dirValues[number];
+export type Dir = (typeof dirValues)[number];
 
-export type Orientation = typeof orientationValues[number];
+export type Orientation = (typeof orientationValues)[number];
 
 export type ProtocolHandler = {
   protocol: string;

@@ -1,4 +1,4 @@
-const i18n = {
+export const i18n = {
   defaultLocale: 'en',
   locales: {
     en: {
@@ -21,5 +21,3 @@ const i18n = {
     },
   },
 };
-
-export default i18n;

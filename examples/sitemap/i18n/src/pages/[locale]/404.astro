@@ -1,5 +1,5 @@
 ---
-import i18n from '../../i18n.mjs';
+import { i18n } from '../../i18n.mjs';
 
 export async function getStaticPaths() {
   const items = Object.entries(i18n.locales).filter(([locale]) => locale !== i18n.defaultLocale);

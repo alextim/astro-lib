@@ -3,6 +3,7 @@
   "version": "0.4.1",
   "description": "Generate a sitemap for Astro with more control",
   "keywords": [
+    "astro-integration",
     "astro",
     "astro-component",
     "seo",
@@ -40,19 +41,19 @@
   },
   "dependencies": {
     "deepmerge": "^4.2.2",
-    "minimatch": "^5.1.0",
+    "minimatch": "^5.1.2",
     "sitemap": "^7.1.1",
-    "zod": "^3.19.1"
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.8.2",
-    "astro": "^1.4.4",
+    "@types/node": "^18.11.18",
+    "astro": "^1.9.1",
     "at-scripts": "workspace:*",
     "c8": "^7.12.0",
-    "typescript": "^4.8.4",
-    "vite": "^3.1.4",
-    "vitest": "^0.23.4"
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4",
+    "vitest": "^0.27.0"
   },
   "publishConfig": {
     "access": "public",
