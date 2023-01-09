@@ -1,6 +1,6 @@
 {
   "name": "astro-webmanifest",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Generate a webmanifest and icons for Astro to make progressive web apps",
   "keywords": [
     "astro-integration",
