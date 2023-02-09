@@ -11,7 +11,7 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^1.9.1",
+    "astro": "^2.0.9",
     "astro-sitemap": "latest"
   }
 }

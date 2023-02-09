@@ -40,20 +40,20 @@
     "test:pub": "pnpm publish --dry-run --no-git-checks"
   },
   "dependencies": {
-    "deepmerge": "^4.2.2",
-    "minimatch": "^5.1.2",
+    "deepmerge": "^4.3.0",
+    "minimatch": "^6.1.6",
     "sitemap": "^7.1.1",
-    "zod": "^3.20.2"
+    "zod": "^3.20.6"
   },
   "devDependencies": {
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.11.18",
-    "astro": "^1.9.1",
+    "@types/node": "^18.13.0",
+    "astro": "^2.0.9",
     "at-scripts": "workspace:*",
     "c8": "^7.12.0",
-    "typescript": "^4.9.4",
-    "vite": "^4.0.4",
-    "vitest": "^0.27.0"
+    "typescript": "^4.9.5",
+    "vite": "^4.1.1",
+    "vitest": "^0.28.4"
   },
   "publishConfig": {
     "access": "public",
