@@ -1,6 +1,6 @@
 {
   "name": "astro-robots-txt",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "Generate a robots.txt for Astro",
   "keywords": [
     "astro-integration",

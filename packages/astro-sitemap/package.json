@@ -1,6 +1,6 @@
 {
   "name": "astro-sitemap",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Generate a sitemap for Astro with more control",
   "keywords": [
     "astro-integration",

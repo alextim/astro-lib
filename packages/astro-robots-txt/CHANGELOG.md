@@ -1,5 +1,11 @@
 # astro-robots-txt
 
+## 0.3.12
+
+### Patch Changes
+
+- 062f9e4: chore: deps update
+
 ## 0.3.11
 
 ### Patch Changes
