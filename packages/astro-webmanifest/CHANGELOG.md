@@ -1,5 +1,19 @@
 # astro-webmanifest
 
+## 0.6.0
+
+### Minor Changes
+
+- 13d0e50: ### Minor changes
+
+  - The external config logic is implemented using [@proload/core](https://github.com/natemoo-re/proload) as well as [Astro](https://github.com/withastro/astro). Typescript configs are supported now.
+
+  - The _changefreq_ option property type changed from the `ChangeFreq` type to the `EnumChangeFreq` enum to make it compatible with [sitemap](https://github.com/ekalinin/sitemap.js).
+
+  ### Patch changes
+
+  - chore: deps update
+
 ## 0.5.0
 
 ### Minor Changes
