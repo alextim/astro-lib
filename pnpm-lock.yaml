@@ -52,7 +52,7 @@ importers:
     specifiers:
       '@astrojs/sitemap': ^1.0.1
       astro: ^2.0.13
-      astro-robots-txt: workspace:*
+      astro-robots-txt: latest
     devDependencies:
       '@astrojs/sitemap': 1.0.1
       astro: 2.0.13
@@ -62,7 +62,7 @@ importers:
     specifiers:
       '@astrojs/sitemap': ^1.0.1
       astro: ^2.0.13
-      astro-robots-txt: workspace:*
+      astro-robots-txt: latest
     devDependencies:
       '@astrojs/sitemap': 1.0.1
       astro: 2.0.13
@@ -71,7 +71,7 @@ importers:
   examples/sitemap/advanced:
     specifiers:
       astro: ^2.0.13
-      astro-sitemap: workspace:*
+      astro-sitemap: latest
     devDependencies:
       astro: 2.0.13
       astro-sitemap: link:../../../packages/astro-sitemap
@@ -79,7 +79,7 @@ importers:
   examples/sitemap/basic:
     specifiers:
       astro: ^2.0.13
-      astro-sitemap: workspace:*
+      astro-sitemap: latest
     devDependencies:
       astro: 2.0.13
       astro-sitemap: link:../../../packages/astro-sitemap
@@ -87,7 +87,7 @@ importers:
   examples/sitemap/i18n:
     specifiers:
       astro: ^2.0.13
-      astro-sitemap: workspace:*
+      astro-sitemap: latest
     devDependencies:
       astro: 2.0.13
       astro-sitemap: link:../../../packages/astro-sitemap
@@ -95,7 +95,7 @@ importers:
   examples/webmanifest/advanced:
     specifiers:
       astro: ^2.0.13
-      astro-webmanifest: workspace:*
+      astro-webmanifest: latest
     devDependencies:
       astro: 2.0.13
       astro-webmanifest: link:../../../packages/astro-webmanifest
@@ -103,7 +103,7 @@ importers:
   examples/webmanifest/basic:
     specifiers:
       astro: ^2.0.13
-      astro-webmanifest: workspace:*
+      astro-webmanifest: latest
     devDependencies:
       astro: 2.0.13
       astro-webmanifest: link:../../../packages/astro-webmanifest
@@ -111,7 +111,7 @@ importers:
   examples/webmanifest/i18n:
     specifiers:
       astro: ^2.0.13
-      astro-webmanifest: workspace:*
+      astro-webmanifest: latest
     devDependencies:
       astro: 2.0.13
       astro-webmanifest: link:../../../packages/astro-webmanifest
