@@ -1,5 +1,17 @@
 # astro-webmanifest
 
+## 0.5.0
+
+### Minor Changes
+
+- b95d515: ### Minor changes
+
+  - The external config logic is implemented using [@proload/core](https://github.com/natemoo-re/proload) as well as [Astro](https://github.com/withastro/astro). Typescript configs are supported now.
+
+  ### Patch changes
+
+  - chore: deps update
+
 ## 0.4.4
 
 ### Patch Changes
