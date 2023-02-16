@@ -1,6 +1,5 @@
 ---
-'astro-webmanifest': minor
-'astro-robots-txt': minor
+'astro-sitemap': minor
 ---
 
 ### Minor changes
@@ -12,4 +11,3 @@
 ### Patch changes
 
 - chore: deps update
-
