@@ -1,11 +1,13 @@
 import path from 'node:path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
 import merge from 'deepmerge';
-import { SitemapItemLoose as SitemapItemLooseBase, EnumChangefreq, LinkItem as LinkItemBase } from 'sitemap';
+import type { SitemapItemLoose as SitemapItemLooseBase, LinkItem as LinkItemBase, EnumChangefreq } from 'sitemap';
+import load from '@proload/core';
+import typescript from '@proload/plugin-tsm';
 
-import { Logger, loadConfig, getErrorMessage } from '@/at-utils';
+import { Logger, getErrorMessage } from '@/at-utils';
 import { validateOptions } from './validate-options';
 import { generateSitemap } from './generate-sitemap';
 import { simpleSitemapAndIndexExtended } from './sitemap/sitemap-simple-extended';
@@ -17,7 +19,7 @@ import { excludeRoutes } from './helpers/exclude-routes';
 import { packageName } from './data/pkg-name';
 
 export type LinkItem = LinkItemBase;
-export type ChangeFreq = EnumChangefreq;
+export { EnumChangefreq } from 'sitemap';
 export type SitemapItemLoose = SitemapItemLooseBase;
 export type SitemapItem = Pick<SitemapItemLoose, 'url' | 'lastmod' | 'changefreq' | 'priority' | 'links'>;
 
@@ -49,7 +51,7 @@ export type SitemapOptions =
       xmlns?: NSArgs;
 
       // sitemap specific
-      changefreq?: ChangeFreq;
+      changefreq?: EnumChangefreq;
       lastmod?: Date;
       priority?: number;
 
@@ -79,8 +81,14 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
 
       'astro:build:done': async ({ dir, pages: srcPages }) => {
         const namespace = packageName.replace('astro-', '');
-        const external = (await loadConfig(namespace, config.root)) || {};
-        const merged: SitemapOptions = merge(external, options);
+
+        load.use([typescript]);
+        const external = (await load(namespace, {
+          mustExist: false,
+          cwd: fileURLToPath(config.root),
+        })) as load.Config<SitemapOptions>;
+
+        const merged: SitemapOptions = merge(external?.value || {}, options);
 
         try {
           const opts = validateOptions(config.site, merged);

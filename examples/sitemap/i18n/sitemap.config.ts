@@ -1,4 +1,4 @@
-import { i18n } from './src/i18n.mjs';
+import { i18n } from './src/i18n';
 
 /** @type {import('astro-sitemap').SitemapOptions} */
 const sitemapConfig = {

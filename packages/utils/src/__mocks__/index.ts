@@ -10,7 +10,6 @@ export {
   isDirExists,
   ILogger,
   cloneDeep,
-  loadConfig,
   getErrorMessage,
 } from '../index';
 

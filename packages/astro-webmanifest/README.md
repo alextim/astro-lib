@@ -797,7 +797,7 @@ You can explore a localization usage in this demo [repo](https://github.com/alex
 
 ## External config file
 
-You can configure the integration using the external file `webmanifest.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+You can configure the integration using the external file `webmanifest.config.*` (`js`, `cjs`, `mjs`, `ts`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
 The external config must contain the default export statement:
 
@@ -828,7 +828,6 @@ module.exports = {
 
 The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).  
 
-:exclamation: The current version of the integration doesn't support typescript configs.
 
 ## Examples
 

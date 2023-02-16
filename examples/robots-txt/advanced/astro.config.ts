@@ -7,7 +7,7 @@ import robotsTxt from 'astro-robots-txt';
 // So, we commented all below.
 //
 /*
-import siteConfig from './site.config.mjs';
+import siteConfig from './site.config';
 
 const robotsConfig = {
   policy: [

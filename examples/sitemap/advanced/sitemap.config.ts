@@ -1,7 +1,9 @@
+import type { SitemapOptions } from 'astro-sitemap';
+import { EnumChangefreq } from 'astro-sitemap';
+
 const canonicalURL = 'http://localhost:3000';
 
-/** @type {import('astro-sitemap').SitemapOptions} */
-const sitemapConfig = {
+const sitemapConfig: SitemapOptions = {
   canonicalURL,
   customPages: [`${canonicalURL}/virtual-one.html`, `${canonicalURL}/virtual-two.html`, `${canonicalURL}/virtual-3/`],
 
@@ -30,7 +32,7 @@ const sitemapConfig = {
   },
 
   // sitemap specific
-  changefreq: 'yearly',
+  changefreq: EnumChangefreq.YEARLY,
   lastmod: new Date('2019-12-31'),
   priority: 0.4,
 
@@ -38,12 +40,13 @@ const sitemapConfig = {
     if (/virtual-one/.test(item.url)) {
       return undefined;
     }
+
     if (/special-page/.test(item.url)) {
-      item.changefreq = 'daily';
-      item.lastmod = new Date();
+      item.changefreq = EnumChangefreq.DAILY;
+      item.lastmod = new Date().toISOString();
       item.priority = 0.9;
 
-      item.img = [
+      (item as any).img = [
         {
           url: 'http://test.com/img1.jpg',
           caption: 'An image',
@@ -59,7 +62,7 @@ const sitemapConfig = {
           license: 'https://creativecommons.org/licenses/by/4.0/',
         },
       ];
-      item.video = [
+      (item as any).video = [
         {
           thumbnail_loc: 'http://test.com/tmbn1.jpg',
           title: 'A video title',
@@ -78,7 +81,7 @@ const sitemapConfig = {
     return item;
   },
 
-  createLinkInHead: true,
+  createLinkInHead: false,
 };
 
 export default sitemapConfig;

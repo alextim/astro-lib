@@ -317,7 +317,7 @@ export default {
 
 |  Type        | Required |  Default value  |
 | :----------: | :------: | :-------------: |
-| `ChangeFreq` |   No     |   `undefined`   |
+| `EnumChangeFreq` |   No     |   `undefined`   |
 
 This option corresponds to the `<changefreq>` tag in the [Sitemap XML specification.](https://www.sitemaps.org/protocol.html).  
 
@@ -325,7 +325,19 @@ How frequently the page is likely to change.
 
 Ignored by Google.  
 
-Available values: `always` | `hourly` | `daily` | `weekly` | `monthly` | `yearly` | `never`.
+Available values: 
+
+```js
+export enum EnumChangefreq {
+  DAILY = 'daily',
+  MONTHLY = 'monthly',
+  ALWAYS = 'always',
+  HOURLY = 'hourly',
+  WEEKLY = 'weekly',
+  YEARLY = 'yearly',
+  NEVER = 'never',
+}
+```
 
 __`astro.config.mjs`__
 
@@ -336,7 +348,7 @@ export default {
   site: 'https://example.com',
 
   integrations: [sitemap({
-    changefreq: 'weekly',
+    changefreq: EnumChangeFreq.WEEKLY,
   })],
 };
 ```
@@ -699,7 +711,7 @@ __Example of XML output__
 
 ## External config file
 
-You can configure the integration using the external file `sitemap.config.*` (`js`, `cjs`, `mjs`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
+You can configure the integration using the external file `sitemap.config.*` (`js`, `cjs`, `mjs`, `ts`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
 
 The external config must contain the default export statement:
 
@@ -729,8 +741,6 @@ module.exports = {
 | Yes                         |           Yes           | External config is merged with options parameter |
 
 The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/advanced).
-
-:exclamation: The current version of the integration doesn't support typescript configs.
 
 ## Examples
 

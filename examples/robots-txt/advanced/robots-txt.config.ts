@@ -1,7 +1,7 @@
-import siteConfig from './site.config.mjs';
+import type { RobotsTxtOptions } from 'astro-robots-txt';
+import siteConfig from './site.config';
 
-/** @type {import('astro-robots-txt').RobotsTxtOptions} */
-const robotsConfig = {
+const robotsConfig: RobotsTxtOptions = {
   policy: [
     {
       userAgent: '*',

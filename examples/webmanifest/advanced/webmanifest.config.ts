@@ -1,5 +1,6 @@
-/** @type {import('astro-webmanifest').WebmanifestOptions} */
-const webmanifestConfig = {
+import type { WebmanifestOptions } from 'astro-webmanifest';
+
+const webmanifestConfig: WebmanifestOptions = {
   config: {
     iconPurpose: ['maskable'], // default - undefined
     createFavicon: true, // default - true
