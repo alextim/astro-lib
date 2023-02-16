@@ -9,8 +9,8 @@ importers:
       '@types/node': ^18.13.0
       '@typescript-eslint/eslint-plugin': ^5.52.0
       '@typescript-eslint/parser': ^5.52.0
-      astro: ^2.0.12
-      c8: ^7.12.0
+      astro: ^2.0.13
+      c8: ^7.13.0
       commitlint: ^17.4.3
       esbuild: ^0.17.8
       eslint: ^8.34.0
@@ -31,8 +31,8 @@ importers:
       '@types/node': 18.13.0
       '@typescript-eslint/eslint-plugin': 5.52.0_6cfvjsbua5ptj65675bqcn6oza
       '@typescript-eslint/parser': 5.52.0_7kw3g6rralp5ps6mg3uyzz6azm
-      astro: 2.0.12_@types+node@18.13.0
-      c8: 7.12.0
+      astro: 2.0.13_@types+node@18.13.0
+      c8: 7.13.0
       commitlint: 17.4.3
       esbuild: 0.17.8
       eslint: 8.34.0
@@ -51,69 +51,69 @@ importers:
   examples/robots-txt/advanced:
     specifiers:
       '@astrojs/sitemap': ^1.0.1
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-robots-txt: workspace:*
     devDependencies:
       '@astrojs/sitemap': 1.0.1
-      astro: 2.0.12
+      astro: 2.0.13
       astro-robots-txt: link:../../../packages/astro-robots-txt
 
   examples/robots-txt/basic:
     specifiers:
       '@astrojs/sitemap': ^1.0.1
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-robots-txt: workspace:*
     devDependencies:
       '@astrojs/sitemap': 1.0.1
-      astro: 2.0.12
+      astro: 2.0.13
       astro-robots-txt: link:../../../packages/astro-robots-txt
 
   examples/sitemap/advanced:
     specifiers:
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-sitemap: workspace:*
     devDependencies:
-      astro: 2.0.12
+      astro: 2.0.13
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/basic:
     specifiers:
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-sitemap: workspace:*
     devDependencies:
-      astro: 2.0.12
+      astro: 2.0.13
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/sitemap/i18n:
     specifiers:
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-sitemap: workspace:*
     devDependencies:
-      astro: 2.0.12
+      astro: 2.0.13
       astro-sitemap: link:../../../packages/astro-sitemap
 
   examples/webmanifest/advanced:
     specifiers:
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-webmanifest: workspace:*
     devDependencies:
-      astro: 2.0.12
+      astro: 2.0.13
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   examples/webmanifest/basic:
     specifiers:
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-webmanifest: workspace:*
     devDependencies:
-      astro: 2.0.12
+      astro: 2.0.13
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   examples/webmanifest/i18n:
     specifiers:
-      astro: ^2.0.12
+      astro: ^2.0.13
       astro-webmanifest: workspace:*
     devDependencies:
-      astro: 2.0.12
+      astro: 2.0.13
       astro-webmanifest: link:../../../packages/astro-webmanifest
 
   packages/astro-robots-txt:
@@ -121,9 +121,9 @@ importers:
       '@proload/core': ^0.3.3
       '@proload/plugin-tsm': ^0.2.1
       '@types/node': ^18.13.0
-      astro: ^2.0.12
+      astro: ^2.0.13
       at-scripts: workspace:*
-      c8: ^7.12.0
+      c8: ^7.13.0
       deepmerge: ^4.3.0
       typescript: ^4.9.5
       valid-filename: ^4.0.0
@@ -138,9 +138,9 @@ importers:
       zod: 3.20.6
     devDependencies:
       '@types/node': 18.13.0
-      astro: 2.0.12_@types+node@18.13.0
+      astro: 2.0.13_@types+node@18.13.0
       at-scripts: link:../../scripts
-      c8: 7.12.0
+      c8: 7.13.0
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.13.0
       vitest: 0.28.5
@@ -151,9 +151,9 @@ importers:
       '@proload/plugin-tsm': ^0.2.1
       '@types/minimatch': ^5.1.2
       '@types/node': ^18.13.0
-      astro: ^2.0.12
+      astro: ^2.0.13
       at-scripts: workspace:*
-      c8: ^7.12.0
+      c8: ^7.13.0
       deepmerge: ^4.3.0
       minimatch: ^6.2.0
       sitemap: ^7.1.1
@@ -171,9 +171,9 @@ importers:
     devDependencies:
       '@types/minimatch': 5.1.2
       '@types/node': 18.13.0
-      astro: 2.0.12_@types+node@18.13.0
+      astro: 2.0.13_@types+node@18.13.0
       at-scripts: link:../../scripts
-      c8: 7.12.0
+      c8: 7.13.0
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.13.0
       vitest: 0.28.5
@@ -184,9 +184,9 @@ importers:
       '@proload/plugin-tsm': ^0.2.1
       '@types/node': ^18.13.0
       '@types/sharp': ^0.31.1
-      astro: ^2.0.12
+      astro: ^2.0.13
       at-scripts: workspace:*
-      c8: ^7.12.0
+      c8: ^7.13.0
       deepmerge: ^4.3.0
       sharp: ^0.31.3
       typescript: ^4.9.5
@@ -204,9 +204,9 @@ importers:
     devDependencies:
       '@types/node': 18.13.0
       '@types/sharp': 0.31.1
-      astro: 2.0.12_@types+node@18.13.0
+      astro: 2.0.13_@types+node@18.13.0
       at-scripts: link:../../scripts
-      c8: 7.12.0
+      c8: 7.13.0
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.13.0
       vitest: 0.28.5
@@ -214,13 +214,13 @@ importers:
   packages/utils:
     specifiers:
       '@types/node': ^18.13.0
-      c8: ^7.12.0
+      c8: ^7.13.0
       typescript: ^4.9.5
       vite: ^4.1.1
       vitest: ^0.28.5
     devDependencies:
       '@types/node': 18.13.0
-      c8: 7.12.0
+      c8: 7.13.0
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.13.0
       vitest: 0.28.5
@@ -267,13 +267,13 @@ packages:
       vscode-uri: 3.0.7
     dev: true
 
-  /@astrojs/markdown-remark/2.0.1_astro@2.0.12:
+  /@astrojs/markdown-remark/2.0.1_astro@2.0.13:
     resolution: {integrity: sha512-xQF1rXGJN18m+zZucwRRtmNehuhPMMhZhi6HWKrtpEAKnHSPk8lqf1GXgKH7/Sypglu8ivdECZ+EGs6kOYVasQ==}
     peerDependencies:
       astro: ^2.0.2
     dependencies:
       '@astrojs/prism': 2.0.0
-      astro: 2.0.12_@types+node@18.13.0
+      astro: 2.0.13_@types+node@18.13.0
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.1
       rehype-raw: 6.1.1
@@ -2016,14 +2016,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /astro/2.0.12:
-    resolution: {integrity: sha512-qtAqPSfvUuA94Lt38ErB+pe1JrPzMsdxhLLxmbMA44JLriFAjkKA60mZf+woaYxe9l8Gc0KQ0oKa4rE4ucrA8A==}
+  /astro/2.0.13:
+    resolution: {integrity: sha512-TyRFn6VpWiiYKhogt3W7O3eU05YQ61rlOU/Vwr/USZkHVLFXnEtWYFVcBYXoQ8cKXfEdc4JIZMmk923UzsMlZg==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/compiler': 1.1.1
       '@astrojs/language-server': 0.28.3
-      '@astrojs/markdown-remark': 2.0.1_astro@2.0.12
+      '@astrojs/markdown-remark': 2.0.1_astro@2.0.13
       '@astrojs/telemetry': 2.0.0
       '@astrojs/webapi': 2.0.0
       '@babel/core': 7.20.12
@@ -2083,14 +2083,14 @@ packages:
       - terser
     dev: true
 
-  /astro/2.0.12_@types+node@18.13.0:
-    resolution: {integrity: sha512-qtAqPSfvUuA94Lt38ErB+pe1JrPzMsdxhLLxmbMA44JLriFAjkKA60mZf+woaYxe9l8Gc0KQ0oKa4rE4ucrA8A==}
+  /astro/2.0.13_@types+node@18.13.0:
+    resolution: {integrity: sha512-TyRFn6VpWiiYKhogt3W7O3eU05YQ61rlOU/Vwr/USZkHVLFXnEtWYFVcBYXoQ8cKXfEdc4JIZMmk923UzsMlZg==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/compiler': 1.1.1
       '@astrojs/language-server': 0.28.3
-      '@astrojs/markdown-remark': 2.0.1_astro@2.0.12
+      '@astrojs/markdown-remark': 2.0.1_astro@2.0.13
       '@astrojs/telemetry': 2.0.0
       '@astrojs/webapi': 2.0.0
       '@babel/core': 7.20.12
@@ -2264,8 +2264,8 @@ packages:
       streamsearch: 1.1.0
     dev: true
 
-  /c8/7.12.0:
-    resolution: {integrity: sha512-CtgQrHOkyxr5koX1wEUmN/5cfDa2ckbHRA4Gy5LAL0zaCFtVWJS5++n+w4/sr2GWGerBxgTjpKeDclk/Qk6W/A==}
+  /c8/7.13.0:
+    resolution: {integrity: sha512-/NL4hQTv1gBL6J6ei80zu3IiTrmePDKXKXOTLpHvcIWZTVYQlDhVWjjWvkhICylE8EwwnMVzDZugCvdx0/DIIA==}
     engines: {node: '>=10.12.0'}
     hasBin: true
     dependencies:
