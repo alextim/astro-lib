@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "astro": "^2.0.13",
-    "astro-sitemap": "workspace:*"
+    "astro-sitemap": "latest"
   }
 }

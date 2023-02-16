@@ -11,6 +11,6 @@
   },
   "devDependencies": {
     "astro": "^2.0.13",
-    "astro-webmanifest": "workspace:*"
+    "astro-webmanifest": "latest"
   }
 }

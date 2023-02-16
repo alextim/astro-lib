@@ -12,6 +12,6 @@
   "devDependencies": {
     "@astrojs/sitemap": "^1.0.1",
     "astro": "^2.0.13",
-    "astro-robots-txt": "workspace:*"
+    "astro-robots-txt": "latest"
   }
 }
