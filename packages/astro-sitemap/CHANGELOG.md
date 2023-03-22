@@ -1,5 +1,11 @@
 # astro-sitemap
 
+## 0.5.1
+
+### Patch Changes
+
+- 1ff6997: chore: deps update
+
 ## 0.5.0
 
 ### Minor Changes

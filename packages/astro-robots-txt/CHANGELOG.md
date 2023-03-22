@@ -1,5 +1,11 @@
 # astro-robots-txt
 
+## 0.4.1
+
+### Patch Changes
+
+- 1ff6997: chore: deps update
+
 ## 0.4.0
 
 ### Minor Changes
