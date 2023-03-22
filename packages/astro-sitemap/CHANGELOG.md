@@ -10,15 +10,13 @@
 
 ### Minor Changes
 
-- a994b61: ### Minor changes
+- a994b61: The external config logic is implemented using [@proload/core](https://github.com/natemoo-re/proload) as well as [Astro](https://github.com/withastro/astro). Typescript configs are supported now.
 
-  - The external config logic is implemented using [@proload/core](https://github.com/natemoo-re/proload) as well as [Astro](https://github.com/withastro/astro). Typescript configs are supported now.
+- The _changefreq_ option property type changed from the `ChangeFreq` type to the `EnumChangeFreq` enum to make it compatible with [sitemap](https://github.com/ekalinin/sitemap.js).
 
-  - The _changefreq_ option property type changed from the `ChangeFreq` type to the `EnumChangeFreq` enum to make it compatible with [sitemap](https://github.com/ekalinin/sitemap.js).
+### Patch changes
 
-  ### Patch changes
-
-  - chore: deps update
+- chore: deps update
 
 ## 0.4.3
 
