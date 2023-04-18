@@ -1,4 +1,4 @@
-import { isNumber } from './is-number';
+import { isNumber } from './is-number.js';
 // @internal
 export const isValidUrlEx = (s: any) => {
   if (typeof s !== 'string' || !s) {

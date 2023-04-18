@@ -2,21 +2,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
-import merge from 'deepmerge';
 import type { SitemapItemLoose as SitemapItemLooseBase, LinkItem as LinkItemBase, EnumChangefreq } from 'sitemap';
-import load from '@proload/core';
-import typescript from '@proload/plugin-tsm';
 
 import { Logger, getErrorMessage } from '@/at-utils';
-import { validateOptions } from './validate-options';
-import { generateSitemap } from './generate-sitemap';
-import { simpleSitemapAndIndexExtended } from './sitemap/sitemap-simple-extended';
-import { processPages } from './process-pages';
-import { excludeRoutes } from './helpers/exclude-routes';
+
+import { validateOptions } from './validate-options.js';
+import { generateSitemap } from './generate-sitemap.js';
+import { simpleSitemapAndIndexExtended } from './sitemap/sitemap-simple-extended.js';
+import { processPages } from './process-pages.js';
+import { excludeRoutes } from './helpers/exclude-routes.js';
 /**
  * `pkg-name.ts` is generated during build from the `name` property of a `package.json`
  */
-import { packageName } from './data/pkg-name';
+import { packageName } from './data/pkg-name.js';
 
 export type LinkItem = LinkItemBase;
 export { EnumChangefreq } from 'sitemap';
@@ -80,18 +78,8 @@ const createSitemapIntegration = (options: SitemapOptions = {}): AstroIntegratio
       },
 
       'astro:build:done': async ({ dir, pages: srcPages }) => {
-        const namespace = packageName.replace('astro-', '');
-
-        load.use([typescript]);
-        const external = (await load(namespace, {
-          mustExist: false,
-          cwd: fileURLToPath(config.root),
-        })) as load.Config<SitemapOptions>;
-
-        const merged: SitemapOptions = merge(external?.value || {}, options);
-
         try {
-          const opts = validateOptions(config.site, merged);
+          const opts = validateOptions(config.site, options);
 
           const { filter, exclude, customPages, canonicalURL, entryLimit, lastmodDateOnly, xslUrl, xmlns, serialize, createLinkInHead } =
             opts;

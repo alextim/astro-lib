@@ -1,6 +1,8 @@
-import { i18n } from './src/i18n';
+import { defineConfig } from 'astro/config';
+import sitemap from 'astro-sitemap';
 
-/** @type {import('astro-sitemap').SitemapOptions} */
+import { i18n } from './src/i18n.mjs';
+
 const sitemapConfig = {
   // added
   i18n: {
@@ -12,4 +14,7 @@ const sitemapConfig = {
   },
 };
 
-export default sitemapConfig;
+export default defineConfig({
+  site: 'https://example.com',
+  integrations: [sitemap(sitemapConfig)],
+});

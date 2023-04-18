@@ -10,7 +10,6 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 - <strong>[Installation](#installation)</strong>
 - <strong>[Usage](#usage)</strong>
 - <strong>[Configuration](#configuration)</strong>
-- <strong>[External config file](#external-config-file)</strong>
 - <strong>[Examples](#examples)</strong>
 - <strong>[Contributing](#contributing)</strong>
 - <strong>[Changelog](#changelog)</strong>
@@ -327,39 +326,6 @@ export default {
 ```
 
 </details>
-
-## External config file
-
-You can configure the integration using the external file `robots-txt.config.*` (`js`, `cjs`, `mjs`, `ts`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
-
-The external config must contain the default export statement:
-
-```js
-// ESM
-export default {
-  ...
-};
-```
-
-or
-
-```js
-// CommonJS
-module.exports = {
-  ...
-};
-```
-
-**How does the integration internally resolve a config?**
-
-| Options parameter provided? | External config exists? | Result                                           |
-| :-------------------------- | :---------------------: | :----------------------------------------------- |
-| No                          |           No            | Default config used                              |
-| Yes                         |           No            | Options parameter used                           |
-| No                          |           Yes           | External config used                             |
-| Yes                         |           Yes           | External config is merged with options parameter |
-
-The external configuration usage example is in the demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/robots-txt/advanced).
 
 ## Examples
 

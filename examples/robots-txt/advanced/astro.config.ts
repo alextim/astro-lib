@@ -2,30 +2,14 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
 
-//
-// The external config is used.
-// So, we commented all below.
-//
-/*
-import siteConfig from './site.config';
-
-const robotsConfig = {
-  policy: [
-    {
-      userAgent: '*',
-      // The next line enables or disables the crawling on the `robots.txt` level
-      disallow: siteConfig.disableIndexing ? '/' : '',
-    },
-  ],
-};
-*/
+import robotsConfig from './robots-txt.config';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
   integrations: [
     sitemap(),
-    robotsTxt(),
+    robotsTxt(robotsConfig),
     // robotsTxt(robotsConfig),
   ],
 });

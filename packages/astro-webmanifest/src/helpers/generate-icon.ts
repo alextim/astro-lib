@@ -2,7 +2,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 import { promises as fs } from 'node:fs';
 import { isDirExists } from '@/at-utils';
-import type { Icon } from '../index';
+import type { Icon } from '../index.js';
 
 export async function generateIcon(icon: Icon, srcIcon: string, dir: URL) {
   const { sizes = '' } = icon;

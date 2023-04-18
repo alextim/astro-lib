@@ -1,4 +1,5 @@
-import { promises as fs, PathLike } from 'node:fs';
+import type { PathLike } from 'node:fs';
+import { promises as fs } from 'node:fs';
 
 export async function isDirExists(dir: PathLike) {
   try {

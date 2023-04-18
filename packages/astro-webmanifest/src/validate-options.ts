@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import isValidFilename from 'valid-filename';
+
 import { isObjectEmpty } from '@/at-utils';
-import type { WebmanifestOptions } from './index';
-import { WEBMANIFEST_CONFIG_DEFAULTS } from './config-defaults';
-import { crossOriginValues, iconPurposeValues } from './constants';
-import { manifestSchema } from './manifest-schema';
+import type { WebmanifestOptions } from './index.js';
+import { WEBMANIFEST_CONFIG_DEFAULTS } from './config-defaults.js';
+import { crossOriginValues, iconPurposeValues } from './constants.js';
+import { manifestSchema } from './manifest-schema.js';
 
 export const validateOptions = (opts: WebmanifestOptions) => {
   const getLocalesValidator = () => {

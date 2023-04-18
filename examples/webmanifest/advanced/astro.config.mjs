@@ -1,6 +1,7 @@
-import type { WebmanifestOptions } from 'astro-webmanifest';
+import { defineConfig } from 'astro/config';
+import webmanifest from 'astro-webmanifest';
 
-const webmanifestConfig: WebmanifestOptions = {
+const webmanifestConfig = {
   config: {
     iconPurpose: ['maskable'], // default - undefined
     createFavicon: true, // default - true
@@ -93,4 +94,13 @@ const webmanifestConfig: WebmanifestOptions = {
   ],
 };
 
-export default webmanifestConfig;
+// https://astro.build/config
+export default defineConfig({
+  build: {
+    // By default the 'format' option is 'directory',
+    //
+    // 'file' is used for demonstration purposes.
+    format: 'file',
+  },
+  integrations: [webmanifest(webmanifestConfig)],
+});

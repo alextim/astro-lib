@@ -1,5 +1,5 @@
-import type { WebmanifestOptions, Webmanifest, Icon, Shortcut } from './index';
-import { defaultIcons } from './default-icons';
+import type { WebmanifestOptions, Webmanifest, Icon, Shortcut } from './index.js';
+import { defaultIcons } from './default-icons.js';
 
 export const getManifest = ({ icon, config, locales, name, icons, shortcuts, ...opts }: WebmanifestOptions = { name: '' }): Webmanifest => {
   const add: string[] = config?.iconPurpose || [];

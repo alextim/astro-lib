@@ -10,7 +10,7 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^2.1.5",
-    "astro-webmanifest": "latest"
+    "astro": "^2.3.0",
+    "astro-webmanifest": "^0.5.1"
   }
 }

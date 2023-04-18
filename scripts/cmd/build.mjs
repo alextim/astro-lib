@@ -12,9 +12,9 @@ export async function build() {
     minify: false,
     platform: 'node',
     format: 'esm',
-    // sourcemap: true,
-    // sourcesContent: false,
-    target: 'node14',
+    sourcemap: false,
+    sourcesContent: false,
+    target: 'node16',
     // logLevel: 'verbose',
     external: Object.keys(dependencies).concat(Object.keys(peerDependencies)),
     tsconfig: 'tsconfig.json', // 'tsconfig.build.json',
@@ -22,6 +22,7 @@ export async function build() {
 
   try {
     await esbuild.build(config);
+    // eslint-disable-next-line no-console
     console.info('⚡ Done');
   } catch (err) {
     console.error(err);

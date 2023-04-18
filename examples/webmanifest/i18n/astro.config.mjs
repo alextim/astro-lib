@@ -1,5 +1,6 @@
-import type { WebmanifestOptions } from 'astro-webmanifest';
-import i18n from './src/i18n';
+import { defineConfig } from 'astro/config';
+import webmanifest from 'astro-webmanifest';
+import i18n from './src/i18n.mjs';
 
 const locales = { ...i18n.locales };
 delete locales[i18n.defaultLocale]; // here we delete default language
@@ -9,7 +10,7 @@ Object.keys(locales).forEach((locale) => {
   locales[locale].start_url = `/${locale}`;
 });
 
-const webmanifest: WebmanifestOptions = {
+const webmanifestConfig = {
   // common source to generate favicon and icons
   icon: 'src/images/logomark-light.svg',
 
@@ -26,4 +27,7 @@ const webmanifest: WebmanifestOptions = {
   locales,
 };
 
-export default webmanifest;
+// https://astro.build/config
+export default defineConfig({
+  integrations: [webmanifest(webmanifestConfig)],
+});

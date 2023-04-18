@@ -1,5 +1,5 @@
-import type { WebmanifestOptions, Webmanifest } from './index';
-import { favicons } from './default-icons';
+import type { WebmanifestOptions, Webmanifest } from './index.js';
+import { favicons } from './default-icons.js';
 
 export const getHeads = (opts: WebmanifestOptions, base: string, results: { locale: string; outfile: string; manifest: Webmanifest }[]) => {
   const { icon: srcIcon, config: cfg } = opts!;

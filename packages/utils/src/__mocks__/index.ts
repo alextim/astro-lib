@@ -1,5 +1,4 @@
 import { vi } from 'vitest';
-
 export {
   isObjectEmpty,
   isValidHostname,
@@ -8,12 +7,12 @@ export {
   isValidUrl,
   isFileExistsSync,
   isDirExists,
-  ILogger,
   cloneDeep,
   getErrorMessage,
 } from '../index';
+export type { ILogger } from '../index';
 
-export const Logger = vi.fn().mockImplementation(() => ({
+export const Logger: any = vi.fn().mockImplementation(() => ({
   warn: vi.fn(),
   error: vi.fn(),
   success: vi.fn(),

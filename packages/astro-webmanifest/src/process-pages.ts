@@ -1,5 +1,6 @@
-import { ILogger } from '@/at-utils';
 import { promises as fs } from 'node:fs';
+
+import type { ILogger } from '@/at-utils';
 
 const addTailSlash = (s: string) => (s.endsWith('/') ? s : s + '/');
 const removeHeadSlash = (s: string) => s.replace(/^\/+/, '');

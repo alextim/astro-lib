@@ -1,16 +1,12 @@
-import { fileURLToPath } from 'node:url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
-import merge from 'deepmerge';
-import load from '@proload/core';
-import typescript from '@proload/plugin-tsm';
 
 import { Logger } from '@/at-utils';
 /**
  * `pkg-name.ts` is generated during build from `name` property of `package.json`
  */
-import { packageName } from './data/pkg-name';
-import onBuildDone from './on-build-done';
+import { packageName } from './data/pkg-name.js';
+import onBuildDone from './on-build-done.js';
 import { crossOriginValues, dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
 
 export type CrossOrigin = (typeof crossOriginValues)[number];
@@ -132,24 +128,13 @@ const createPlugin = (options?: WebmanifestOptions): AstroIntegration => {
         config = cfg;
       },
       'astro:build:done': async ({ dir, pages }) => {
-        const namespace = packageName.replace('astro-', '');
-
-        load.use([typescript]);
-        const external = (await load(namespace, {
-          mustExist: false,
-          cwd: fileURLToPath(config.root),
-        })) as load.Config<WebmanifestOptions>;
-
-        if (!external?.value && !options) {
-          throw new Error(
-            `${packageName}: no configurations found. Provide external config "${namespace}.config.*" or options in "astro.config.*"`,
-          );
+        if (!options) {
+          throw new Error(`${packageName}: no configurations found. Provide options in "astro.config.*"`);
         }
-        const merged: WebmanifestOptions = merge(external?.value || {}, options || {});
 
         const logger = new Logger(packageName);
         try {
-          await onBuildDone(merged, config, dir, pages, logger);
+          await onBuildDone(options, config, dir, pages, logger);
         } catch (err) {
           if (err instanceof ZodError) {
             logger.warn(formatConfigErrorMessage(err));

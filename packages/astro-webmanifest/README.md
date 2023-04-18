@@ -12,7 +12,6 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 - <strong>[Generation modes](#generation-modes)</strong>
 - <strong>[Configuration](#configuration)</strong>
 - <strong>[Localization](#localization)</strong>
-- <strong>[External config file](#external-config-file)</strong>
 - <strong>[Examples](#examples)</strong>
 - <strong>[Contributing](#contributing)</strong>
 - <strong>[Changelog](#changelog)</strong>
@@ -309,6 +308,8 @@ export default {
 
 To configure this integration, pass an object to the `webmanifest()` function call in `astro.config.mjs`.
 
+:bulb: For this integration to work correctly, it is recommended to use the `mjs` or `js` configuration file extensions.
+
 __`astro.config.mjs`__
 
 ```js
@@ -319,6 +320,7 @@ export default defineConfig({
   })]
 });
 ```
+
 
 The integration option object extends the `Webmanifest` type and optionally has `config` and `locales` properties as an object.
 
@@ -794,40 +796,6 @@ In this configuration, the default `en` language and `fr` language will have a c
 :bulb: The favicon will be the same for all languages. The source for generation will be taken from the default language.
 
 You can explore a localization usage in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/i18n).
-
-## External config file
-
-You can configure the integration using the external file `webmanifest.config.*` (`js`, `cjs`, `mjs`, `ts`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
-
-The external config must contain the default export statement:
-
-```js
-// ESM
-export default {
-  ...
-};
-```
-
-or
-
-```js
-// CommonJS
-module.exports = {
-  ...
-};
-```
-
-**How does the integration internally resolve a config?**
-
-| Options parameter provided? | External config exists? | Result                                           |
-| :-------------------------- | :---------------------: | :----------------------------------------------- |
-| No                          |           No            | Throw error                                      |
-| Yes                         |           No            | Options parameter used                           |
-| No                          |           Yes           | External config used                             |
-| Yes                         |           Yes           | External config is merged with options parameter |
-
-The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/webmanifest/advanced).  
-
 
 ## Examples
 

@@ -1,4 +1,4 @@
-import type { Icon } from './index';
+import type { Icon } from './index.js';
 
 export const favicons: Icon[] = [
   {

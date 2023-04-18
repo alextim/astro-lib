@@ -1,6 +1,6 @@
 # Demo for astro-sitemap integration
 
-This demo shows the advanced usage of `astro-sitemap` integration with an external configuration.
+This demo shows the advanced usage of `astro-sitemap` integration.
 
 XSL template code is based on this [repo](https://github.com/pedroborges/xml-sitemap-stylesheet).
 

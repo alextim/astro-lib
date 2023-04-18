@@ -1,4 +1,4 @@
-import type { WebmanifestOptions, CrossOrigin } from './index';
+import type { WebmanifestOptions, CrossOrigin } from './index.js';
 
 export const WEBMANIFEST_CONFIG_DEFAULTS: WebmanifestOptions & any = {
   config: {

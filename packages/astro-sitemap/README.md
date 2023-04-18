@@ -11,7 +11,6 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 - <strong>[Usage](#usage)</strong>
 - <strong>[Configuration](#configuration)</strong>
 - <strong>[Localization](#localization)</strong>
-- <strong>[External config file](#external-config-file)</strong>
 - <strong>[Examples](#examples)</strong>
 - <strong>[Contributing](#contributing)</strong>
 - <strong>[Changelog](#changelog)</strong>
@@ -32,7 +31,6 @@ Advantages of **astro-sitemap** over [@astrojs/sitemap](https://github.com/witha
   - `lastmod` format option;
   - possibility to add a link to custom XSL.
 - Automatically creates a link to the sitemap in the `<head>` section of generated pages.
-- Flexible configuration: configure the integration with an external config, `astro.config.*` or a combination of both.
 - Better logging.
 
 Part of the functionality of **astro-sitemap** has become a minor update of the official integration [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap) from v0.1.2 to version 0.2.0.
@@ -104,6 +102,7 @@ Then, restart the dev server.
 
 The `astro-sitemap` integration requires a deployment / site URL for generation. Add your site's URL under your _astro.config.\*_ using the `site` property.
 
+
 __`astro.config.mjs`__
 
 ```js
@@ -165,6 +164,8 @@ All pages generated at build time will contain a link to the sitemap in the `<he
 
 To configure this integration, pass an object to the `sitemap()` function call in `astro.config.mjs`.
 
+:bulb: For this integration to work correctly, it is recommended to use the `mjs` or `js` configuration file extensions.
+
 __`astro.config.mjs`__
 
 ```js
@@ -175,6 +176,7 @@ export default defineConfig({
   })]
 });
 ```
+
 
 <details>
   <summary><strong>canonicalURL</strong></summary>
@@ -709,38 +711,6 @@ __Example of XML output__
 </urlset>
 ```
 
-## External config file
-
-You can configure the integration using the external file `sitemap.config.*` (`js`, `cjs`, `mjs`, `ts`). Put it in the application `root` folder (see about `root` in official [docs](https://docs.astro.build/en/reference/configuration-reference/)).
-
-The external config must contain the default export statement:
-
-```js
-// ESM
-export default {
-  ...
-};
-```
-
-or
-
-```js
-// CommonJS
-module.exports = {
-  ...
-};
-```
-
-**How does the integration internally resolve a config?**
-
-| Options parameter provided? | External config exists? | Result                                           |
-| :-------------------------- | :---------------------: | :----------------------------------------------- |
-| No                          |           No            | Default config used                              |
-| Yes                         |           No            | Options parameter used                           |
-| No                          |           Yes           | External config used                             |
-| Yes                         |           Yes           | External config is merged with options parameter |
-
-The external configuration usage example is in this demo [repo](https://github.com/alextim/astro-lib/tree/main/examples/sitemap/advanced).
 
 ## Examples
 

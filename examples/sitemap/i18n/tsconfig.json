@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     // Enable top-level await, and other modern ESM features.
     "target": "ESNext",
@@ -9,7 +10,16 @@
     "resolveJsonModule": true,
     // Enable stricter transpilation for better output.
     "isolatedModules": true,
-    // Add type definitions for our Vite runtime.
-    "types": ["vite/client"]
+    // Astro directly run TypeScript code, no transpilation needed.
+    "noEmit": true,
+    // Report an error when importing a file using a casing different from the casing on disk.
+    "forceConsistentCasingInFileNames": true,
+    // Properly support importing CJS modules in ESM
+    "esModuleInterop": true,
+    // Skip typechecking libraries and .d.ts files
+    "skipLibCheck": true,
+    // TypeScript 5.0 changed how `isolatedModules` and `importsNotUsedAsValues` works, deprecating the later
+    // Until the majority of users are on TypeScript 5.0, we'll have to supress those deprecation errors
+    "ignoreDeprecations": "5.0"
   }
 }

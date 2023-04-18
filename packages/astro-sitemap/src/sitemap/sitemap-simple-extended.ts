@@ -1,4 +1,5 @@
-import { SitemapAndIndexStream, SitemapStream, SitemapItemLoose } from 'sitemap';
+import type { SitemapItemLoose } from 'sitemap';
+import { SitemapAndIndexStream, SitemapStream } from 'sitemap';
 
 import { createWriteStream, WriteStream, promises } from 'node:fs';
 import { normalize, resolve } from 'node:path';
@@ -7,8 +8,8 @@ import { createGzip } from 'node:zlib';
 import { format, promisify } from 'node:util';
 import { URL } from 'node:url';
 
-import { NSArgs } from '../index';
-import { SITEMAP_INDEX_FILE_NAME, SITEMAP_CHUNK_TEMPLATE } from '../output-files';
+import type { NSArgs } from '../index.js';
+import { SITEMAP_INDEX_FILE_NAME, SITEMAP_CHUNK_TEMPLATE } from '../output-files.js';
 
 const pipelineAsync = promisify(pipeline);
 /**

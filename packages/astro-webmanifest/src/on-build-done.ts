@@ -1,13 +1,15 @@
 import type { AstroConfig } from 'astro';
-import { ILogger, isObjectEmpty } from '@/at-utils';
 
-import type { WebmanifestOptions } from './index';
-import { isIconSquare } from './helpers/is-icon-square';
-import { validateOptions } from './validate-options';
-import { processFavicon } from './process-favicon';
-import { createManifest } from './create-manifest';
-import { processPages } from './process-pages';
-import { getHeads } from './get-heads';
+import type { ILogger } from '@/at-utils';
+import { isObjectEmpty } from '@/at-utils';
+
+import type { WebmanifestOptions } from './index.js';
+import { isIconSquare } from './helpers/is-icon-square.js';
+import { validateOptions } from './validate-options.js';
+import { processFavicon } from './process-favicon.js';
+import { createManifest } from './create-manifest.js';
+import { processPages } from './process-pages.js';
+import { getHeads } from './get-heads.js';
 
 const onBuildDone = async (
   pluginOptions: WebmanifestOptions,

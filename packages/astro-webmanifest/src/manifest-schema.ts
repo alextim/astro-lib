@@ -1,7 +1,9 @@
 import { string, z } from 'zod';
+
 import { isFileExistsSync, isValidUrlEx } from '@/at-utils';
-import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants';
-import isValidSize from './helpers/is-valid-size';
+
+import { dirValues, displayValues, orientationValues, applicationPlatformValues, iconPurposeValues } from './constants.js';
+import isValidSize from './helpers/is-valid-size.js';
 
 const schemaRelativeUrl = z.string().refine((val) => !val || isValidUrlEx(val), { message: 'Not valid URL' });
 const schemaRelativeUrlRequired = z

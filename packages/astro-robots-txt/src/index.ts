@@ -1,10 +1,6 @@
 import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 import { ZodError } from 'zod';
-import merge from 'deepmerge';
-import load from '@proload/core';
-import typescript from '@proload/plugin-tsm';
 
 import { Logger, getErrorMessage } from '@/at-utils';
 import { validateOptions } from './validate-options';
@@ -48,18 +44,9 @@ const createRobotsTxtIntegration = (options: RobotsTxtOptions = {}): AstroIntegr
       },
 
       'astro:build:done': async ({ dir }) => {
-        const namespace = packageName.replace('astro-', '');
-
-        load.use([typescript]);
-        const external = (await load(namespace, {
-          mustExist: false,
-          cwd: fileURLToPath(config.root),
-        })) as load.Config<RobotsTxtOptions>;
-
-        const merged: RobotsTxtOptions = merge(external?.value || {}, options);
         const logger = new Logger(packageName);
         try {
-          const opts = validateOptions(config.site, merged);
+          const opts = validateOptions(config.site, options);
 
           const finalSiteHref = new URL(config.base, config.site).href;
           let robotsTxtContent = getRobotsTxtContent(finalSiteHref, opts, config.site!);
