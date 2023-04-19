@@ -22,8 +22,8 @@
     "build:examples:sitemap": "turbo run build --scope=\"@example/sitemap*\"",
     "build:sitemap": "turbo run build --scope=@example/sitemap-advanced",
     "typecheck": "turbo run typecheck --no-deps --concurrency=1",
-    "lint": "eslint \"packages/**/*.ts\"",
-    "lint:fix": "eslint --fix \"packages/**/*.ts\"",
+    "lint": "eslint . --ext .ts,.js,.mjs,.cjs",
+    "lint:fix": "eslint . --fix --ext .ts,.js,.mjs,.cjs",
     "format": "prettier -w  .",
     "prettier:check": "prettier --check .",
     "test": "turbo run test --no-deps --concurrency=1",
@@ -31,7 +31,8 @@
     "test:pub": "turbo run test:pub --no-deps",
     "prepare": "husky install",
     "clean:all": "rimraf ./**/turbo-build.log ./**/dist ./**/.pnpm-debug.log ./**/.turbo ./**/coverage ./**/pnpm-lock.yaml ./**/node_modules",
-    "version": "changeset version && pnpm install --no-frozen-lockfile && pnpm run format"
+    "version": "changeset version && pnpm install --no-frozen-lockfile && pnpm run format",
+    "ncu": "ncu -u --deep -x rimraf,sharp"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
@@ -50,7 +51,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
     "prettier": "^2.8.7",
-    "rimraf": "3.0.2",
+    "rimraf": "5.0.0",
     "turbo": "^1.9.3",
     "typescript": "^5.0.4",
     "vite": "^4.2.2",

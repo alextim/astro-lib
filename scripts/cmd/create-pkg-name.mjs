@@ -14,6 +14,7 @@ export function createPkgName() {
   const currData = `// @internal\nexport const ${constName} = '${name}';\n`;
   if (currData != prevData) {
     fs.writeFileSync(pkgNamePath, currData);
+    // eslint-disable-next-line no-console
     console.log(`new '${fileName}' with ${constName} = '${name}' created\n`);
   }
 }
