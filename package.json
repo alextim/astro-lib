@@ -32,6 +32,7 @@
     "prepare": "husky install",
     "clean:all": "rimraf ./**/turbo-build.log ./**/dist ./**/.pnpm-debug.log ./**/.turbo ./**/coverage ./**/pnpm-lock.yaml ./**/node_modules",
     "version": "changeset version && pnpm install --no-frozen-lockfile",
+    "preinstall": "npx only-allow pnpm",
     "ncu": "ncu -u --deep -x rimraf,sharp"
   },
   "devDependencies": {
