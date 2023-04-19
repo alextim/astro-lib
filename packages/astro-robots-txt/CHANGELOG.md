@@ -1,5 +1,19 @@
 # astro-robots-txt
 
+## 0.5.0
+
+### Minor Changes
+
+- 62acf9c: ## Minor changes
+
+  The ability to load an external configuration file depended on the [proload](https://github.com/natemoo-re/proload) package.
+  The updated Astro removed the **proload** dependency from its core. Therefore, this option is no more available for the integration.
+
+  ## Patch changes
+
+  chore: deps update
+  fix: update compilation target for Node 16
+
 ## 0.4.1
 
 ### Patch Changes
