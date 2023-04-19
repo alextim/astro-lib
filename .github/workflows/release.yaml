@@ -12,7 +12,8 @@ on:
       - '!.github/**'
       - '!.husky/**'
       - '!.vscode/**'
-      - '!**/*.md'
+      - '!**/README.md'
+      - '!**/CHANGELOG.md'
       - '!**/LICENSE'
       - '!packages/**/__tests__/**'
 
