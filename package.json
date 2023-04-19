@@ -31,7 +31,7 @@
     "test:pub": "turbo run test:pub --no-deps",
     "prepare": "husky install",
     "clean:all": "rimraf ./**/turbo-build.log ./**/dist ./**/.pnpm-debug.log ./**/.turbo ./**/coverage ./**/pnpm-lock.yaml ./**/node_modules",
-    "version": "changeset version && pnpm install --no-frozen-lockfile && pnpm run format",
+    "version": "changeset version && pnpm install --no-frozen-lockfile",
     "ncu": "ncu -u --deep -x rimraf,sharp"
   },
   "devDependencies": {
