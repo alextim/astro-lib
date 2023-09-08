@@ -1,5 +1,12 @@
 # astro-webmanifest
 
+## 1.0.0
+
+### Major Changes
+
+- 5fb9f90: Astro has grown to the third version in years. All **Astro-lib** integrations are stable, so the decision was made to change the version to 1.0
+  There are no any real breaking changes.
+
 ## 0.6.0
 
 ### Minor Changes
