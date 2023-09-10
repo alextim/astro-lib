@@ -23,7 +23,7 @@ The _robots.txt_ file informs search engines which pages on your website should 
 
 For Astro project you usually create the _robots.txt_ in a text editor and place it to the `public/` directory.
 In that case you must manually synchronize `site` option in _astro.config.\*_ with `Sitemap:` record in _robots.txt_.  
-It brakes DRY principle.
+It breakes DRY principle.
 
 Sometimes, especially during development, it's necessary to prevent your site from being indexed. To achieve this you need to place the meta tag `<meta name="robots" content="noindex">` into the `<head>` section of your pages or add `X-Robots-Tag: noindex` to the HTTP response header, then add the lines `User-agent: *` and `Disallow: \` to _robots.txt_.  
 Again you have to do it manually in two different places.
