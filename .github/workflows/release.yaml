@@ -28,17 +28,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
       - name: Setup PNPM
         id: pnpm-install
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
           node-version: 18
           cache: "pnpm"
@@ -60,7 +60,7 @@ jobs:
 
       - name: Create Release Pull Request or Publish
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
           # Note: pnpm install after versioning is necessary to refresh lockfile
           version: pnpm run version
